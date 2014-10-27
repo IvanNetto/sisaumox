@@ -1,0 +1,65 @@
+<h3>Lista de Produtos</h3>
+<hr>
+<div class="instrucao">
+    <p>Busque a categoria desejada e selecione os produtos que desejar e mova-os para o <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'carrinhodesolicitacoes', 'solicitacaoid' => $this->solicitacaoid)); ?>">carrinho de solicitações <span class="glyphicon glyphicon-shopping-cart"></span></a></p>
+    
+    <div class="combobox">
+        <form class="form-horizontal" action="<?= $this->baseUrl() . '/produtosolicitacao/buscarprodutosporcategoria' ?>" method="POST">
+            <input type="hidden" name="solicitacaoid" value="<?php echo $this->solicitacaoid ?>">
+            <select name="categoriaid">
+                <option></option>
+                <?php foreach ($this->listadecategorias as $nomeCategoria): ?>
+                    <option value="<?php echo $nomeCategoria['id']; ?>"><?php echo $nomeCategoria['nome']; ?></option>
+                    <?php
+                endforeach;
+                ?>
+            </select>
+            <button class="btn btn-default btn-xs btn-filter" ><span class="glyphicon glyphicon-search"></span> Buscar</button>
+        </form>
+    </div>
+        
+</div>
+<?php if ($this->listaDeProdutos) { ?>
+    <div class="row">
+        <div class="panel panel-primary filterable">
+            <div class="panel-heading">
+                <div class="pull-right">
+                    <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Buscar na lista</button>
+                </div>
+                <span class="glyphicon glyphicon-list"></span>Lista de produtos da categoria <strong><?php echo $nomeCategoria['nome']; ?></strong>
+            </div>
+            <form action="<?= $this->baseUrl() . '/produtosolicitacao/inserir' ?>" method="POST">
+            <table class="table">
+                <thead>
+                    <tr class="filters">
+                        <th><input type="text" class="form-control" placeholder="Produto" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Categoria" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Descrição" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Quantidade em estoque" disabled></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+
+                        <?php foreach ($this->listaDeProdutos as $produto) { ?>
+                            <?php
+                            $tCategoria = new Categoria();
+                            $categoriaNome = $tCategoria->findCategoriaById($produto['categoriaid']);
+                            ?>
+                            <input type="hidden" name="solicitacaoid" value="<?php echo $this->solicitacaoid ?>">
+                            <input type="hidden" name="categoriaid" value="<?php echo $produto['categoriaid'] ?>">
+                            <td><input type="checkbox" id="checkbox" name="checkbox[]" value="<?= $produto['id']?>"/> <?= $produto['nome']; ?></td>
+                            
+                            <td name="teste" value="<?= $categoriaNome['nome']->nome; ?>"><?= $categoriaNome['nome']->nome; ?></td>
+                            <td><?= $produto['descricao']; ?></td>
+                            <td><?= $produto['quantidade']; ?></td>
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+                <button class="btn btn-success btn-xs"><span class="glyphicon glyphicon-shopping-cart"></span>Mover pro carrinho</button>
+            </form>
+        </div>
+        
+    </div>
+<?php } ?>

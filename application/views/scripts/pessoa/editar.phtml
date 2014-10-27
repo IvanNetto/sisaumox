@@ -1,0 +1,51 @@
+<form class="form-horizontal" action="<?= $this->baseUrl() . '/pessoa/editar'?>" method="POST">
+  <fieldset>
+    <legend>Editando um funcionário já cadastrado</legend>
+     <input type="hidden" name="id" value="<?php echo $this->pessoa->id?>">
+    <div class="form-group">
+      <label for="inputMatricula" class="col-lg-2 control-label">Matricula</label>
+      <div class="col-lg-10">
+        <input class="form-control" id="inputMatricula" placeholder="" type="text" name="matricula" value="<?php echo $this->pessoa->matricula?>">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputNome" class="col-lg-2 control-label">Nome</label>
+      <div class="col-lg-10">
+        <input class="form-control" id="inputNome" placeholder="" type="text" name="nome" value="<?php echo $this->pessoa->nome?>">
+      </div>
+    </div>
+      <div class="form-group">
+            <label for="select" class="col-lg-2 control-label">Função</label>
+            <div class="col-lg-10">
+                <select class="form-control" id="select" name="funcaoid">
+                    <option></option>
+                    <?php foreach ($this->funcoes as $nomeFuncao): ?> 
+                        <option value="<?php echo $nomeFuncao['id']; ?>"><?php echo $nomeFuncao['nome']; ?></option> 
+                    <?php
+                    endforeach;
+                    ?> 
+                </select>     
+                <br>
+            </div>
+        </div>
+    <div class="form-group">
+      <label for="inputTelefone1" class="col-lg-2 control-label">Telefone1</label>
+      <div class="col-lg-10">
+        <input class="form-control" id="inputTelefone1" placeholder="" type="text" name="telefone1" value="<?php echo $this->pessoa->telefone1?>">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="inputTelefone2" class="col-lg-2 control-label">Telefone2</label>
+      <div class="col-lg-10">
+        <input class="form-control" id="inputTelefone2" placeholder="" type="text" name="telefone2" value="<?php echo $this->pessoa->telefone2?>">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-lg-10 col-lg-offset-2">
+                <a href="<?php echo $this->url(array('controller' => 'pessoa', 'action' => 'listar')); ?>">Voltar</a>
+<!--        <button class="btn btn-default">Cancelar</button>-->
+        <button type="submit" class="btn btn-primary">Editar</button>
+      </div>
+    </div>
+  </fieldset>
+</form>

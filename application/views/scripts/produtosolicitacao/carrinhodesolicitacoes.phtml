@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <div class="panel-title">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <h5><span class="glyphicon glyphicon-shopping-cart"></span> Carrinho de Solicitações</h5>
+                    </div>
+                    <div class="col-xs-6">
+                        <a class='btn btn-primary btn-sm btn-block' href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'buscarprodutosporcategoria')); ?>"><span class="glyphicon glyphicon-share-alt"></span>Continue escolhendo</a> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-body">
+
+            <form action="<?= $this->baseUrl() . '/produtosolicitacao/atualizarprodutosesolicitacao' ?>" method="POST">
+
+                <?php if ($this->conteudoDoCarrinho->current() == null) { ?>
+                    <br>
+                    <center><strong><h4>Você ainda não escolheu produtos para esta solicitação, clique em "Continue escolhendo".</h4></strong></center>
+                <?php
+                } else {
+
+                    foreach ($this->conteudoDoCarrinho as $item) {
+
+                        $tProduto = new Produto();
+                        $produto = $tProduto->findProdutoById($item->produtoid);
+                        ?>
+
+                        <div class="row" class="carrinho">
+                            <br>
+                            <div class="col-xs-4 produtoCart">
+                                <input type="hidden" name="produto[]" value="<?= $item->produtoid ?>"/>                                                                   
+                                <input type="hidden" name="solicitacaoid" value="<?php echo $this->solicitacaoid ?>"/>       
+                                <h4 class="product-name"><strong><?php echo $produto[0]->nome; ?></strong></h4><h4><small><?php echo $produto[0]->descricao; ?></small></h4>
+                                <br>    
+                            </div>
+                            <div class="col-xs-3">
+                                <div class="col-xs-6 text-right">
+                                    <h6>Qtd</h6>
+                                </div>
+                                <div class="col-xs-4">
+                                    <input type="text" name = "quantidade" class="form-control input-sm" value="">
+                                </div>
+                                <div class="col-xs-2">
+                                    <button type="button" class="btn btn-link btn-xs">
+                                        <span class="glyphicon glyphicon-trash"> </span>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+    <?php }
+} ?>
+                <hr>
+
+               
+                    <div class="row">
+                        <div class="text-center">
+                            <div class="col-xs-2">
+                                <button class="btn btn-success btn-sm">
+                                    Enviar solicitação
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-footer">
+                <div class="row text-center">
+                    <div class="col-xs-2">
+                        <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'cancelarcarrinhodesolicitacoes', 'solicitacaoid' => $this->solicitacaoid)); ?>"><span class="glyphicon glyphicon-edit"></span>Cancelar</a> 
+                    </div>
+                </div>
+            </div>
+                    
+    </div>
+</div>

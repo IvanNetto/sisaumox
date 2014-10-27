@@ -1,0 +1,117 @@
+<div class="navbar navbar-default">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listar')); ?>" ><i class="glyphicon glyphicon-home"></i> Início</a>
+    </div>
+    <div class="navbar-collapse collapse navbar-responsive-collapse">
+        <ul class="nav navbar-nav">
+            <!--<li class="active"><a href="#">Active</a></li>-->
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-th-large"></i> Produto <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li class="dropdown-header">Disponíveis em estoque</li>
+                    <li>
+                        <a href="#">Consultar por categoria</a>
+                    </li>
+                    <li class="dropdown-header">Indisponíveis em estoque</li>
+                    <li>
+                        <a href="#">Consultar todos indisponíveis</a>
+                    </li>
+                    <li class="divider"></li>
+                </ul>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> Solicitação <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#"><i class="Solicitaçãoglyphicon glyphicon-plus"></i> Fazer nova</a>
+                    </li>
+                    <li class="dropdown-header">Solicitações em andamento</li>
+                    <li>
+                        <a href="#">Novas</a>
+                    </li>
+                    <li>
+                        <a href="#">Agendadas</a>
+                    </li>
+                    <li class="dropdown-header">Solicitações antigas</li>
+                    <li>
+                        <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>" > Histórico</a>
+                    </li>
+                    <li class="divider"></li>
+                </ul>                
+            </li>
+        </ul>
+        <!-- <form class="navbar-form navbar-left">
+                    <input class="form-control col-lg-8" placeholder="Search" type="text">
+                </form>-->
+        <ul class="nav navbar-nav navbar-right">                            
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+
+                    <font color="white"><i class="glyphicon glyphicon-bell" draggable="true"></i>  <i class="caret" draggable="true"></i></font>
+
+                </a>
+                <ul class="dropdown-menu dropdown-alerts">
+                    <li>
+                        <a href="#">
+
+                            <div>
+
+                                <i class="glyphicon glyphicon-envelope"></i> Comprar lápis ref 0081
+
+                            </div>
+
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+
+                    <li>
+                        <a href="#">
+
+                            <div>
+
+                                <i class="glyphicon glyphicon-envelope"></i> Comprar borracha azul
+
+
+                            </div>
+
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#" class="text-center">
+
+                            <strong>Ver todos os alertas</strong>
+
+                            <i class="glyphicon glyphicon-chevron-right"></i>
+
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.dropdown-alerts -->
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> <b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li>
+                        <a href="#">P</a>
+                    </li>
+                    <li>
+                        <a href="#">Another action</a>
+                    </li>
+                    <li>
+                        <a href="#">Something else here</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">Separated link</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>

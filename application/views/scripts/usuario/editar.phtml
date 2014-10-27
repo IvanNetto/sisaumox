@@ -1,0 +1,54 @@
+<?php ?>
+<form class="form-horizontal" action="<?= $this->baseUrl() . '/usuario/editar' ?>" method="POST">
+    <fieldset>
+        <legend>Editando um usuário</legend>    
+        <input type="hidden" name="id" value="<?php echo $this->usuario->id?>">
+        <div class="form-group">
+            <label for="select" class="col-lg-2 control-label">Funcionário</label>
+            <div class="col-lg-10">
+                <select class="form-control" id="select" name="pessoaid">
+                    <option></option>
+                    <?php foreach ($this->pessoas as $nomePessoa): ?> 
+                        <option value="<?php echo $nomePessoa['id']; ?>"><?php echo $nomePessoa['nome']; ?></option> 
+                        <?php
+                    endforeach;
+                    ?> 
+                </select>     
+                <br>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="select" class="col-lg-2 control-label">Perfil</label>
+            <div class="col-lg-10">
+                <select class="form-control" id="select" name="perfilid">
+                    <option></option>
+                    <?php foreach ($this->perfis as $nomePerfil): ?> 
+                        <option value="<?php echo $nomePerfil['id']; ?>"><?php echo $nomePerfil['nome']; ?></option> 
+                        <?php
+                    endforeach;
+                    ?> 
+                </select>     
+                <br>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputLogin" class="col-lg-2 control-label">Login</label>
+            <div class="col-lg-10">
+                <input class="form-control" id="inputLogin" placeholder="" type="text" name="login" value="<?php echo $this->usuario->login?>">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="inputSenha" class="col-lg-2 control-label">Senha</label>
+            <div class="col-lg-10">
+                <input class="form-control" id="inputSenha" placeholder="digite a senha" type="text" name="senha">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <!-- <button class="btn btn-default">Cancelar</button>-->
+                <a href="<?php echo $this->url(array('controller' => 'usuario', 'action' => 'listar')); ?>">Voltar</a>
+                <button type="submit" class="btn btn-primary">Editar</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

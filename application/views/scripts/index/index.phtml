@@ -1,0 +1,52 @@
+<?php echo $this->doctype(); ?>
+<html>
+<head>
+    <?php echo $this->headMeta(); ?>
+    <?php echo $this->headTitle(); ?>
+    <?php
+    echo $this->headLink()->prependStylesheet($this->baseUrl() . '/styles/style.css')
+        ->prependStylesheet($this->baseUrl() . '/styles/bootstrap.min.css');
+    ?>
+
+    <?php
+    echo $this->headScript()->appendFile($this->baseUrl() . '/js/javascript.js')
+        ->prependFile($this->baseUrl() . '/js/bootstrap.min.js')
+        ->prependFile($this->baseUrl() . '/js/jquery/jquery-2.1.1.js');
+    ?>
+
+</head>
+<body>
+
+<div class="header">
+    <div id="logo">
+        <div class="logosisaumox">
+            <div class="headercontent">
+                <h1></h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="header"></div>
+<div class="row">
+    <div class="col-sm-6 col-md-4 col-md-offset-4">
+        <h1 class="text-center login-title"></h1>
+        <div class="account-wall">
+            <img class="profile-img" src="img/login.png" alt="">
+            <form class="form-signin" action="<?= $this->baseUrl() . '/auth/login' ?>" method="POST">
+                <input type="text" name ="usuario" class="form-control"  placeholder="Login" required autofocus>
+                <input type="password" name ="senha" class="form-control" placeholder="Senha" required autofocus>
+                <button class="btn btn-lg btn-primary btn-block" type="submit">
+                    Entrar</button>
+                <a href="#" class="need-help">Esqueceu sua senha? </a><span class="clearfix"></span>
+            </form>
+            <div id="logos">
+                <img id ="logosisaumox" src="img/logo.png">
+                <img id ="logoprefeitura" src="img/prefeitura.png">
+            </div>
+        </div>
+
+
+    </div>
+
+</div>

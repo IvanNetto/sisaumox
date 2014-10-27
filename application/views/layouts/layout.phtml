@@ -1,0 +1,35 @@
+<?php echo $this->doctype(); ?>
+<html>
+    <head>
+        <?php echo $this->headMeta(); ?>
+        <?php echo $this->headTitle(); ?>
+        <?php
+        echo $this->headLink()->prependStylesheet($this->baseUrl() . '/styles/style.css')
+                ->prependStylesheet($this->baseUrl() . '/styles/bootstrap.min.css');
+        ?>
+
+        <?php
+        echo $this->headScript()->appendFile($this->baseUrl() . '/js/javascript.js')
+                ->prependFile($this->baseUrl() . '/js/bootstrap.min.js')
+                ->prependFile($this->baseUrl() . '/js/jquery/jquery-2.1.1.js');
+        ?>
+
+    </head>
+
+    <body>
+    <?= $this->partial("navbar.phtml");?>
+    <?= $this->partial("header.phtml");?>
+        <div class="container" id="content">
+            <?php $mensagens = isset($this->layout()->flashMessenger) ? $this->layout()->flashMessenger->getMessages() : array() ?>
+            <?php foreach ($mensagens as $key => $mensagem): ?>
+                <div class="alert alert-<?= key($mensagem) ?>">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <p class="alerta"><?= $mensagem[key($mensagem)] ?></p>
+                </div>
+            <?php endforeach ?>
+            <div class="row">
+                <?= $this->layout()->content; ?>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,47 @@
+<h3>Lista de solicitações ativas</h3>
+<hr>
+<?php if ($this->listaDeSolicitacoes->current() <> null) { ?>
+<p> Abaixo seguem suas solicitações ativas, para criar seu carrinho de solicitações, selecione abaixo o botão <a class='btn btn-info btn-xs disabled'><span class="glyphicon glyphicon-edit"></span>Iniciar</a></p>
+<?php } else { ?>
+    <p> Você não tem ainda solicitações, mas você pode criar a sua agora mesmo, <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserir')); ?>">Clique aqui</a> </p>
+<?php } ?>
+<div class="row">
+    <div class="panel panel-primary filterable">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-list"></span>Lista de Solicitações
+        </div>
+        <table class="table">
+            <tr>
+                <?php if ($this->listaDeSolicitacoes->current() == null) { ?>
+                <center><strong><h4>sem solicitações</h4></strong></center>
+                </tr>
+            <?php } else { ?>
+                <thead>
+                    <tr class="filters">
+                        <th><input type="text" class="form-control" placeholder="Código" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Data" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Status" disabled></th>  
+                        <th class="text-center">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <?php foreach ($this->listaDeSolicitacoes as $solicitacao) { ?>
+                            <td><?= $solicitacao['id']; ?></td>
+                            <td><?= $solicitacao['data']; ?></td>
+                            <td><?= $solicitacao['status']; ?></td>
+                            <td class="text-center">
+                                <a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'buscarprodutosporcategoria', 'solicitacaoid' => $solicitacao['id'])); ?>"><span class="glyphicon glyphicon-edit"></span>Iniciar</a> 
+                                <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'deletar', 'id' => $solicitacao['id'])); ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Deletar</a>
+                                <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Acusar recebimento</a>
+                            </td>
+                        </tr> 
+                    <?php }
+                } ?>
+                </tr>
+            </tbody>
+        </table>
+    </div>     
+</div>
+
+
