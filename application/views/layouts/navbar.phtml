@@ -15,7 +15,7 @@
                 <ul class="dropdown-menu">
                     <li class="dropdown-header">Disponíveis em estoque</li>
                     <li>
-                        <a href="#">Consultar por categoria</a>
+                        <a href="<?php echo $this->url(array('controller' => 'categoria', 'action' => 'selecionarcategoria')); ?>">Consultar por categoria</a>
                     </li>
                     <li class="dropdown-header">Indisponíveis em estoque</li>
                     <li>
@@ -28,12 +28,12 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> Solicitação <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#"><i class="Solicitaçãoglyphicon glyphicon-plus"></i> Fazer nova</a>
+                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'carrinhodesolicitacoes')); ?>"><i class="glyphicon glyphicon-shopping-cart"></i> Carrinho de solicitações</a>                   
+                    </li>
+                    <li>
+                        <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserir')); ?>"><i class="Solicitaçãoglyphicon glyphicon-plus"></i> Fazer nova</a>
                     </li>
                     <li class="dropdown-header">Solicitações em andamento</li>
-                    <li>
-                        <a href="#">Novas</a>
-                    </li>
                     <li>
                         <a href="#">Agendadas</a>
                     </li>

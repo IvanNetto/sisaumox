@@ -46,6 +46,7 @@ class Produto extends Zend_Db_Table_Row_Abstract {
             $quanditademinima = $objetoProduto->quantidademinima;
             
             if ($quantidadecorrente > $quantidade) {
+                   
 
                 if ($operacao == '-'){
                     $valor = $quantidadecorrente - $quantidade;
@@ -56,13 +57,12 @@ class Produto extends Zend_Db_Table_Row_Abstract {
                 $objetoProduto->save();
             }else{
                 
-                echo 'a quantidade escolhida para o item não poderá ser superior a quantidade existente em estoque';
-                return 0;
+               throw new exception("A quantidade escolhida para algum(ns) item(ns) excede a quantidade mínima. Favor verificar a quantidade existente em estoque.");
             }
             
             if ($quantidadecorrente < $quanditademinima){
                 
-                echo 'quantidade mínima em estoque atingida, favor repor o item o mais breve possível';
+                throw new exception("A quantidade mínima do produto em estoque foi atingida. O produto deve ser reposto para que as próximas solicitações para este produto possam ser realizadas.");
                 
             }
             

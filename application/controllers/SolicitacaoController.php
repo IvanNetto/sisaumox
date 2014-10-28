@@ -22,7 +22,7 @@ class SolicitacaoController extends Zend_Controller_Action {
     public function listarAction() {
 
         //Armazena os status de solicitações que podem aparecer na list principal do usuário solicitante         
-        $solicitacoesAtivas = ['nova', 'rejeitada', 'aprovada', 'em analise', 'agendada'];
+        $solicitacoesAtivas = ['nova', 'rejeitada', 'aprovada', 'em analise', 'agendada', 'entregue'];
 
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
 
@@ -44,8 +44,7 @@ class SolicitacaoController extends Zend_Controller_Action {
     
     
     public function listarhistoricoAction(){
-        
-        $usuarioId = $this->_getParam('usuarioid');
+        $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
 
         $tSolicitacao = new Solicitacao();
         $historico = $tSolicitacao->listarHistorico($usuarioId);
@@ -98,5 +97,6 @@ class SolicitacaoController extends Zend_Controller_Action {
 
         return $this->_helper->redirector('listar');
     }
+    
 
 }

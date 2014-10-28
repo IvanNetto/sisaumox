@@ -120,4 +120,23 @@ class ProdutoController extends Zend_Controller_Action {
     }
     
     
+    public function buscarprodutoporcategoriaAction(){
+        
+        $categoriaid = $this->_getParam("categoriaid");
+
+        $tCategoria = new DbTable_Categoria();
+        $listadecategorias = $tCategoria->fetchAll();
+
+        $this->view->listadecategorias = $listadecategorias;
+
+        if ($categoriaid) {
+
+            $tProduto = new Produto();
+            $listaDeProdutos = $tProduto->findProdutoByCategoriaid($categoriaid);
+
+            $this->view->listaDeProdutos = $listaDeProdutos->toArray();
+        }
+       
+    }
+    
 }

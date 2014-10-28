@@ -70,6 +70,9 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
             case 'aguardando fornecedor':
                 $status = 'entregue';
                 break;
+            default:
+                $status = 'recebida';
+                break;
         }
 
         $tSolicitacao = new DbTable_Solicitacao();
@@ -86,9 +89,22 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
         $tSolicitacao = new DbTable_Solicitacao();
         $query = $tSolicitacao->select()
                 ->where('usuarioid = (?)', $usuarioId)
-                ->where('status = (?)', 'entregue');
+                ->where('status = (?)', 'recebida');
 
         return $tSolicitacao->fetchAll($query);
+    }
+    
+    public function atualizaDataDeRecebimento($idSolicitacao,$data_solicitacao){
+        
+        
+        $tSolicitacao = new DbTable_Solicitacao();
+        $solicitacao = $tSolicitacao->find($idSolicitacao);
+        
+        $post = ['data_recebimento' => $data_solicitacao];
+        $solicitacao->current()->setFromArray($post);
+        $solicitacao->current()->save();
+        
+        
     }
 
 }
