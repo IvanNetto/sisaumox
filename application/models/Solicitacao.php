@@ -12,31 +12,12 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
         return $tSolicitacao->fetchAll($query);
     }
 
-    public function verificarSeExisteSolicitacaoNova($usuarioId) {
-        
-        $statusnova = ['nova', 'em analise'];
+    public function inserirSolicitacao($post) {
 
-        $tSolicitacao = new DbTable_Solicitacao();
-        $query = $tSolicitacao->select()
-                ->where('usuarioid = (?)', $usuarioId)
-                ->where('status in (?)', $statusnova);
-        
-        return $tSolicitacao->fetchAll($query);
-    }
-
-    public function inserirSolicitacao($post, $usuarioId) {
-
-        $jahExisteSolicitacao = $this->verificarSeExisteSolicitacaoNova($usuarioId);
-
-        if ($jahExisteSolicitacao->current() <> null) {
-
-            throw new exception("Você já possui uma solicitação com status NOVA!");
-        } else {
             $tSolicitacao = new DbTable_Solicitacao();
             $novaSolicitacao = $tSolicitacao->createRow();
             $novaSolicitacao->setFromArray($post);
             $novaSolicitacao->save();
-        }
     }
 
     public function mostrarStatusAtual($solicitacaoid) {
@@ -58,8 +39,8 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
             case 'em analise':
                 $status = 'entregue';
                 break;
-            case 'rejeitada':
-                $status = 'nova';
+            case 'reprovada':
+                $status = 'reprovada';
                 break;
             case 'entregue':
                 $status = 'recebida';
@@ -69,6 +50,12 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
                 break;
             case 'aguardando fornecedor':
                 $status = 'entregue';
+                break;
+            case 'cancelada':
+                $status = 'cancelada';
+                break;
+            case 'aprovada':
+                $status = 'aprovada';
                 break;
             default:
                 $status = 'recebida';
@@ -86,12 +73,27 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
 
     public function listarHistorico($usuarioId) {
 
+        $lista = ['recebida', 'reprovada', 'cancelada'];
+        
         $tSolicitacao = new DbTable_Solicitacao();
         $query = $tSolicitacao->select()
                 ->where('usuarioid = (?)', $usuarioId)
-                ->where('status = (?)', 'recebida');
+                ->where('status in (?)', $lista); 
 
         return $tSolicitacao->fetchAll($query);
+    }
+    
+    
+    public function listarAgendadas(){
+        
+        $tSolicitacao = new DbTable_Solicitacao();
+        $query = $tSolicitacao->select()
+                ->where('status = (?)', 'agendada'); 
+
+        return $tSolicitacao->fetchAll($query);
+        
+        
+        
     }
     
     public function atualizaDataDeRecebimento($idSolicitacao,$data_solicitacao){
@@ -104,7 +106,29 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
         $solicitacao->current()->setFromArray($post);
         $solicitacao->current()->save();
         
+    }
+    
+    public function selecionarUltimaSolicitacaoCadastrada(){
+        
+         $tSolicitacao = new DbTable_Solicitacao();
+         $query = $tSolicitacao->select()
+                ->from($tSolicitacao, array(new Zend_Db_Expr("MAX(id) AS maxID")));
+               
+        return $tSolicitacao->fetchAll($query);
         
     }
+    
+    public function listarSolicitacoesGerente(){
+        
+         $solicitacoesAtivas = ['em analise','aprovada', 'reprovada', 'agendada', 'aguardando fornecedor'];
+        
+        $tSolicitacao = new DbTable_Solicitacao();
+        $query = $tSolicitacao->select()
+                ->where('status in (?)', $solicitacoesAtivas); 
+
+        return $tSolicitacao->fetchAll($query);
+        
+    }
+
 
 }

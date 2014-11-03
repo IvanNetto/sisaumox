@@ -17,17 +17,32 @@
     </head>
 
     <body>
-    <?= $this->partial("navbar.phtml");?>
-    <?= $this->partial("header.phtml");?>
-        <div class="container" id="content">
-            <?php $mensagens = isset($this->layout()->flashMessenger) ? $this->layout()->flashMessenger->getMessages() : array() ?>
-            <?php foreach ($mensagens as $key => $mensagem): ?>
-                <div class="alert alert-<?= key($mensagem) ?>">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                    <p class="alerta"><?= $mensagem[key($mensagem)] ?></p>
-                </div>
-            <?php endforeach ?>
+        <?php echo $this->partial("navbar.phtml"); ?>
+        <?php echo $this->partial("header.phtml"); ?>
+        <div class="container">
             <div class="row">
+                <?php $perfil = Zend_Auth::getInstance()->getIdentity()->perfilid; ?>
+                <?php
+                if ($perfil == 2 || $perfil == 3) {
+                    echo $this->partial("controle.phtml");
+                } else {
+                    ?>
+                    <div class="somecontrole" style= "display: none">
+                        <?php echo $this->partial("controle.phtml"); ?>
+                    </div>
+                <?php } ?>
+
+
+                <?php $mensagens = isset($this->layout()->flashMessenger) ? $this->layout()->flashMessenger->getMessages() : array() ?>
+                <?php foreach ($mensagens as $key => $mensagem): ?>
+
+                    <div class="alert alert-<?= key($mensagem) ?> ">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <p class="alerta"><?= $mensagem[key($mensagem)] ?></p>
+                    </div>
+
+                <?php endforeach ?>
+
                 <?= $this->layout()->content; ?>
             </div>
         </div>

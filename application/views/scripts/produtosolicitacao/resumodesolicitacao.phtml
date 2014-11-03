@@ -44,10 +44,13 @@
                     <?php 
                     $tProduto = new DbTable_Produto();
                     $produto = $tProduto->find($produtosolicitacao['produtoid']);
+                    
+                    $tProdutosolicitacao = new Produtosolicitacao();
+                    $produtosolicitacao = $tProdutosolicitacao->findByProdutoESolicitacao($produtosolicitacao['solicitacaoid'], $produtosolicitacao['produtoid']);
                     ?>
                     
                     <td style="width: 300px;"><?= $produto->current()->nome; ?></td>
-                    <td><?= $produto->current()->quantidade; ?></td>
+                    <td><?= $produtosolicitacao->current()->quantidade; ?></td>
                 </tr>
             </tbody>
             </div>

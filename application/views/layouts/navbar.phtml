@@ -25,7 +25,7 @@
                 </ul>
             </li>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> Solicitação <b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> Minha Solicitação <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li>
                         <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'carrinhodesolicitacoes')); ?>"><i class="glyphicon glyphicon-shopping-cart"></i> Carrinho de solicitações</a>                   
@@ -35,11 +35,14 @@
                     </li>
                     <li class="dropdown-header">Solicitações em andamento</li>
                     <li>
-                        <a href="#">Agendadas</a>
+                        <li><a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listaragendadas')); ?>"> Minhas agendadas</a></li>
                     </li>
-                    <li class="dropdown-header">Solicitações antigas</li>
                     <li>
-                        <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>" > Histórico</a>
+                        <a href="#">Minhas reprovadas</a>
+                    </li>                    
+                    <li class="dropdown-header">Solicitações finalizadas</li>
+                    <li>
+                        <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>" > Meu histórico</a>
                     </li>
                     <li class="divider"></li>
                 </ul>                
@@ -48,14 +51,16 @@
         <!-- <form class="navbar-form navbar-left">
                     <input class="form-control col-lg-8" placeholder="Search" type="text">
                 </form>-->
-        <ul class="nav navbar-nav navbar-right">                            
+        <ul class="nav navbar-nav navbar-right">    
+            <!-- 
             <li class="dropdown">
+                
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#">
 
                     <font color="white"><i class="glyphicon glyphicon-bell" draggable="true"></i>  <i class="caret" draggable="true"></i></font>
 
                 </a>
-                <ul class="dropdown-menu dropdown-alerts">
+               <ul class="dropdown-menu dropdown-alerts">
                     <li>
                         <a href="#">
 
@@ -92,8 +97,9 @@
                         </a>
                     </li>
                 </ul>
-                <!-- /.dropdown-alerts -->
+               
             </li>
+            -->
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> <b class="caret"></b></a>
                 <ul class="dropdown-menu">

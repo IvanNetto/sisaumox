@@ -11,7 +11,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
     }
 
     public function indexAction() {
-        
+
     }
 
     public function buscarprodutosporcategoriaAction() {
@@ -19,6 +19,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         $categoriaid = $this->_getParam("categoriaid");
         $solicitacaoid = $this->_getParam("solicitacaoid");
 
+        $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
 
         $tCategoria = new DbTable_Categoria();
         $listadecategorias = $tCategoria->fetchAll();
@@ -27,10 +28,16 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
         if ($categoriaid) {
 
-            $tProduto = new Produto();
-            $listaDeProdutos = $tProduto->findProdutoByCategoriaid($categoriaid);
 
-            $this->view->listaDeProdutos = $listaDeProdutos->toArray();
+
+            $tProdutosolicitacao = new DbTable_Produtosolicitacao();
+            $listaItensProibidos = $tProdutosolicitacao->verificarSeJahExisteItemEmSolicitacaoAtivaDoUsuario($usuarioId);
+
+            $tProdutoSolicitacao = new Produtosolicitacao;
+            $listaDeItensPermitidos = $tProdutoSolicitacao->listarProdutosPermitidos($categoriaid, $listaItensProibidos);
+
+
+            $this->view->listaDeProdutos = $listaDeItensPermitidos->toArray();
         }
 
         $this->view->solicitacaoid = $solicitacaoid;
@@ -41,23 +48,23 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         $produtosescolhidos = ($_POST['checkbox']);
         $solicitacaoid = ($_POST['solicitacaoid']);
 
-
         $categoriaid = ($_POST['categoriaid']);
 
         $produtoid = $this->_getParam("id");
 
-        $params = array('categoriaid' => $categoriaid, 'solicitacaoid' => $solicitacaoid);
+
+        $mensagem = array();
+        $params = array('categoriaid' => $categoriaid, 'solicitacaoid' => $solicitacaoid, $mensagem);
 
         try {
 
             $tProdutosolicitacao = new Produtosolicitacao();
             $novoprodutosolicitacao = $tProdutosolicitacao->inserirProdutoSolicitacao($solicitacaoid, $produtosescolhidos);
-            $this->flashMessenger->addMessage(array('success' => "Movido com sucesso para o carrinho de solicitações"));
+            $mensagem = $this->flashMessenger->addMessage(array('success' => "Movido com sucesso para o carrinho de solicitações"));
         } catch (Exception $e) {
 
-            $this->flashMessenger->addMessage(array('danger' => $e->getMessage()));
+            $mensagem = $this->flashMessenger->addMessage(array('danger' => $e->getMessage()));
         };
-
 
         return $this->forward('buscarprodutosporcategoria', 'produtosolicitacao', null, $params);
     }
@@ -70,16 +77,18 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         $tProdutosolicitacao = new Produtosolicitacao();
         $produtosolicitacao = $tProdutosolicitacao->findByProdutoESolicitacao($solicitacaoid, $produtoid);
 
+        $mensagem = array();
+
         try {
 
             $produtosolicitacao->current()->delete();
-            $this->flashMessenger->addMessage(array('success' => "Item removido do carrinho com sucesso"));
+            $mensagem = $this->flashMessenger->addMessage(array('success' => "Item removido do carrinho com sucesso"));
         } catch (Exception $e) {
 
-            $this->flashMessenger->addMessage(array('success' => "Bem, isto é constrangedor! Algo aconteceu com seu item. Recarregue a página (pressione F5 do seu teclado) e tente novamente"));
+            $mensagem = $this->flashMessenger->addMessage(array('success' => "Bem, isto é constrangedor! Algo aconteceu com seu item. Recarregue a página (pressione F5 do seu teclado) e tente novamente"));
         }
 
-        return $this->forward('carrinhodesolicitacoes', 'produtosolicitacao', null, ['solicitacaoid' => $solicitacaoid]);
+        return $this->forward('carrinhodesolicitacoes', 'produtosolicitacao', null, ['solicitacaoid' => $solicitacaoid], $mensagem);
     }
 
     public function carrinhodesolicitacoesAction() {
@@ -92,6 +101,10 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         $this->view->conteudoDoCarrinho = $conteudoDoCarrinho;
         $this->view->solicitacaoid = $solicitacaoid;
     }
+
+    /*
+     * Atualiza primeiro o estoque - Depois o status da solicitação - Depois armazena a quantidade da solicitação
+     */
 
     public function atualizarprodutosesolicitacaoAction() {
 
@@ -110,27 +123,40 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
         if ($produtos) {
 
-            $tProduto = new Produto();
-            $atualizaProduto = $tProduto->atualizarEstoque($produtos, $operacao, $quantidade);
+            try{
+                $tProduto = new Produto();
+                $tProduto->atualizarEstoque($produtos, $operacao, $quantidade);
+
+                $tProdutosolicitacao = new Produtosolicitacao();
+                $tProdutosolicitacao->registrarQuantidadeDoProdutoNaSolicitacao($produtos, $quantidade, $solicitacaoid);
+
+                //mensagem de estoque minimo atingido
+                if ($this->mensagem){
+
+                    $this->flashMessenger->addMessage(array('alert-warning' => $this->mensagem));
+
+                }
+
+            }catch (Exception $e){
+                //gera exceção se solicicitar quantidade superior a existente em estoque
+                $this->flashMessenger->addMessage(array('danger' => $e->getMessage()));
+
+            }
         }
 
         $tsolicitacao = new Solicitacao();
         $statusatual = $tsolicitacao->mostrarStatusAtual($solicitacaoid)->current()->status;
         $atualizaSolicitacao = $tsolicitacao->atualizarStatus($solicitacaoid, $statusatual);
-        
-        if ($data_recebimento){
-            
-        $atualizaSolicitacao = $tsolicitacao->atualizaDataDeRecebimento($solicitacaoid, $data_recebimento);
-                
-            
+
+        if ($data_recebimento) {
+
+            $atualizaSolicitacao = $tsolicitacao->atualizaDataDeRecebimento($solicitacaoid, $data_recebimento);
         }
-        
-        
+
 
         //como eu mando pra solicitacao/listar?
         return $this->_helper->redirector->gotoSimple('listar', 'solicitacao');
     }
-
 
     public function resumodesolicitacaoAction() {
 
@@ -151,6 +177,28 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         $carrinhocancelado = $ProdutoSolicitacao->cancelarCarrinhoDeCompras($solicitacaoid);
 
         return $this->_helper->redirector('solicitacao/listar');
+    }
+
+    public function inserirprodutoemsolicitacaoagendadaAction() {
+
+        if (!($_POST)) {
+
+            $produtoId = $this->_getParam("produtoid");
+
+            $this->view->produtoid = $produtoId;
+
+        } else {
+
+            $produtoId = $_POST['produtoid'];
+            $quantidade = $_POST['quantidade'];
+            $data_agendamento = $_POST['data_agendamento'];
+
+            $tSolicitacao = new Solicitacao();
+            $solicitacaoid = $tSolicitacao->selecionarUltimaSolicitacaoCadastrada()->current()->maxID;
+
+            $tProdutoSolicitacao = new Produtosolicitacao();
+            $novoprodutosolicitacao = $tProdutoSolicitacao->inserirProdutoNaSolicitacaoAgendada($solicitacaoid, $produtoId, $quantidade, $data_agendamento);
+        }
     }
 
 }

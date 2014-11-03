@@ -21,7 +21,7 @@
 </div>
 <?php if ($this->listaDeProdutos) { ?>
     <div class="row">
-        <div class="panel panel-primary filterable">
+        <div class="panel panel-primary filterable conteudogerente">
             <div class="panel-heading">
                 <div class="pull-right">
                     <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Buscar na lista</button>
@@ -43,6 +43,7 @@
 
                         <?php foreach ($this->listaDeProdutos as $produto) { ?>
                             <?php
+                            
                             $tCategoria = new Categoria();
                             $categoriaNome = $tCategoria->findCategoriaById($produto['categoriaid']);
                             ?>
@@ -53,6 +54,9 @@
                             <td name="teste" value="<?= $categoriaNome['nome']->nome; ?>"><?= $categoriaNome['nome']->nome; ?></td>
                             <td><?= $produto['descricao']; ?></td>
                             <td><?= $produto['quantidade']; ?></td>
+                            <?php if ($produto['quantidade'] == 0){ ?>
+                            <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirsolicitacaoagendada', 'produtoid' => $produto['id'])); ?>"><span class="glyphicon glyphicon-time"></span>Agendar</a></td>
+                            <?php } ?>
                         </tr>
                     <?php } ?>
                 </tbody>
