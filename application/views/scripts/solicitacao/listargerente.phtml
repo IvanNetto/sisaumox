@@ -31,7 +31,7 @@
                         <td><?= $solicitacao['data']; ?></td>
                         <td><?= $solicitacao['status']; ?></td>
                         <td class="text-center">
-                            <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'aprovada')); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Aprovar</a>
+                            <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'aprovada', 'data_envio' => $data_envio = date("m-d-Y"))); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Aprovar</a>
                             <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'reprovada')); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Reprovar</a>
                         </td>
                     </tr> 

@@ -81,14 +81,14 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
         return $tProdutoSolicitacao->fetchAll($query);
     }
 
-    public function cancelarCarrinhoDeCompras($solicitacaoid) {
+    public function limparCarrinhoDeSolicitacao($solicitacaoid) {
 
         $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
+        $where = $tProdutoSolicitacao->getAdapter()->quoteInto('solicitacaoid = (?)', $solicitacaoid);
 
-        $query = $tProdutoSolicitacao->select()
-                ->where('solicitacaoid = (?)', $solicitacaoid);
-        //vai deletar ??? não deve criar um foreach e deletar linha por linha?
-        $tProdutoSolicitacao->delete($query);
+        $tProdutoSolicitacao->delete($where);
+       
+       
     }
 
     public function registrarQuantidadeDoProdutoNaSolicitacao($produtos, $quantidade, $solicitacaoid) {

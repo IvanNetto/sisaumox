@@ -35,13 +35,13 @@
                     <?php if ($solicitacao['status'] == 'nova'){?>
                         <a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'buscarprodutosporcategoria', 'solicitacaoid' => $solicitacao['id'])); ?>"><span class="glyphicon glyphicon-edit"></span>Iniciar</a>
                         <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'deletar', 'id' => $solicitacao['id'])); ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Deletar</a>
-                    <?}elseif ($solicitacao['status'] == 'entregue'){ ?>
+                    <?php }elseif ($solicitacao['status'] == 'entregue'){ ?>
 
                         <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao['id'], 'data_recebimento' => $data_recebimento = date("m-d-Y"))); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Acusar recebimento</a>
 
-                    <?php  }  ?>
+                    <?php  }else{  ?>
                         <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'cancelarsolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'cancelada')); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Cancelar</a>
-
+                    <?php } ?>
                 </td>
             </tr>
             <?php

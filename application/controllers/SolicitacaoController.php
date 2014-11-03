@@ -37,7 +37,7 @@ class SolicitacaoController extends Zend_Controller_Action {
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
 
         //Armazena os status de solicitações que podem aparecer na list principal do usuário solicitante         
-        $solicitacoesAtivas = ['nova', 'rejeitada', 'aprovada', 'em analise'];
+        $solicitacoesAtivas = ['nova', 'rejeitada', 'aprovada', 'em analise', 'entregue'];
 
         //Retorna as solicitações do usuário logado que estejam ativas
         $tSolicitacao = new Solicitacao();
@@ -112,23 +112,7 @@ class SolicitacaoController extends Zend_Controller_Action {
         };
 
         return $this->_helper->redirector('listar');
-//        $perfil = Zend_Auth::getInstance()->getIdentity()->perfilid;
-//        if ($perfil == 1){
-//            
-//            return $this->_helper->redirector('listar');
-//        
-//            
-//        }elseif ($perfil == 2) {
-//            
-//            
-//            return $this->_helper->redirector('listargerente');
-//            
-//        }elseif ($perfil == 3) {
-//            
-//            
-//            return $this->_helper->redirector('listaradmin');
-//            
-//        }
+
     }
 
     public function inserirsolicitacaoagendadaAction() {

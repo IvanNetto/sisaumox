@@ -112,6 +112,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         $operacao = '-';
         $quantidade = $_POST['quantidade'];
         $data_recebimento = $this->_getParam('data_recebimento');
+        $data_envio = $this->_getParam('data_envio');
 
         if ($_POST['solicitacaoid']) {
 
@@ -125,15 +126,15 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
             try{
                 $tProduto = new Produto();
-                $tProduto->atualizarEstoque($produtos, $operacao, $quantidade);
-
+                $mensagem = $tProduto->atualizarEstoque($produtos, $operacao, $quantidade);
+                
                 $tProdutosolicitacao = new Produtosolicitacao();
                 $tProdutosolicitacao->registrarQuantidadeDoProdutoNaSolicitacao($produtos, $quantidade, $solicitacaoid);
 
                 //mensagem de estoque minimo atingido
-                if ($this->mensagem){
+                if ($mensagem){
 
-                    $this->flashMessenger->addMessage(array('alert-warning' => $this->mensagem));
+                    $this->flashMessenger->addMessage(array('danger' => $mensagem));
 
                 }
 
@@ -152,6 +153,13 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
             $atualizaSolicitacao = $tsolicitacao->atualizaDataDeRecebimento($solicitacaoid, $data_recebimento);
         }
+        
+        if ($data_envio) {
+
+            $atualizaSolicitacao = $tsolicitacao->atualizaDataDeEnvio($solicitacaoid, $data_envio);
+        
+            
+        }
 
 
         //como eu mando pra solicitacao/listar?
@@ -168,15 +176,15 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         $this->view->resumoDeSolicitacao = $resumoDeSolicitacao;
     }
 
-    public function cancelarcarrinhodecomprasAction() {
+    public function limparcarrinhodesolicitacaoAction() {
 
 
         $solicitacaoid = $this->_getParam('solicitacaoid');
 
         $ProdutoSolicitacao = new Produtosolicitacao();
-        $carrinhocancelado = $ProdutoSolicitacao->cancelarCarrinhoDeCompras($solicitacaoid);
+        $carrinhocancelado = $ProdutoSolicitacao->limparCarrinhoDeSolicitacao($solicitacaoid);
 
-        return $this->_helper->redirector('solicitacao/listar');
+         return $this->_helper->redirector->gotoSimple('listar', 'solicitacao');
     }
 
     public function inserirprodutoemsolicitacaoagendadaAction() {

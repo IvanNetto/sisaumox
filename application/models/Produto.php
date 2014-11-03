@@ -40,35 +40,33 @@ class Produto extends Zend_Db_Table_Row_Abstract {
     public function atualizarEstoque($produtos, $operacao, $quantidade) {
 
         foreach ($produtos as $produto) {
-            
+
             $objetoProduto = $this->findProdutoById($produto)->current();
             $quantidadecorrente = $objetoProduto->quantidade;
             $quanditademinima = $objetoProduto->quantidademinima;
 
 
-            
-            if ($quantidadecorrente > $quantidade) {
-                   
 
-                if ($operacao == '-'){
-                    $valor = $quantidadecorrente - $quantidade;
+            if ($quantidadecorrente >= $quantidade) {
+
+
+                if ($operacao == '-') {
+                    $quantidadecorrente = $quantidadecorrente - $quantidade;
                 }
-                $post = ['quantidade' => $valor];
+                $post = ['quantidade' => $quantidadecorrente];
                 //var_dump($post);
                 $objetoProduto->setFromArray($post);
                 $objetoProduto->save();
-            }else{
 
-               throw new exception("A quantidade escolhida para algum(ns) item(ns) excede a quantidade mínima. Favor verificar a quantidade existente em estoque.");
-            }
-            
-            if ($quantidadecorrente <= $quanditademinima){
-
-                return $mensagem = "Solicitação enviada com sucesso, mas a quantidade mínima do produto em estoque foi atingida. O produto deve ser reposto para que as próximas solicitações para este produto possam ser realizadas.";
+                if ($quantidadecorrente <= $quanditademinima) {
                 
+                    return $mensagem = "Solicitação enviada com sucesso, mas a quantidade mínima do produto em estoque foi atingida. O produto deve ser reposto para que as próximas solicitações para este produto possam ser realizadas.";
+                }
+                
+            } else {
+
+                throw new exception("A quantidade escolhida para algum(ns) item(ns) excede a quantidade mínima. Favor verificar a quantidade existente em estoque.");
             }
-            
-            
         }
     }
 

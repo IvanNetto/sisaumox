@@ -96,15 +96,28 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
         
     }
     
-    public function atualizaDataDeRecebimento($idSolicitacao,$data_solicitacao){
+    public function atualizaDataDeRecebimento($idSolicitacao,$data_recebimento){
         
         
         $tSolicitacao = new DbTable_Solicitacao();
         $solicitacao = $tSolicitacao->find($idSolicitacao);
         
-        $post = ['data_recebimento' => $data_solicitacao];
+        $post = ['data_recebimento' => $data_recebimento];
         $solicitacao->current()->setFromArray($post);
         $solicitacao->current()->save();
+        
+    }
+    
+    
+    public function atualizaDataDeEnvio($idSolicitacao,$data_envio){
+        
+        $tSolicitacao = new DbTable_Solicitacao();
+        $solicitacao = $tSolicitacao->find($idSolicitacao);
+        
+        $post = ['data_envio' => $data_envio];
+        $solicitacao->current()->setFromArray($post);
+        $solicitacao->current()->save();
+        
         
     }
     
