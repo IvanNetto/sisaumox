@@ -1,0 +1,20 @@
+
+<form class="form-horizontal" action="" method="POST">
+    <fieldset>
+        <legend>Justificando sua reprovação</legend>
+        <div class="form-group">
+            <label for="Observação" class="col-lg-2 control-label">Observação</label>
+            <div class="col-lg-10">
+                <textarea class="form-control" rows="3" id="observacao" name="observacao"></textarea>
+                <span class="help-block">Comente a razão da rejeição desta solicitação</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <!-- <button class="btn btn-default">Cancelar</button>-->
+                <a href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'listar')); ?>">Voltar</a>
+                <button type="submit" class="btn btn-primary" id="enviar">Inserir</button>
+            </div>
+        </div>
+    </fieldset>
+</form>

@@ -86,6 +86,14 @@ class SolicitacaoController extends Zend_Controller_Action {
         $this->view->agendadas = $agendadas;
     }
 
+    public function listarreprovadasAction() {
+
+        $tSolicitacao = new Solicitacao();
+        $reprovadas = $tSolicitacao->listarReprovadas();
+
+        $this->view->reprovadas = $reprovadas;
+    }
+
     public function inserirAction() {
 
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
@@ -101,11 +109,11 @@ class SolicitacaoController extends Zend_Controller_Action {
         try {
 
             $tSolicitacao = new Solicitacao();
-            $novaSolicitacao = $tSolicitacao->inserirSolicitacao($post, $usuarioId);
+            $tSolicitacao->inserirSolicitacao($post, $usuarioId);
 
             $this->flashMessenger->addMessage(array('success' => "Solicitação criada com sucesso! Você já pode iniciar sua lista de solicitações agora!"));
-        
-            
+
+
         } catch (Exception $e) {
 
             $this->flashMessenger->addMessage(array('danger' => $e->getMessage()));
@@ -130,8 +138,8 @@ class SolicitacaoController extends Zend_Controller_Action {
         );
 
         $tSolicitacao = new Solicitacao();
-        $novaSolicitacao = $tSolicitacao->inserirSolicitacao($post);
-        
+        $tSolicitacao->inserirSolicitacao($post);
+
         $this->flashMessenger->addMessage(array('success' => "Solicitação agendada com sucesso! Agora é só esperar a reposição para este item no estoque!"));
 
         $param = ['produtoid' => $produtoId];
@@ -177,6 +185,38 @@ class SolicitacaoController extends Zend_Controller_Action {
         $this->flashMessenger->addMessage(array('success' => "Solicitação cancelada com sucesso!"));
 
         return $this->_helper->redirector('listar');
+
+    }
+
+    public function inserirobservacaoAction(){
+
+        $solicitacaoid = $this->_getParam("solicitacaoid");
+        $status = $this->_getParam("status");
+
+        $param = ['solicitacaoid' => $solicitacaoid];
+
+        $this->view->solicitacaoid = $solicitacaoid;
+
+        if ($_POST){
+
+            $observacao = $_POST['observacao'];
+            $data_reprovacao = $this->_getParam("data_reprovacao");
+
+            $tSolicitacao = new DbTable_Solicitacao();
+            $solicitacao = $tSolicitacao->find($solicitacaoid);
+
+            $post = (['observacao' => $observacao, 'status' => $status, 'data_reprovacao' => $data_reprovacao]);
+
+            $solicitacao->current()->setFromArray($post);
+            $solicitacao->current()->save();
+
+
+            $this->forward('atualizarprodutosesolicitacao', 'produtosolicitacao', null, $param);
+
+        }
+
+
+
 
     }
 

@@ -91,10 +91,21 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
                 ->where('status = (?)', 'agendada'); 
 
         return $tSolicitacao->fetchAll($query);
-        
-        
-        
+
     }
+
+    public function listarReprovadas(){
+
+        $tSolicitacao = new DbTable_Solicitacao();
+        $query = $tSolicitacao->select()
+            ->where('status = (?)', 'reprovada');
+
+        return $tSolicitacao->fetchAll($query);
+
+    }
+
+
+
     
     public function atualizaDataDeRecebimento($idSolicitacao,$data_recebimento){
         

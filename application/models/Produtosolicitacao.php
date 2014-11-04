@@ -74,6 +74,7 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
 
     public function resumoDeSolicitacao($solicitacaoid) {
 
+
         $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
         $query = $tProdutoSolicitacao->select()
                 ->where('solicitacaoid = (?)', $solicitacaoid);

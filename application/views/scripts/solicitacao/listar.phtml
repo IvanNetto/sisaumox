@@ -38,9 +38,11 @@
                     <?php }elseif ($solicitacao['status'] == 'entregue'){ ?>
 
                         <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao['id'], 'data_recebimento' => $data_recebimento = date("m-d-Y"))); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Acusar recebimento</a>
+                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Visualizar Carrinho</a>
 
                     <?php  }else{  ?>
                         <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'cancelarsolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'cancelada')); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Cancelar</a>
+                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Visualizar Carrinho</a>
                     <?php } ?>
                 </td>
             </tr>

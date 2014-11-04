@@ -5,16 +5,17 @@
     <div class="panel panel-primary filterable">
         <div class="panel-heading">
             <span class="glyphicon glyphicon-list"></span>Resumo da solicitção
-        </div> 
-         <table class="table">
-        <thead>
+        </div>
+        <table class="table">
+            <thead>
             <tr>
                 <th>Solicitação</th>
-                <th>Data de solicitação</th>
-                <th>Data de recebimento</th>  
+                <th>Data da solicitação</th>
+                <th>Data de envio</th>
+                <th>Data de recebimento</th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             <tr>
                 <?php foreach ($this->resumoDeSolicitacao as $produtosolicitacao) { ?>
 
@@ -25,40 +26,47 @@
 
                     <td><?= $produtosolicitacao['solicitacaoid']; ?></td>
                     <td><?= $solicitacao->current()->data; ?></td>
+                    <td><?= $solicitacao->current()->data_envio; ?></td>
                     <td><?= $solicitacao->current()->data_recebimento; ?></td>
                 <?php } ?>
             </tr>
-        <table>
-            <thead>
+            <tr>
+                <th>Observação</th>
+            </tr>
+            <tr>
+                <td><?= $solicitacao->current()->observacao; ?> </td>
+            </tr>
+            <table>
+                <thead>
                 <tr>
                     <th>Produto</th>
                     <th>Quantidade</th>
                 </tr>
-            </thead>
-            <br><br><br>
-            <tr  ><h4 class="text-center">Produtos escolhidos nesta solicitação:</h4></tr>
-            <br>
-            <div class="col-lg-4">
-            <tbody>
-                <tr>
-                    <?php 
-                    $tProduto = new DbTable_Produto();
-                    $produto = $tProduto->find($produtosolicitacao['produtoid']);
-                    
-                    $tProdutosolicitacao = new Produtosolicitacao();
-                    $produtosolicitacao = $tProdutosolicitacao->findByProdutoESolicitacao($produtosolicitacao['solicitacaoid'], $produtosolicitacao['produtoid']);
-                    ?>
-                    
-                    <td style="width: 300px;"><?= $produto->current()->nome; ?></td>
-                    <td><?= $produtosolicitacao->current()->quantidade; ?></td>
-                </tr>
+                </thead>
+                <br><br><br>
+                <tr  ><h4 class="text-center">Produtos escolhidos nesta solicitação:</h4></tr>
+                <br>
+                <div class="col-lg-4">
+                    <tbody>
+                    <tr>
+                        <?php
+                        $tProduto = new DbTable_Produto();
+                        $produto = $tProduto->find($produtosolicitacao['produtoid']);
+
+                        $tProdutosolicitacao = new Produtosolicitacao();
+                        $produtosolicitacao = $tProdutosolicitacao->findByProdutoESolicitacao($produtosolicitacao['solicitacaoid'], $produtosolicitacao['produtoid']);
+                        ?>
+
+                        <td style="width: 300px;"><?= $produto->current()->nome; ?></td>
+                        <td><?= $produtosolicitacao->current()->quantidade; ?></td>
+                    </tr>
+                    </tbody>
+                </div>
+            </table>
+
             </tbody>
-            </div>
         </table>
-            
-        </tbody>
-        </table>
-    </div>     
+    </div>
 </div>
 
 

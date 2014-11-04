@@ -28,9 +28,6 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-list"></i> Minha Solicitação <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'carrinhodesolicitacoes')); ?>"><i class="glyphicon glyphicon-shopping-cart"></i> Carrinho de solicitações</a>                   
-                    </li>
-                    <li>
                         <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserir')); ?>"><i class="Solicitaçãoglyphicon glyphicon-plus"></i> Fazer nova</a>
                     </li>
                     <li class="dropdown-header">Solicitações em andamento</li>
@@ -38,7 +35,7 @@
                         <li><a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listaragendadas')); ?>"> Minhas agendadas</a></li>
                     </li>
                     <li>
-                        <a href="#">Minhas reprovadas</a>
+                        <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarreprovadas')); ?>">Minhas reprovadas</a>
                     </li>                    
                     <li class="dropdown-header">Solicitações finalizadas</li>
                     <li>
