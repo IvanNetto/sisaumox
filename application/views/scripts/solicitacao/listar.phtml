@@ -1,7 +1,8 @@
 <h3>Lista de solicitações ativas</h3>
 <hr>
 <?php if ($this->listaDeSolicitacoes->current() <> null) { ?>
-    <p> Abaixo seguem suas solicitações ativas, para criar seu carrinho de solicitações, selecione abaixo o botão <a class='btn btn-info btn-xs disabled'><span class="glyphicon glyphicon-edit"></span>Iniciar</a></p>
+<p> Abaixo seguem suas solicitações ativas, para criar seu carrinho de solicitações, selecione <b>abaixo</b> o botão <a class='btn btn-info btn-xs disabled'><span class="glyphicon glyphicon-edit"></span>Iniciar</a> para solicitar produtos, <a class='btn btn-danger btn-xs disabled'><span class="glyphicon glyphicon-remove-circle"></span>Cancelar</a> para cancelar sua solicitação ativa, ou
+     <a class='btn btn-default btn-xs disabled'><span class="glyphicon glyphicon-eye-open"></span>Visualizar</a>, para visualizar os itens escolhidos.</p>
 <?php } else { ?>
     <p> Você não tem ainda solicitações, mas você pode criar a sua agora mesmo, <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserir')); ?>">Clique aqui</a> </p>
 <?php } ?>
@@ -41,8 +42,8 @@
                         <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Visualizar Carrinho</a>
 
                     <?php  }else{  ?>
-                        <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'cancelarsolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'cancelada')); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Cancelar</a>
-                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Visualizar Carrinho</a>
+                        <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'cancelarsolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'cancelada')); ?>" class='btn btn-danger btn-xs'><span class="glyphicon glyphicon-remove-circle"></span>Cancelar</a>
+                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>" class='btn btn-default btn-xs'><span class="glyphicon glyphicon-eye-open"></span>Visualizar</a>
                     <?php } ?>
                 </td>
             </tr>

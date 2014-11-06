@@ -93,7 +93,7 @@ class SolicitacaoController extends Zend_Controller_Action {
 
         $this->view->reprovadas = $reprovadas;
     }
-
+    
     public function inserirAction() {
 
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;

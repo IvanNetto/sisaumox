@@ -1,6 +1,13 @@
 <h3>Resumo da solicitação</h3>
+<?php 
+$tSolicitacao = new DbTable_Solicitacao;
+      $solicitacao = $tSolicitacao->find($this->resumoDeSolicitacao[0]->solicitacaoid);
+      if ($solicitacao->current()->status == 'recebida'){?>
 <hr>
-<p> Abaixo segue o resumo de sua solicitação, selecione <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>">Voltar</a> para retornar ao histórico</p>
+<p> Abaixo segue o resumo de sua solicitação já finalizada, <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>">clique aqui</a> e retorne ao histórico de solicitações.</p>
+      <?php }elseif ($solicitacao->current()->status == 'em analise' || $solicitacao->current()->status == 'aprovada'){ ?>
+<p> Abaixo segue o resumo de sua solicitação ainda não finalizada, selecione <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listar')); ?>">Voltar</a> para retornar para sua lista de solicitações.</p>
+      <?php } ?>
 <div class="row">
     <div class="panel panel-primary filterable">
         <div class="panel-heading">
@@ -11,8 +18,12 @@
             <tr>
                 <th>Solicitação</th>
                 <th>Data da solicitação</th>
+                <?php if ($solicitacao->current()->status == 'agendada' || $solicitacao->current()->status == 'pendente'){?>
+                <th>Data de agendametno</th>                
+                <?php }else{ ?>
                 <th>Data de envio</th>
                 <th>Data de recebimento</th>
+                <?php } ?>
             </tr>
             </thead>
             <tbody>
@@ -26,15 +37,18 @@
 
                     <td><?= $produtosolicitacao['solicitacaoid']; ?></td>
                     <td><?= $solicitacao->current()->data; ?></td>
+                       <?php if ($solicitacao->current()->status == 'agendada' || $solicitacao->current()->status == 'pendente'){?>
+                <td><?= $solicitacao->current()->data_agendamento; ?></td>                
+                <?php }else{ ?>                 
                     <td><?= $solicitacao->current()->data_envio; ?></td>
                     <td><?= $solicitacao->current()->data_recebimento; ?></td>
-                <?php } ?>
+                <?php } }?>
             </tr>
             <tr>
                 <th>Observação</th>
             </tr>
             <tr>
-                <td><?= $solicitacao->current()->observacao; ?> </td>
+                <td><a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'status' => 'pendente','data_reprovacao' => $data_reprovacao = date("m-d-Y"))); ?>" <span class="glyphicon glyphicon-plus"></span>Atualizar</a><?= $solicitacao->current()->observacao; ?> </td>
             </tr>
             <table>
                 <thead>

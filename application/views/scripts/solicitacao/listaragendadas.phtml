@@ -20,7 +20,7 @@
                 <thead>
                     <tr class="filters">
                         <th><input type="text" class="form-control" placeholder="Código" disabled></th>
-                        <th><input type="text" class="form-control" placeholder="Data" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Data de agendamento" disabled></th>
                          
                         <th class="text-center">Ação</th>
                     </tr>
@@ -30,9 +30,14 @@
                         <?php foreach ($this->agendadas as $solicitacao) { ?>
                             <td><?= $solicitacao['id']; ?></td>
                             <td><?= $solicitacao['data_agendamento']; ?></td>
+                <td class="text-center">            
+                            <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'pendente','data_reprovacao' => $data_reprovacao = date("m-d-Y"))); ?>" class='btn btn-warning btn-xs'><span class="glyphicon glyphicon-remove-circle"></span>Pendente</a>
+                            <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>" class='btn btn-default btn-xs'><span class="glyphicon glyphicon-eye-open"></span>Visualizar</a>
                             
-                            <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'carrinhodesolicitacoes', 'solicitacaoid' => $solicitacao['id'])); ?>"><span class="glyphicon glyphicon-edit"></span>Visualizar</a>
-
+                            
+                            
+                            
+                </td>
                         </tr> 
                     <?php }
                 }

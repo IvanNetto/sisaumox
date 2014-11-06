@@ -31,7 +31,6 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
 
     public function atualizarStatus($idSolicitacao, $statusatual) {
 
-        
         switch ($statusatual) {
             case 'nova':
                 $status = 'em analise';
@@ -57,6 +56,9 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
             case 'aprovada':
                 $status = 'aprovada';
                 break;
+            case 'pendente':
+                $status = 'pendente';
+                break;
             default:
                 $status = 'recebida';
                 break;
@@ -73,7 +75,7 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
 
     public function listarHistorico($usuarioId) {
 
-        $lista = ['recebida', 'reprovada', 'cancelada'];
+        $lista = ['recebida', 'reprovada', 'cancelada', 'pendente'];
         
         $tSolicitacao = new DbTable_Solicitacao();
         $query = $tSolicitacao->select()
@@ -86,9 +88,10 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
     
     public function listarAgendadas(){
         
+        $lista = ['agendada', 'pendente'];
         $tSolicitacao = new DbTable_Solicitacao();
         $query = $tSolicitacao->select()
-                ->where('status = (?)', 'agendada'); 
+                ->where('status in (?)', $lista); 
 
         return $tSolicitacao->fetchAll($query);
 
@@ -103,8 +106,6 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
         return $tSolicitacao->fetchAll($query);
 
     }
-
-
 
     
     public function atualizaDataDeRecebimento($idSolicitacao,$data_recebimento){
