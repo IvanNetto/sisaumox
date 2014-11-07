@@ -122,6 +122,7 @@ class ProdutoController extends Zend_Controller_Action {
     
     public function buscarprodutoporcategoriaAction(){
         
+        $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
         $categoriaid = $this->_getParam("categoriaid");
 
         $tCategoria = new DbTable_Categoria();
@@ -130,11 +131,17 @@ class ProdutoController extends Zend_Controller_Action {
         $this->view->listadecategorias = $listadecategorias;
 
         if ($categoriaid) {
+            
+            $tProdutosolicitacao = new DbTable_Produtosolicitacao();
+            $listaItensProibidos = $tProdutosolicitacao->verificarSeJahExisteItemEmSolicitacaoAtivaDoUsuario($usuarioId);
+            
+            
+            
+            
+            $tProdutoSolicitacao = new Produtosolicitacao;
+            $listaDeItensPermitidos = $tProdutoSolicitacao->listarProdutosPermitidos($categoriaid, $listaItensProibidos);
 
-            $tProduto = new Produto();
-            $listaDeProdutos = $tProduto->findProdutoByCategoriaid($categoriaid);
-
-            $this->view->listaDeProdutos = $listaDeProdutos->toArray();
+            $this->view->listaDeProdutos = $listaDeItensPermitidos->toArray();
         }
        
     }

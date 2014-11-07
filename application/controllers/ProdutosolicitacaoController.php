@@ -116,7 +116,8 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         $operacao = '-';
         $quantidade = $_POST['quantidade'];
         $data_recebimento = $this->_getParam('data_recebimento');
-        $data_envio = $this->_getParam('data_envio');
+        $data_aprovacao = $this->_getParam('data_aprovacao');
+        $gerente_responsavel = $this->_getParam('gerente_responsavel');
 
         if ($_POST['solicitacaoid']) {
 
@@ -151,23 +152,31 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
         $tsolicitacao = new Solicitacao();
         $statusatual = $tsolicitacao->mostrarStatusAtual($solicitacaoid)->current()->status;
-        $tsolicitacao->atualizarStatus($solicitacaoid, $statusatual);
+        
+        $tsolicitacao->atualizarStatus($solicitacaoid, $statusatual, $gerente_responsavel);
+        
+        
 
         if ($data_recebimento) {
 
             $tsolicitacao->atualizaDataDeRecebimento($solicitacaoid, $data_recebimento);
         }
 
-        if ($data_envio) {
+        if ($data_aprovacao) {
 
-            $tsolicitacao->atualizaDataDeEnvio($solicitacaoid, $data_envio);
+            $tsolicitacao->atualizaDataDeaprovação($solicitacaoid, $data_aprovacao);
 
 
         }
+        
+        $perfil = Zend_Auth::getInstance()->getIdentity()->perfilid;
 
-
-        //como eu mando pra solicitacao/listar?
-        return $this->_helper->redirector->gotoSimple('listar', 'solicitacao');
+        if ($perfil == 1) {
+            return $this->_helper->redirector->gotoSimple('listar', 'solicitacao');
+        }elseif ($perfil == 2 || $perfil == 3){
+            return $this->_helper->redirector->gotoSimple('listargerente', 'solicitacao');
+        }
+        
     }
 
     public function resumodesolicitacaoAction() {
@@ -210,6 +219,8 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
             $tProdutoSolicitacao = new Produtosolicitacao();
             $tProdutoSolicitacao->inserirProdutoNaSolicitacaoAgendada($solicitacaoid, $produtoId, $quantidade, $data_agendamento);
+            
+            return $this->_helper->redirector->gotoSimple('listar', 'solicitacao');
         }
     }
 

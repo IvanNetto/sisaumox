@@ -45,6 +45,9 @@
                 </ul>                
             </li>
         </ul>
+        <form class="navbar-form navbar-left" action="<?= $this->baseUrl() . '/solicitacao/buscarsolicitacao' ?>" method="POST">
+            <input class="form-control col-lg-8" placeholder="Nº da solicitação" type="text" name="solicitacaoid">
+        </form>
         <!-- <form class="navbar-form navbar-left">
                     <input class="form-control col-lg-8" placeholder="Search" type="text">
                 </form>-->

@@ -30,9 +30,10 @@
                         <td><?= $solicitacao['id']; ?></td>
                         <td><?= $solicitacao['data']; ?></td>
                         <td><?= $solicitacao['status']; ?></td>
+                        <?php $login = Zend_Auth::getInstance()->getIdentity()->login; ?>
                         <td class="text-center">
-                            <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'aprovada', 'data_envio' => $data_envio = date("m-d-Y"))); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Aprovar</a>
-                            <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'reprovada','data_reprovacao' => $data_reprovacao = date("m-d-Y"))); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Reprovar</a>
+                            <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'aprovada', 'data_aprovacao' => $data_aprovacao = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Aprovar</a>
+                            <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'reprovada','data_atualizacao_status' => $data_reprovacao = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Reprovar</a>
                             <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Visualizar</a>
                         </td>
                     </tr> 

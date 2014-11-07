@@ -29,14 +29,14 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
         return $tSolicitacao->fetchAll($query);
     }
 
-    public function atualizarStatus($idSolicitacao, $statusatual) {
+    public function atualizarStatus($idSolicitacao, $statusatual, $gerente_responsavel) {
 
         switch ($statusatual) {
             case 'nova':
                 $status = 'em analise';
                 break;
             case 'em analise':
-                $status = 'entregue';
+                $status = 'aprovada';
                 break;
             case 'reprovada':
                 $status = 'reprovada';
@@ -62,6 +62,8 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
             default:
                 $status = 'recebida';
                 break;
+            
+            
         }
 
         $tSolicitacao = new DbTable_Solicitacao();
@@ -71,11 +73,18 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
 
         $solicitacao->current()->setFromArray($dados);
         $solicitacao->current()->save();
+        
+        if ($gerente_responsavel){
+                
+                $this->atualizarGerenteResponsavel($gerente_responsavel, $solicitacao);
+                
+            }
+        
     }
 
     public function listarHistorico($usuarioId) {
 
-        $lista = ['recebida', 'reprovada', 'cancelada', 'pendente'];
+        $lista = ['recebida', 'reprovada', 'cancelada'];
         
         $tSolicitacao = new DbTable_Solicitacao();
         $query = $tSolicitacao->select()
@@ -106,6 +115,16 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
         return $tSolicitacao->fetchAll($query);
 
     }
+    
+     public function listarCanceladas(){
+
+        $tSolicitacao = new DbTable_Solicitacao();
+        $query = $tSolicitacao->select()
+            ->where('status = (?)', 'cancelada');
+
+        return $tSolicitacao->fetchAll($query);
+
+    }
 
     
     public function atualizaDataDeRecebimento($idSolicitacao,$data_recebimento){
@@ -121,12 +140,12 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
     }
     
     
-    public function atualizaDataDeEnvio($idSolicitacao,$data_envio){
+    public function atualizaDataDeaprovação($idSolicitacao,$data_aprovacao){
         
         $tSolicitacao = new DbTable_Solicitacao();
         $solicitacao = $tSolicitacao->find($idSolicitacao);
         
-        $post = ['data_envio' => $data_envio];
+        $post = ['data_aprovacao' => $data_aprovacao];
         $solicitacao->current()->setFromArray($post);
         $solicitacao->current()->save();
         
@@ -145,13 +164,25 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
     
     public function listarSolicitacoesGerente(){
         
-         $solicitacoesAtivas = ['em analise','aprovada', 'reprovada', 'agendada', 'aguardando fornecedor'];
+         $solicitacoesAtivas = ['em analise', 'agendada', 'aguardando fornecedor'];
         
         $tSolicitacao = new DbTable_Solicitacao();
         $query = $tSolicitacao->select()
                 ->where('status in (?)', $solicitacoesAtivas); 
 
         return $tSolicitacao->fetchAll($query);
+        
+    }
+    
+    public function atualizarGerenteResponsavel($gerente_responsavel, $solicitacao){
+        
+        
+        $dados = array('gerente_responsavel' => $gerente_responsavel);
+
+        $solicitacao->current()->setFromArray($dados);
+        $solicitacao->current()->save();
+        
+        
         
     }
 

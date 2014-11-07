@@ -13,7 +13,7 @@ class DbTable_Produtosolicitacao extends Zend_Db_Table_Abstract
         $sql = "select ps.produtoid from t_produto_solicitacao ps, t_solicitacao s
                 where ps.solicitacaoid = s.id                
                 and s.usuarioid = $usuarioid
-                and s.status in ('nova','rejeitada','em analise','agendada')"; //echo $sql;die;
+                and s.status in ('nova','rejeitada','em analise','agendada', 'entregue','aprovada')"; 
 
         return $this->getAdapter()->fetchAll($sql);
        

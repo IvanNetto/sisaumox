@@ -37,7 +37,7 @@ class SolicitacaoController extends Zend_Controller_Action {
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
 
         //Armazena os status de solicitações que podem aparecer na list principal do usuário solicitante         
-        $solicitacoesAtivas = ['nova', 'rejeitada', 'aprovada', 'em analise', 'entregue'];
+        $solicitacoesAtivas = ['nova', 'rejeitada', 'aprovada', 'em analise', 'entregue', 'agendada'];
 
         //Retorna as solicitações do usuário logado que estejam ativas
         $tSolicitacao = new Solicitacao();
@@ -54,6 +54,24 @@ class SolicitacaoController extends Zend_Controller_Action {
         }
     }
 
+    public function buscarsolicitacaoAction() {
+        
+        $solicitacaoid = $_POST['solicitacaoid'];
+        
+        try {
+        $tSolicitacao = new DbTable_Solicitacao;
+        $solicitacao = $tSolicitacao->find($solicitacaoid);
+        
+        $this->view->solicitacao = $solicitacao;
+        
+        } catch (Exception $ex) {
+        
+            $this->flashMessenger->addMessage(array('danger' => "Solicitação não encontrada!"));
+            
+        }
+        
+    }
+    
     public function listargerenteAction() {
 
         $tSolicitacao = new Solicitacao();
@@ -92,6 +110,15 @@ class SolicitacaoController extends Zend_Controller_Action {
         $reprovadas = $tSolicitacao->listarReprovadas();
 
         $this->view->reprovadas = $reprovadas;
+    }
+    
+     public function listarCanceladasAction() {
+
+        $tSolicitacao = new Solicitacao();
+        $reprovadas = $tSolicitacao->listarCanceladas();
+
+        $this->view->canceladas = $canceladas;
+        
     }
     
     public function inserirAction() {
@@ -172,7 +199,8 @@ class SolicitacaoController extends Zend_Controller_Action {
     public function cancelarsolicitacaoAction()
     {
         $solicitacaoid = $this->_getParam("solicitacaoid");
-
+        $gerente_responsavel = $this->_getParam("gerente_responsavel");
+        
         $tProdutosolicitacao = new Produtosolicitacao();
         $produtosolicitacao = $tProdutosolicitacao->findBySolicitacao($solicitacaoid);
 
@@ -180,7 +208,7 @@ class SolicitacaoController extends Zend_Controller_Action {
 
         $status = 'cancelada';
         $tSolicitacao = new Solicitacao();
-        $tSolicitacao->atualizarStatus($solicitacaoid, $status);
+        $tSolicitacao->atualizarStatus($solicitacaoid, $status, $gerente_responsavel);
 
         $this->flashMessenger->addMessage(array('success' => "Solicitação cancelada com sucesso!"));
 
@@ -192,6 +220,8 @@ class SolicitacaoController extends Zend_Controller_Action {
 
         $solicitacaoid = $this->_getParam("solicitacaoid");
         $status = $this->_getParam("status");
+        $gerente_responsavel = $this->_getParam("gerente_responsavel");
+        
 
         $param = ['solicitacaoid' => $solicitacaoid];
 
@@ -200,12 +230,13 @@ class SolicitacaoController extends Zend_Controller_Action {
         if ($_POST){
 
             $observacao = $_POST['observacao'];
-            $data_reprovacao = $this->_getParam("data_reprovacao");
+            $data_atualizacao_status = $this->_getParam("data_atualizacao_status");
+            
 
             $tSolicitacao = new DbTable_Solicitacao();
             $solicitacao = $tSolicitacao->find($solicitacaoid);
 
-            $post = (['observacao' => $observacao, 'status' => $status, 'data_reprovacao' => $data_reprovacao]);
+            $post = (['observacao' => $observacao, 'status' => $status, 'data_atualizacao_status' => $data_atualizacao_status, 'gerente_responsavel' => $gerente_responsavel]);
 
             $solicitacao->current()->setFromArray($post);
             $solicitacao->current()->save();
