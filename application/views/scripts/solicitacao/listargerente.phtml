@@ -32,9 +32,14 @@
                         <td><?= $solicitacao['status']; ?></td>
                         <?php $login = Zend_Auth::getInstance()->getIdentity()->login; ?>
                         <td class="text-center">
-                            <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'aprovada', 'data_aprovacao' => $data_aprovacao = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Aprovar</a>
+                            <?php if($solicitacao['status'] == 'em analise'){?>
+                                <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'aprovada', 'data_aprovacao' => $data_aprovacao = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Aprovar</a>
+                            <?php } ?>
                             <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'reprovada','data_atualizacao_status' => $data_reprovacao = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Reprovar</a>
                             <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Visualizar</a>
+                            <?php if($solicitacao['status'] == 'aprovada'){?>
+                                <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'entregue', 'data_atualizacao_status' => $data_atualizacao_status = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Acusar entrega</a>
+                            <?php } ?>
                         </td>
                     </tr> 
                 <?php

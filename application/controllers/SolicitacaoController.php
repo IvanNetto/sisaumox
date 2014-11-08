@@ -189,10 +189,6 @@ class SolicitacaoController extends Zend_Controller_Action {
             echo $e->getMessage();
         }
 
-        //deletando da produtosolicitacao
-
-
-
         return $this->_helper->redirector('listar');
     }
 

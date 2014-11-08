@@ -118,6 +118,9 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         $data_recebimento = $this->_getParam('data_recebimento');
         $data_aprovacao = $this->_getParam('data_aprovacao');
         $gerente_responsavel = $this->_getParam('gerente_responsavel');
+        
+        //mudar
+        $status = $this->_getParam('status');
 
         if ($_POST['solicitacaoid']) {
 
@@ -149,13 +152,17 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
             }
         }
-
+        
         $tsolicitacao = new Solicitacao();
+        if ($status == 'entregue'){
+            $statusatual='entregue';
+        }elseif($status == 'recebida'){
+            $statusatual = 'recebida';
+        }else{    
         $statusatual = $tsolicitacao->mostrarStatusAtual($solicitacaoid)->current()->status;
-        
+        }  
         $tsolicitacao->atualizarStatus($solicitacaoid, $statusatual, $gerente_responsavel);
-        
-        
+                
 
         if ($data_recebimento) {
 

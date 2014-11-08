@@ -38,7 +38,7 @@
                         <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'deletar', 'id' => $solicitacao['id'])); ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Deletar</a>
                     <?php }elseif ($solicitacao['status'] == 'entregue'){ ?>
 
-                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao['id'], 'data_recebimento' => $data_recebimento = date("m-d-Y"))); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Acusar recebimento</a>
+                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao['id'],'status' => 'recebida' ,'data_recebimento' => $data_recebimento = date("m-d-Y"))); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Acusar recebimento</a>
                         <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Visualizar Carrinho</a>
 
                     <?php  }else{  ?>

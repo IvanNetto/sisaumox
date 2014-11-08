@@ -30,7 +30,7 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
     }
 
     public function atualizarStatus($idSolicitacao, $statusatual, $gerente_responsavel) {
-
+        
         switch ($statusatual) {
             case 'nova':
                 $status = 'em analise';
@@ -42,13 +42,10 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
                 $status = 'reprovada';
                 break;
             case 'entregue':
-                $status = 'recebida';
-                break;
-            case 'agendada':
-                $status = 'aguardando fornecedor';
-                break;
-            case 'aguardando fornecedor':
                 $status = 'entregue';
+                break;
+            case 'recebida';
+                $status = 'recebida';
                 break;
             case 'cancelada':
                 $status = 'cancelada';
@@ -59,6 +56,8 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
             case 'pendente':
                 $status = 'pendente';
                 break;
+            case 'entregue';
+                $status = 'entregue';
             default:
                 $status = 'recebida';
                 break;
@@ -164,7 +163,7 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
     
     public function listarSolicitacoesGerente(){
         
-         $solicitacoesAtivas = ['em analise', 'agendada', 'aguardando fornecedor'];
+         $solicitacoesAtivas = ['em analise', 'agendada', 'pendente', 'aprovada', 'entregue'];
         
         $tSolicitacao = new DbTable_Solicitacao();
         $query = $tSolicitacao->select()
