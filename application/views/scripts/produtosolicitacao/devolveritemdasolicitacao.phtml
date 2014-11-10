@@ -1,0 +1,40 @@
+<h3>Devolução de item</h3>
+<hr>
+<div class="instrucao">
+    <p>Insira a quantidade que deseja devolver e informe uma observação se achar necessário</p>
+    <form class="form-horizontal" action="" method="POST">
+        <input type="hidden" name="produtoid" value="<?php echo $this->produtoid ?>">
+        <input type="hidden" name="solicitacaoid" value="<?php echo $this->solicitacaoid ?>">
+        <input type="hidden" name="produtosolicitacaoid" value="<?php echo $this->produtosolicitacaoid ?>">
+        <input type="hidden" name="data" value="<?php echo date('d/m/Y');?>">
+        <input type="hidden" name="status" value="<?php echo $this->status ?>">
+        <br><br>
+            <div class="form-group">
+                <div class="col-lg-5 col-lg-offset-5">
+                    <legend>Devolvendo um item</legend>
+                    <input type="text" name="quantidade" placeholder="Quantidade a vevolver">
+                </div>
+            </div>    
+            <div class="form-group">
+                <div class="col-lg-5 col-lg-offset-5">
+                    <input type="textarea" name="observacao" placeholder="Informe se achar necessário">
+                </div>
+            </div>    
+            <div class="form-group">
+                <div class="col-lg-5 col-lg-offset-5">
+                    <!--        <button class="btn btn-default">Cancelar</button>-->
+                    <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'listarhistorico' => 'listar')); ?>">Voltar</a>
+                    <button type="submit" class="btn btn-primary">Devolver</button>
+                </div>
+            </div>
+    </form>
+
+</div>
+
+
+
+
+
+
+
+

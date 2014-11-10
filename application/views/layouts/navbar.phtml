@@ -36,11 +36,17 @@
                     </li>
                     <li>
                         <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarreprovadas')); ?>">Minhas reprovadas</a>
-                    </li>                    
-                    <li class="dropdown-header">Solicitações finalizadas</li>
+                    </li>  
+                    <li class="dropdown-header">Devolução</li>
+                     <li>
+                           <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>" > Devoluções ativas</a>
+                     </li>
+                    <li class="dropdown-header">Histórico</li>
                     <li>
-                        <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>" > Meu histórico</a>
+                        <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>" > Solicitações antigas</a>
+                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'listardevolucaoantiga')); ?>" > Devoluções antigas</a>
                     </li>
+                     
                     <li class="divider"></li>
                 </ul>                
             </li>

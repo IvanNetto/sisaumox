@@ -59,10 +59,9 @@ class Produto extends Zend_Db_Table_Row_Abstract {
                 $objetoProduto->save();
 
                 if ($quantidadecorrente <= $quanditademinima) {
-                
+
                     return $mensagem = "Solicitação enviada com sucesso, mas a quantidade mínima do produto em estoque foi atingida. O produto deve ser reposto para que as próximas solicitações para este produto possam ser realizadas.";
                 }
-                
             } else {
 
                 throw new exception("A quantidade escolhida para algum(ns) item(ns) excede a quantidade mínima. Favor verificar a quantidade existente em estoque.");
@@ -70,4 +69,20 @@ class Produto extends Zend_Db_Table_Row_Abstract {
         }
     }
 
+    public function devolverItemProEstoque($produtodevolvido, $id){
+        
+        $tDevolucao = new DbTable_Devolucao;
+        $devolucao= $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtodevolvido);
+        
+        $quantidadeDevolvida = $devolucao[0]['quantidade'];
+                
+        $tProduto = new DbTable_Produto;
+        $produto = $tProduto->find($produtodevolvido);
+        
+        $quantidadeAtualizada = $produto->current()->quantidade + $quantidadeDevolvida;
+        
+        $produto->current()->setFromArray(['quantidade' => $quantidadeAtualizada]);
+        $produto->current()->save();
+        
+    }
 }

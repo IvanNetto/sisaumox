@@ -1,0 +1,67 @@
+<h3>Lista de devoluções para análise</h3>
+<hr>
+<?php if ($this->listaDeDevolucoes) { ?>
+    <p> Abaixo segue uma lista de itens de solicitações já concretizadas que foram devolvidas por seus solicitantes.
+<?php } else { ?>
+    <p> Não existem devoluções para ser analisada na base de dados.</p> 
+<?php } ?>
+
+<div class="panel panel-primary filterable conteudogerente">
+    <div class="panel-heading">
+        <span class="glyphicon glyphicon-list"></span>Lista de Devoluções
+    </div>
+    <table class="table">
+        <tr>
+            <?php if ($this->listaDeDevolucoes == null) { ?>
+            <center><strong><h4>sem devoluções</h4></strong></center>
+            </tr>
+        <?php } else { ?>
+            <thead>
+                <tr class="filters">
+                    <th><input type="text" class="form-control" placeholder="Solicitação" disabled></th>
+                    <th><input type="text" class="form-control" placeholder="Solicitante" disabled></th>
+                    <th><input type="text" class="form-control" placeholder="Data de devolução" disabled></th>  
+                    <th><input type="text" class="form-control" placeholder="Produto" disabled></th>  
+                    <th><input type="text" class="form-control" placeholder="Quantidade devolvida" disabled></th>  
+                    <th class="text-center">Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    
+                    <?php foreach ($this->listaDeDevolucoes as $devolucao) { 
+                        $tUsuario = new Usuario();
+                        $login = $tUsuario->findUsuarioById($devolucao['usuarioid'])->current()->login;
+                    ?>
+                        <td><?= $devolucao['solicitacaoid']; ?></td>
+                        <td><?= $login; ?></td>
+                        <td><?= $devolucao['data_devolucao']; ?></td>
+                        <?php $tProduto = new Produto;
+                              $produto = $tProduto->findProdutoById($devolucao['produtoid']);
+                              $nomeProduto = $produto->current()->nome;?>
+                        <td><?= $nomeProduto; ?></td>
+                        <td><?= $devolucao['quantidade_devolvida']; ?></td>
+                        <?php $login = Zend_Auth::getInstance()->getIdentity()->login; ?>
+                        <td class="text-center">
+                            <?php if($devolucao['status_devolucao'] == 'nova'){?>
+                                <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizardevolucao', 'id_devolucao' => $devolucao['id_devolucao'], 'status' => 'aprovada', 'data_aprovacao' => $data_aprovacao = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Aprovar</a>
+                            <?php } ?>
+                            <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'id_devolucao' => $devolucao['id_devolucao'], 'status' => 'reprovada','data_atualizacao_status' => $data_reprovacao = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Reprovar</a>
+<!--                            <a href="<?php //echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $devolucao['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Visualizar</a>-->
+                            <?php  
+                            if($devolucao['status_devolucao'] == 'aprovada'){?>
+                                <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizardevolucao', 'id_devolucao' => $devolucao['id_devolucao'], 'status' => 'entregue', 'data_aprovacao' => $data_aprovacao = $data_atualizacao_status = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Concluir</a>
+                            <?php } ?>
+                        </td>
+                    </tr> 
+                <?php
+                }
+            }
+            ?>
+            </tr>
+        </tbody>
+    </table>
+</div>     
+
+
+
