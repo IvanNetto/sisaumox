@@ -49,7 +49,8 @@ class DbTable_Devolucao extends Zend_Db_Table_Abstract
     
     public function listarDevolucoesAntigas($produtosolicitacao){
         
-        $sql = "select * from t_devolucao where produtosolicitacaoid = $produtosolicitacao and status_devolucao = 'entregue'";
+        $sql = "select * from t_devolucao dev, t_produto pr, t_produto_solicitacao ps where dev.produtosolicitacaoid = ps.id and pr.id = ps.produtoid and produtosolicitacaoid = $produtosolicitacao and status_devolucao = 'entregue'";
+
         
         return $this->getAdapter()->fetchAll($sql);
     }
