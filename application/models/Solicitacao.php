@@ -3,11 +3,11 @@
 class Solicitacao extends Zend_Db_Table_Row_Abstract {
 
     public function findSolicitacoesAtivasByUsuario($usuarioid, $solicitacoesAtivas) {
-
+        var_dump($usuarioid, $solicitacoesAtivas);die;
         $tSolicitacao = new DbTable_Solicitacao();
         $query = $tSolicitacao->select()
                 ->where('usuarioid = (?)', $usuarioid)
-                ->where('status in (?)', $solicitacoesAtivas);
+                ->where('status = (?)', $solicitacoesAtivas);
 
         return $tSolicitacao->fetchAll($query);
     }

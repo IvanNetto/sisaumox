@@ -32,6 +32,7 @@
                     <?php foreach ($this->listaDeDevolucoes as $devolucao) { 
                         $tUsuario = new Usuario();
                         $login = $tUsuario->findUsuarioById($devolucao['usuarioid'])->current()->login;
+                        
                     ?>
                         <td><?= $devolucao['solicitacaoid']; ?></td>
                         <td><?= $login; ?></td>
@@ -44,13 +45,13 @@
                         <?php $login = Zend_Auth::getInstance()->getIdentity()->login; ?>
                         <td class="text-center">
                             <?php if($devolucao['status_devolucao'] == 'nova'){?>
-                                <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizardevolucao', 'id_devolucao' => $devolucao['id_devolucao'], 'status' => 'aprovada', 'data_aprovacao' => $data_aprovacao = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Aprovar</a>
+                                <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizardevolucao', 'id_devolucao' => $devolucao['id_devolucao'], 'status' => 'aprovada', 'data_atualizacao_status' => $data_aprovacao = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Aprovar</a>
                             <?php } ?>
-                            <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'id_devolucao' => $devolucao['id_devolucao'], 'status' => 'reprovada','data_atualizacao_status' => $data_reprovacao = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Reprovar</a>
+                            <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao','solicitacaoid' => $devolucao['solicitacaoid'], 'id_devolucao' => $devolucao['id_devolucao'], 'status' => 'reprovada','data_atualizacao_status' => $data_reprovacao = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Reprovar</a>
 <!--                            <a href="<?php //echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $devolucao['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Visualizar</a>-->
                             <?php  
                             if($devolucao['status_devolucao'] == 'aprovada'){?>
-                                <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizardevolucao', 'id_devolucao' => $devolucao['id_devolucao'], 'status' => 'entregue', 'data_aprovacao' => $data_aprovacao = $data_atualizacao_status = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Concluir</a>
+                                <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizardevolucao', 'id_devolucao' => $devolucao['id_devolucao'], 'status' => 'entregue', 'data_atualizacao_status' => $data_atualizacao_status = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Concluir</a>
                             <?php } ?>
                         </td>
                     </tr> 

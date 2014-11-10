@@ -214,7 +214,11 @@ class SolicitacaoController extends Zend_Controller_Action {
 
     public function inserirobservacaoAction(){
 
+        $idDevolucao = $solicitacaoid = $this->_getParam("id_devolucao");
+        
+        
         $solicitacaoid = $this->_getParam("solicitacaoid");
+        
         $status = $this->_getParam("status");
         $gerente_responsavel = $this->_getParam("gerente_responsavel");
         
@@ -228,7 +232,18 @@ class SolicitacaoController extends Zend_Controller_Action {
             $observacao = $_POST['observacao'];
             $data_atualizacao_status = $this->_getParam("data_atualizacao_status");
             
+           if ($idDevolucao){
+               
+            $tDevolucao = new DbTable_Devolucao();
+            $devolucao = $tDevolucao->find($idDevolucao);
 
+            $post = (['observacao' => $observacao, 'status_devolucao' => 'reprovada', 'data_atualizacao_status' => $data_atualizacao_status, 'gerente_responsavel' => $gerente_responsavel]);
+
+            $devolucao->current()->setFromArray($post);
+            $devolucao->current()->save();
+               
+               
+           }else{
             $tSolicitacao = new DbTable_Solicitacao();
             $solicitacao = $tSolicitacao->find($solicitacaoid);
 
@@ -236,10 +251,15 @@ class SolicitacaoController extends Zend_Controller_Action {
 
             $solicitacao->current()->setFromArray($post);
             $solicitacao->current()->save();
-
+           
 
             $this->forward('atualizarprodutosesolicitacao', 'produtosolicitacao', null, $param);
 
+            }
+            
+            
+            //pra onde vou se for devolução?
+            
         }
 
 

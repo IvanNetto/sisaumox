@@ -322,11 +322,12 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
     public function listardevolucaoantigaAction(){
        
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
-        $status = ['recebida'];
+        $status = 'recebida';
         
 
         $tSolicitacao = new Solicitacao;
         $solicitacao = $tSolicitacao->findSolicitacoesAtivasByUsuario($usuarioId, $status);
+        var_dump($solicitacao);die;
 
         $tProdutosolicitacao = new Produtosolicitacao;
         $produtoSolicitacao = $tProdutosolicitacao->findBySolicitacao($solicitacao->current()->id);
