@@ -1,12 +1,12 @@
 <h3>Lista de Produtos</h3>
 <hr>
 <div class="instrucao">
-    <p>Busque a categoria desejada e selecione os produtos que desejar e mova-os para o <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'carrinhodesolicitacoes', 'solicitacaoid' => $this->solicitacaoid)); ?>">carrinho de solicitações <span class="glyphicon glyphicon-shopping-cart"></span></a></p>
+    <p>Busque a categoria desejada e selecione os produtos que desejar e mova-os para o <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'carrinhodecompras', 'compraId' => $this->compraId)); ?>">carrinho de compras <span class="glyphicon glyphicon-shopping-cart"></span></a></p>
     
     <div class="combobox">
-        <form class="form-horizontal" action="<?= $this->baseUrl() . '/produtosolicitacao/buscarprodutosporcategoria' ?>" method="POST">
-            <input type="hidden" name="solicitacaoid" value="<?php echo $this->solicitacaoid ?>">
-            <select name="categoriaid">
+        <form class="form-horizontal" action="<?= $this->baseUrl() . '/produtocompra/buscarprodutosporcategoria' ?>" method="POST">
+            <input type="hidden" name="compraId" value="<?php echo $this->compraId ?>">
+            <select name="categoriaId">
                 <option></option>
                 <?php foreach ($this->listadecategorias as $nomeCategoria): ?>
                     <option value="<?php echo $nomeCategoria['id']; ?>"><?php echo $nomeCategoria['nome']; ?></option>
@@ -28,7 +28,7 @@
                 </div>
                 <span class="glyphicon glyphicon-list"></span>Lista de produtos da categoria <strong><?php echo $nomeCategoria['nome']; ?></strong>
             </div>
-            <form action="<?= $this->baseUrl() . '/produtosolicitacao/inserir' ?>" method="POST">
+            <form action="<?= $this->baseUrl() . '/produtocompra/inserir' ?>" method="POST">
             <table class="table">
                 <thead>
                     <tr class="filters">
@@ -47,8 +47,8 @@
                             $tCategoria = new Categoria();
                             $categoriaNome = $tCategoria->findCategoriaById($produto['categoriaid']);
                             ?>
-                            <input type="hidden" name="solicitacaoid" value="<?php echo $this->solicitacaoid ?>">
-                            <input type="hidden" name="categoriaid" value="<?php echo $produto['categoriaid'] ?>">
+                            <input type="hidden" name="compraId" value="<?php echo $this->compraId ?>">
+                            <input type="hidden" name="categoriaId" value="<?php echo $produto['categoriaid'] ?>">
                             <td><input type="checkbox" id="checkbox" name="checkbox[]" value="<?= $produto['id']?>"/> <?= $produto['nome']; ?></td>
                             
                             <td name="teste" value="<?= $categoriaNome['nome']->nome; ?>"><?= $categoriaNome['nome']->nome; ?></td>

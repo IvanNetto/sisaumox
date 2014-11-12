@@ -1,15 +1,15 @@
 <?php
 
-class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
+class Produtocompra extends Zend_Db_Table_Row_Abstract {
 
-    public function findByProdutoESolicitacao($solicitacaoid, $produtoid) {
+    public function findByProdutoECompra($compraId, $produtoId) {
 
-        $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
-        $query = $tProdutoSolicitacao->select()
-                ->where('solicitacaoid = (?)', $solicitacaoid)
-                ->where('produtoid = (?)', $produtoid);
+        $tProdutoCompra = new DbTable_ProdutoCompra();
+        $query = $tProdutoCompra->select()
+                ->where('compraid = (?)', $compraId)
+                ->where('produtoid = (?)', $produtoId);
 
-        return $tProdutoSolicitacao->fetchAll($query);
+        return $tProdutoCompra->fetchAll($query);
     }
 
     public function findBySolicitacao($solicitacaoid){
@@ -40,11 +40,11 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
         }
     }
 
-    public function inserirProdutoSolicitacao($solicitacaoid, $produtosescolhidos) {
+    public function inserirProdutoCompra($compraId, $produtosEscolhidos) {
+        
+        for ($i = 0; $i < count($produtosEscolhidos); $i++) {
 
-        for ($i = 0; $i < count($produtosescolhidos); $i++) {
-
-            $jahExisteOItemNoCarrinho = $this->findByProdutoESolicitacao($solicitacaoid, $produtosescolhidos[$i])->current();
+            $jahExisteOItemNoCarrinho = $this->findByProdutoECompra($compraId, $produtosEscolhidos[$i])->current();
 
             if ($jahExisteOItemNoCarrinho <> null) {
 
@@ -52,28 +52,26 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
                 return $produtosescolhidos[$i];
             } else {
 
-                $post = array('produtoid' => $produtosescolhidos[$i], 'solicitacaoid' => $solicitacaoid);
-
-                $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
-                $novaProdutoSolicitacao = $tProdutoSolicitacao->createRow();
-                $novaProdutoSolicitacao->setFromArray($post);
-                $novaProdutoSolicitacao->save();
+                $post = array('produtoid' => $produtosEscolhidos[$i], 'compraid' => $compraId);
+                
+                $tProdutoCompra = new DbTable_ProdutoCompra();
+                $novoItemNoCarrinho = $tProdutoCompra->createRow();
+                $novoItemNoCarrinho->setFromArray($post);
+                $novoItemNoCarrinho->save();
             }
         }
     }
 
-    public function exibirCarrinhoDeSolicitacoes($solicitacaoid) {
+    public function exibirCarrinhoDeCompras($compraId) {
 
+        $tProdutoCompra = new DbTable_Produtocompra();
+        $query = $tProdutoCompra->select()
+                ->where('compraid = (?)', $compraId);
 
-        $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
-        $query = $tProdutoSolicitacao->select()
-                ->where('solicitacaoid = (?)', $solicitacaoid);
-
-        return $tProdutoSolicitacao->fetchAll($query);
+        return $tProdutoCompra->fetchAll($query);
     }
 
     public function resumoDeSolicitacao($solicitacaoid) {
-
 
         $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
         $query = $tProdutoSolicitacao->select()
@@ -101,9 +99,7 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
         
     }
 
-    public function registrarQuantidadeDoProdutoNaCompra($produtos, $quantidade, $solicitacaoid) {
-        
-        var_dump($produtos, $quantidade, $solicitacaoid);die;
+    public function registrarQuantidadeDoProdutoNaSolicitacao($produtos, $quantidade, $solicitacaoid) {
 
 
         foreach ($produtos as $produto) {

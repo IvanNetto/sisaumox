@@ -1,23 +1,22 @@
 <?php
 
-class Solicitacao extends Zend_Db_Table_Row_Abstract {
+class Compra extends Zend_Db_Table_Row_Abstract {
 
-    public function findSolicitacoesAtivasByUsuario($usuarioid, $solicitacoesAtivas) {
-       
-        $tSolicitacao = new DbTable_Solicitacao();
-        $query = $tSolicitacao->select()
-                ->where('usuarioid = (?)', $usuarioid)
-                ->where('status in (?)', $solicitacoesAtivas);
+    public function listarComprasAtivas($status) {
+        
+        $tCompra = new DbTable_Compra();
+        $query = $tCompra->select()
+                ->where('status in (?)', $status);
 
-        return $tSolicitacao->fetchAll($query);
+        return $tCompra->fetchAll($query);
     }
 
-    public function inserirSolicitacao($post) {
+    public function inserir($post) {
 
-            $tSolicitacao = new DbTable_Solicitacao();
-            $novaSolicitacao = $tSolicitacao->createRow();
-            $novaSolicitacao->setFromArray($post);
-            $novaSolicitacao->save();
+            $tCompra = new DbTable_Compra();
+            $novaCompra = $tCompra->createRow();
+            $novaCompra->setFromArray($post);
+            $novaCompra->save();
     }
 
     public function mostrarStatusAtual($solicitacaoid) {

@@ -33,14 +33,11 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
         if ($categoriaid) {
 
-
-
             $tProdutosolicitacao = new DbTable_Produtosolicitacao();
             $listaItensProibidos = $tProdutosolicitacao->verificarSeJahExisteItemEmSolicitacaoAtivaDoUsuario($usuarioId);
 
             $tProdutoSolicitacao = new Produtosolicitacao;
             $listaDeItensPermitidos = $tProdutoSolicitacao->listarProdutosPermitidos($categoriaid, $listaItensProibidos);
-
 
             $this->view->listaDeProdutos = $listaDeItensPermitidos->toArray();
         }
@@ -133,14 +130,14 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
             try {
                 $tProduto = new Produto();
-                $mensagem = $tProduto->atualizarEstoque($produtos, $operacao, $quantidade);
+                $mensagem = $tProduto->atualizarEstoque($produtos, $operacao, $quantidade, $_POST['solicitacaoid']);
 
                 $tProdutosolicitacao = new Produtosolicitacao();
                 $tProdutosolicitacao->registrarQuantidadeDoProdutoNaSolicitacao($produtos, $quantidade, $solicitacaoid);
 
                 //mensagem de estoque minimo atingido
                 if ($mensagem) {
-
+                    
                     $this->flashMessenger->addMessage(array('danger' => $mensagem));
                 }
             } catch (Exception $e) {
@@ -327,7 +324,6 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
         $tSolicitacao = new Solicitacao;
         $solicitacao = $tSolicitacao->findSolicitacoesAtivasByUsuario($usuarioId, $status);
-        var_dump($solicitacao);die;
 
         $tProdutosolicitacao = new Produtosolicitacao;
         $produtoSolicitacao = $tProdutosolicitacao->findBySolicitacao($solicitacao->current()->id);

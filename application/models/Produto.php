@@ -37,8 +37,8 @@ class Produto extends Zend_Db_Table_Row_Abstract {
         return $produtos = $tProduto->fetchAll($query);
     }
 
-    public function atualizarEstoque($produtos, $operacao, $quantidade) {
-
+    public function atualizarEstoque($produtos, $operacao, $quantidade, $compraId) {
+        
         foreach ($produtos as $produto) {
 
             $objetoProduto = $this->findProdutoById($produto)->current();
@@ -63,7 +63,10 @@ class Produto extends Zend_Db_Table_Row_Abstract {
                     return $mensagem = "Solicitação enviada com sucesso, mas a quantidade mínima do produto em estoque foi atingida. O produto deve ser reposto para que as próximas solicitações para este produto possam ser realizadas.";
                 }
             } else {
-
+                
+               $tProdutoSolicitacao = new Produtosolicitacao;
+               $tProdutoSolicitacao->deletarItemDeQuantidadeMaximaUltrapassada($solicitacaoid, $produto);
+                
                 throw new exception("A quantidade escolhida para algum(ns) item(ns) excede a quantidade mínima. Favor verificar a quantidade existente em estoque.");
             }
         }
