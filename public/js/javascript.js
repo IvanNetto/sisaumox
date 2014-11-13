@@ -68,6 +68,26 @@ $(document).ready(function(){
             }
         })
     });
+   
+    var disponiveis = $("#disponiveis").text();
+     
+    $('#quantidadeSolicitada').attr("max", disponiveis); 
+    
+    $('#valorUnitario').blur(function(){
+        
+        var quantidadeItensCompra = $("#quantidadeItensCompra").val();
+        var valorUnitario = $("#valorUnitario").val();
+        var soma = parseFloat(quantidadeItensCompra) * parseFloat(valorUnitario);
+        
+        var total = $('#total').text("Valor total: " + soma.toFixed(2));
+        
+        
+        
+    })
+    
+    
+    
+    
 
 });
 
