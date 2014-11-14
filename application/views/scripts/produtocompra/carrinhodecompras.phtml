@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="panel-body">
-            <form action="<?= $this->baseUrl() . '/produtocompra/gerarpedidodecompras' ?>" method="POST">
+            <form action="<?= $this->baseUrl() . '/produtocompra/gerarpedidodecompras' ?> id="formulario" method="POST">
                 <?php if ($this->conteudoDoCarrinho->current() == null) { ?>
                     <br>
                     <center><strong><h4>Você ainda não escolheu produtos para esta solicitação, clique em "Continue escolhendo".</h4></strong></center>
@@ -25,7 +25,7 @@
                         $tProduto = new Produto();
                         $produto = $tProduto->findProdutoById($item->produtoid);
                         ?>
-                        <div class="row">
+                        <div class="row linhaCarrinho" >
                             <br>
                             <div class="col-xs-4 produtoCart">
                                 <input type="hidden" name="produto[]" value="<?= $item->produtoid ?>"/>                                                                   
@@ -37,13 +37,13 @@
                                     <h6>Qtd</h6>
                                 </div>
                                 <div class="col-xs-2">
-                                    <input type="number" id = "quantidadeItensCompra" class="form-control input-sm" value="1" required="true" name="quantidade">
+                                    <input type="number" class="form-control input-sm quantidadeItensCompra" value="1" required="true" name="quantidade">
                                 </div>
                                  <div class="col-xs-1 text-right">
                                     <h6>R$</h6>
                                 </div>
                                 <div class="col-xs-2">
-                                    <input type="text" id = "valorUnitario" class="form-control input-sm" value="0,00" required="true" name="valorunitario">
+                                    <input type="text"  class="form-control input-sm valorUnitario" value="0,00" required="true" name="valorunitario">
                                 </div>
                                 <div class="col-xs-2">
                                     <button type="button" class="btn btn-link btn-xs">

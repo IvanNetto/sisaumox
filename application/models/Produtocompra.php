@@ -4,7 +4,7 @@ class Produtocompra extends Zend_Db_Table_Row_Abstract {
 
     public function findByProdutoECompra($compraId, $produtoId) {
 
-        $tProdutoCompra = new DbTable_ProdutoCompra();
+        $tProdutoCompra = new DbTable_Produtocompra();
         $query = $tProdutoCompra->select()
                 ->where('compraid = (?)', $compraId)
                 ->where('produtoid = (?)', $produtoId);

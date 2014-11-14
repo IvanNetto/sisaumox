@@ -26,7 +26,7 @@ class ProdutocompraController extends Zend_Controller_Action {
 
         if ($categoriaId) {
 
-            $tProdutoCompra = new DbTable_ProdutoCompra();
+            $tProdutoCompra = new DbTable_Produtocompra();
             $listaItensProibidos = $tProdutoCompra->verificarSeJahExisteItemEmCompraAtiva();
 
             $produtoCompra = new Produtocompra;

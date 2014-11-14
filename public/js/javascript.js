@@ -41,7 +41,7 @@ $(document).ready(function(){
         }
     });
 
-/*MODAL*/
+    /*MODAL*/
 
 
     var panels = $('.vote-results');
@@ -68,27 +68,39 @@ $(document).ready(function(){
             }
         })
     });
-   
-    var disponiveis = $("#disponiveis").text();
-     
-    $('#quantidadeSolicitada').attr("max", disponiveis); 
-    
-    $('#valorUnitario').blur(function(){
-        
-        var quantidadeItensCompra = $("#quantidadeItensCompra").val();
-        var valorUnitario = $("#valorUnitario").val();
-        var soma = parseFloat(quantidadeItensCompra) * parseFloat(valorUnitario);
-        
-        var total = $('#total').text("Valor total: " + soma.toFixed(2));
-        
-        
-        
-    })
-    
-    
-    
-    
 
+    /*Carrinho de solicitações*/
+    var disponiveis = $("#disponiveis").text();
+
+    $('#quantidadeSolicitada').attr("max", disponiveis);
+
+
+    /*Carrinho de compras*/
+    $(".valorUnitario").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+
+
+    $('.valorUnitario, .quantidadeItensCompra').blur(function(){
+        var total = 0;
+        $('.linhaCarrinho').each(function(){
+
+           var valorUnitario = $(this).find('.valorUnitario').val();
+           var quantidadeItensCompra = $(this).find('.quantidadeItensCompra').val();
+
+            var valorUnitarioComCifrao = valorUnitario.replace(",",".");
+
+            var multiplica = (parseFloat(quantidadeItensCompra) * parseFloat(valorUnitarioComCifrao));
+            total += multiplica;
+
+        })
+
+        total = String(total);
+
+        total = parseFloat(total).toFixed(2);
+        total = total.replace(".",",");
+
+        $('#total').text("Valor total: " + total);
+
+    });
 });
 
 
