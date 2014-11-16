@@ -27,7 +27,7 @@ class CompraController extends Zend_Controller_Action {
     }
 
     public function inserirAction() {
-  
+
         $gerenteResponsavel = Zend_Auth::getInstance()->getIdentity()->id;
         $status = "nova";
 
@@ -50,36 +50,6 @@ class CompraController extends Zend_Controller_Action {
         return $this->_helper->redirector('listar');
     }
 
-    public function buscarsolicitacaoAction() {
-
-        $solicitacaoid = $_POST['solicitacaoid'];
-
-        try {
-            $tSolicitacao = new DbTable_Solicitacao;
-            $solicitacao = $tSolicitacao->find($solicitacaoid);
-
-            $this->view->solicitacao = $solicitacao;
-        } catch (Exception $ex) {
-
-            $this->flashMessenger->addMessage(array('danger' => "Solicitação não encontrada!"));
-        }
-    }
-
-    public function listargerenteAction() {
-
-        $tSolicitacao = new Solicitacao();
-        $listaDeSolicitacoes = $tSolicitacao->listarSolicitacoesGerente();
-
-
-        if (!($listaDeSolicitacoes)) {
-
-            $this->flashMessenger->addMessage(array('success' => "Não existe solicitações pendentes na base de dados."));
-        } else {
-
-            $this->view->listaDeSolicitacoes = $listaDeSolicitacoes;
-        }
-    }
-
     public function listarhistoricoAction() {
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
 
@@ -87,53 +57,6 @@ class CompraController extends Zend_Controller_Action {
         $historico = $tSolicitacao->listarHistorico($usuarioId);
 
         $this->view->historico = $historico;
-    }
-
-    public function listaragendadasAction() {
-
-        $tSolicitacao = new Solicitacao();
-        $agendadas = $tSolicitacao->listarAgendadas();
-
-        $this->view->agendadas = $agendadas;
-    }
-
-    public function listarreprovadasAction() {
-
-        $tSolicitacao = new Solicitacao();
-        $reprovadas = $tSolicitacao->listarReprovadas();
-
-        $this->view->reprovadas = $reprovadas;
-    }
-
-    public function listarCanceladasAction() {
-
-        $tSolicitacao = new Solicitacao();
-        $reprovadas = $tSolicitacao->listarCanceladas();
-
-        $this->view->canceladas = $canceladas;
-    }
-
-    public function inserirsolicitacaoagendadaAction() {
-
-        $produtoId = $this->_getParam("produtoid");
-
-        $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
-        $data = date("d/m/y");
-        $status = "agendada";
-
-        $post = array(
-            'usuarioid' => $usuarioId,
-            'data' => $data,
-            'status' => $status
-        );
-
-        $tSolicitacao = new Solicitacao();
-        $tSolicitacao->inserirSolicitacao($post);
-
-        $this->flashMessenger->addMessage(array('success' => "Solicitação agendada com sucesso! Agora é só esperar a reposição para este item no estoque!"));
-
-        $param = ['produtoid' => $produtoId];
-        return $this->forward('inserirprodutoemsolicitacaoagendada', 'produtosolicitacao', null, $param);
     }
 
     public function deletarAction() {
@@ -155,69 +78,45 @@ class CompraController extends Zend_Controller_Action {
         return $this->_helper->redirector('listar');
     }
 
-    public function cancelarsolicitacaoAction() {
-        $solicitacaoid = $this->_getParam("solicitacaoid");
-        $gerente_responsavel = $this->_getParam("gerente_responsavel");
+    public function atualizarcompraAction() {
 
-        $tProdutosolicitacao = new Produtosolicitacao();
-        $produtosolicitacao = $tProdutosolicitacao->findBySolicitacao($solicitacaoid);
+        $compraId = $_POST['compraid'];
+        $fornecedorid = $_POST['fornecedorid'];
+        $datapedido = $_POST['datapedido'];
+        $status = $_POST['status'];
+        $arrayQuantidade = $_POST['quantidade'];
+        $arrayValorunitario = $_POST['valorunitario'];
+        $valorTotal = 0;
 
-        $produtosolicitacao->current()->delete();
+        foreach ($arrayQuantidade as $quantidade) {
 
-        $status = 'cancelada';
-        $tSolicitacao = new Solicitacao();
-        $tSolicitacao->atualizarStatus($solicitacaoid, $status, $gerente_responsavel);
+            foreach ($arrayValorunitario as $valorunitario) {
 
-        $this->flashMessenger->addMessage(array('success' => "Solicitação cancelada com sucesso!"));
+                $valunit = str_replace(',', '.', $valorunitario);
+                $quant = number_format($quantidade, 2, '.', ' ');
 
-        return $this->_helper->redirector('listar');
-    }
-
-    public function inserirobservacaoAction() {
-
-        $idDevolucao = $solicitacaoid = $this->_getParam("id_devolucao");
-
-
-        $solicitacaoid = $this->_getParam("solicitacaoid");
-
-        $status = $this->_getParam("status");
-        $gerente_responsavel = $this->_getParam("gerente_responsavel");
-
-
-        $param = ['solicitacaoid' => $solicitacaoid];
-
-        $this->view->solicitacaoid = $solicitacaoid;
-
-        if ($_POST) {
-
-            $observacao = $_POST['observacao'];
-            $data_atualizacao_status = $this->_getParam("data_atualizacao_status");
-
-            if ($idDevolucao) {
-
-                $tDevolucao = new DbTable_Devolucao();
-                $devolucao = $tDevolucao->find($idDevolucao);
-
-                $post = (['observacao' => $observacao, 'status_devolucao' => 'reprovada', 'data_atualizacao_status' => $data_atualizacao_status, 'gerente_responsavel' => $gerente_responsavel]);
-
-                $devolucao->current()->setFromArray($post);
-                $devolucao->current()->save();
-            } else {
-                $tSolicitacao = new DbTable_Solicitacao();
-                $solicitacao = $tSolicitacao->find($solicitacaoid);
-
-                $post = (['observacao' => $observacao, 'status' => $status, 'data_atualizacao_status' => $data_atualizacao_status, 'gerente_responsavel' => $gerente_responsavel]);
-
-                $solicitacao->current()->setFromArray($post);
-                $solicitacao->current()->save();
-
-
-                $this->forward('atualizarprodutosesolicitacao', 'produtosolicitacao', null, $param);
+                $valor = $valunit * $quant;
             }
 
-
-            //pra onde vou se for devolução?
+            $valorTotal = $valorTotal + $valor;
         }
+
+        //atualiza t_compra
+        $post = ['fornecedorid' => $fornecedorid, 'data_pedido' => $datapedido, 'status' => $status, 'valor_total' => $valorTotal];
+
+        $tCompra = new DbTable_Compra;
+        $objTcompra = $tCompra->find($compraId)->current();
+
+        $compra = new Compra;
+        $objCompra = $compra->atualizarCompra($objTcompra, $post);
+                
+        //atualiza t_produto_compra
+        $tProdutoCompra = new Produtocompra;
+        $objTProdutocompra = $tProdutoCompra->findByCompra($compraId);
+        $objTProdutocompra = $tProdutoCompra->atualizarProdutoCompra($objTProdutocompra, $arrayQuantidade, $arrayValorunitario);
+        
+        return $this->_helper->redirector('listar');
+        
     }
 
 }

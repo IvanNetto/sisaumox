@@ -7,13 +7,13 @@
                         <h5><span class="glyphicon glyphicon-shopping-cart"></span> Carrinho de Compras</h5>
                     </div>
                     <div class="col-xs-6">
-                        <a class='btn btn-primary btn-sm btn-block' href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'buscarprodutosporcategoria')); ?>"><span class="glyphicon glyphicon-share-alt"></span>Continue escolhendo</a> 
+                        <a class='btn btn-primary btn-sm btn-block' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'buscarprodutosporcategoria')); ?>"><span class="glyphicon glyphicon-share-alt"></span>Continue escolhendo</a> 
                     </div>
                 </div>
             </div>
         </div>
         <div class="panel-body">
-            <form action="<?= $this->baseUrl() . '/produtocompra/gerarpedidodecompras' ?> id="formulario" method="POST">
+            <form action="<?= $this->baseUrl() . '/compra/atualizarcompra' ?>" method="POST">
                 <?php if ($this->conteudoDoCarrinho->current() == null) { ?>
                     <br>
                     <center><strong><h4>Você ainda não escolheu produtos para esta solicitação, clique em "Continue escolhendo".</h4></strong></center>
@@ -21,7 +21,7 @@
                 } else {
 
                     foreach ($this->conteudoDoCarrinho as $item) {
-                        
+
                         $tProduto = new Produto();
                         $produto = $tProduto->findProdutoById($item->produtoid);
                         ?>
@@ -29,7 +29,10 @@
                             <br>
                             <div class="col-xs-4 produtoCart">
                                 <input type="hidden" name="produto[]" value="<?= $item->produtoid ?>"/>                                                                   
-                                <input type="hidden" name="solicitacaoid" value="<?php echo $this->solicitacaoid ?>"/>       
+                                <input type="hidden" name="compraid" value="<?php echo $this->compraid ?>"/>   
+                                <input type="hidden" name="fornecedorid" value="<?php echo $this->fornecedorid ?>"/>
+                                <input type="hidden" name="datapedido" value="<?php echo $data = date('d/m/Y'); ?>">
+                                <input type="hidden" name="status" value="<?php echo 'aguardando fornecedor' ?>">
                                 <h4 class="product-name"><strong><?php echo $produto[0]->nome; ?> <small>(<?php echo $produto->current()->quantidade ?> itens disponíveis)</small></h4><h4><small><?php echo $produto[0]->descricao; ?></strong></small></h4>
                             </div>
                             <div class="col-xs-7">
@@ -37,23 +40,21 @@
                                     <h6>Qtd</h6>
                                 </div>
                                 <div class="col-xs-2">
-                                    <input type="number" class="form-control input-sm quantidadeItensCompra" value="1" required="true" name="quantidade">
+                                    <input type="number" class="form-control input-sm quantidadeItensCompra" value="1" required="true" name="quantidade[]">
                                 </div>
-                                 <div class="col-xs-1 text-right">
+                                <div class="col-xs-1 text-right">
                                     <h6>R$</h6>
                                 </div>
                                 <div class="col-xs-2">
-                                    <input type="text"  class="form-control input-sm valorUnitario" value="0,00" required="true" name="valorunitario">
+                                    <input type="text"  class="form-control input-sm valorUnitario" value="0,00" required="true" name="valorunitario[]">
                                 </div>
                                 <div class="col-xs-2">
-                                    <button type="button" class="btn btn-link btn-xs">
-                                        <span class="glyphicon glyphicon-trash"> </span>
-                                    </button>
+                                    <a class="btn btn-link btn-xs" href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'deletar', 'id' => $item->id, 'produtoid' => $item->produtoid)); ?>"><span class="glyphicon glyphicon-trash"> </span></a>    
                                 </div>
                             </div>
                         </div>
                         <hr>
-                    <?php
+                        <?php
                     }
                 }
                 ?>
@@ -61,12 +62,10 @@
                 <div class="row">
                     <div class="text-center">
                         <div class="col-xs-8">
-                            <h4 class="text-right" id="total"><strong></strong></h4>
+                            <h4 class="text-right" id="total" name="teste"><strong></strong></h4>
                         </div>
                         <div class="col-xs-3">
-                            <button type="button" class="btn btn-success btn-block">
-                                Concluir pedido
-                            </button>
+                            <input type="submit" class="btn btn-success btn-sm" value ="concluir essa porra">
                         </div>
 
                     </div>
@@ -77,7 +76,7 @@
         <div class="panel-footer">
             <div class="row text-center">
                 <div class="col-xs-2">
-                    <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'limparcarrinhodesolicitacao', 'solicitacaoid' => $this->solicitacaoid)); ?>"><span class="glyphicon glyphicon-edit"></span>Limpar carrinho</a> 
+                    <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'deletar')); ?>"><span class="glyphicon glyphicon-edit"></span>Limpar carrinho</a> 
                 </div>
             </div>
         </div>

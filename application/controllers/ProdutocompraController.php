@@ -17,12 +17,20 @@ class ProdutocompraController extends Zend_Controller_Action {
     public function buscarprodutosporcategoriaAction() {
 
         $categoriaId = $this->_getParam("categoriaId");
-        $compraId = $this->_getParam("compraId");
+        $compraid = $this->_getParam("compraid");
+        $fornecedorId = $this->_getParam("fornecedorid");
+        $datapedido = $this->_getParam("datapedido");
+        $status = $this->_getParam("status");
+        $valortotal = $this->_getParam("valortotal");
 
         $tCategoria = new DbTable_Categoria();
         $listadecategorias = $tCategoria->fetchAll();
 
         $this->view->listadecategorias = $listadecategorias;
+        $this->view->fornecedorid = $fornecedorId;
+        $this->view->datapedido = $datapedido;
+        $this->view->status = $status;
+        $this->view->valortotal = $valortotal;
 
         if ($categoriaId) {
 
@@ -35,139 +43,131 @@ class ProdutocompraController extends Zend_Controller_Action {
             $this->view->listaDeProdutos = $listaDeItensPermitidos->toArray();
         }
 
-        $this->view->compraId = $compraId;
+        $this->view->compraid = $compraid;
+        $this->view->fornecedorid = $fornecedorId;
+        
     }
 
     public function inserirAction() {
 
         $produtosEscolhidos = ($_POST['checkbox']);
-        $compraId = ($_POST['compraId']);
+        $compraid = ($_POST['compraid']);
         $categoriaId = ($_POST['categoriaId']);
-        
+        $fornecedorId = ($_POST['fornecedorid']);
+        $datapedido = $this->_getParam("datapedido");
+        $status = $this->_getParam("status");
+        $valortotal = $this->_getParam("valortotal");
+
         try {
 
             $produtoCompra = new Produtocompra();
-            $produtoCompra->inserirProdutoCompra($compraId, $produtosEscolhidos);
-            
+            $produtoCompra->inserirProdutoCompra($compraid, $produtosEscolhidos);
+
             $deucerto = true;
         } catch (Exception $e) {
 
             $deucerto = false;
         };
 
-        $params = array('categoriaId' => $categoriaId, 'compraId' => $compraId, 'deucerto' => $deucerto);
+        $params = array('categoriaId' => $categoriaId, 'compraid' => $compraid, 'fornecedorid' => $fornecedorId);
         $this->forward('buscarprodutosporcategoria', 'produtocompra', null, $params);
     }
 
-   public function carrinhodecomprasAction() {
+    public function carrinhodecomprasAction() {
 
 
         if ($this->_getParam('deucerto')) {
             $this->flashMessenger->addMessage(array('success' => "Item removido do carrinho com sucesso"));
         }
 
-        $compraId = $this->_getParam('compraId');
+        $compraid = $this->_getParam('compraid');
+        $fornecedorId = $this->_getParam('fornecedorid');
+        $datapedido = $this->_getParam("datapedido");
+        $status = $this->_getParam("status");
+        $valortotal = $this->_getParam("valortotal");
 
         $produtoCompra = new Produtocompra();
-        $conteudoDoCarrinho = $produtoCompra->exibirCarrinhoDeCompras($compraId);
+        $conteudoDoCarrinho = $produtoCompra->exibirCarrinhoDeCompras($compraid);
 
         $this->view->conteudoDoCarrinho = $conteudoDoCarrinho;
-        $this->view->compraId = $compraId;
+        $this->view->compraid = $compraid;
+        $this->view->fornecedorid = $fornecedorId;
+        $this->view->datapedido = $datapedido;
+        $this->view->status = $status;
+        $this->view->valortotal = $valortotal;
     }
 
-    public function gerarpedidodecomprasAction(){
-        
-        $compraId = ($_POST['compraId']);
-        
+    public function gerarpedidodecomprasAction() {
+
+        $compraid = ($_POST['compraid']);
+
         $pedidoDeCompra = new DbTable_Compra();
-        $pedido = $pedidoDeCompra->gerarPedidoDeCompra($compraId);
-        
+        $pedido = $pedidoDeCompra->gerarPedidoDeCompra($compraid);
+
         $this->view->pedidoDeCompra = $pedido;
-        
-        
     }
-    
-    public function listarfornecedoresAction(){
-        
+
+    public function listarfornecedoresAction() {
+
         $tFornecedor = new DbTable_Fornecedor;
         $listaDeFornecedores = $tFornecedor->fetchAll();
-        
+
         $this->view->listaDeFornecedores = $listaDeFornecedores;
-        
     }
 
-    public function atualizarprodutosecompraAction() {
+    public function deletarAction() {
 
-        $produtos = $_POST['produto'];
-        $operacao = '+';
-        $quantidade = $_POST['quantidade'];
-        $data_recebimento = $this->_getParam('data_recebimento');
-        $data_aprovacao = $this->_getParam('data_aprovacao');
-        $gerente_responsavel = $this->_getParam('gerente_responsavel');
-
-        //mudar
-        $status = $this->_getParam('status');
-
-        if ($_POST['compraId']) {
-
-            $solicitacaoid = $_POST['compraId'];
-        } else {
-            $solicitacaoid = $this->_getParam('compraId');
-        }
-
-
-        if ($produtos) {
+        $compraid = $this->getParam('compraid');
+        $produtoId = $this->getParam('produtoid');
+        $produtoCompraId = $this->getParam('id');
+        //deleta 1 item de produto do carrinho
+        if ($produtoId) {
 
             try {
-                $tProduto = new Produto();
-                $mensagem = $tProduto->atualizarEstoque($produtos, $operacao, $quantidade, $_POST['compraId']);
 
-                $tProdutosolicitacao = new Produtosolicitacao();
-                $tProdutosolicitacao->registrarQuantidadeDoProdutoNaCompra($produtos, $quantidade, $solicitacaoid);
+                $tProdutoCompra = new Produtocompra;
+                $tProdutoCompra->deletarItemDoCarrinho($produtoId, $produtoCompraId);
 
-                //mensagem de estoque minimo atingido
-                if ($mensagem) {
-                    
-                    $this->flashMessenger->addMessage(array('danger' => $mensagem));
-                }
+                $this->flashMessenger->addMessage(array('success' => "Item removido do carrinho com sucesso"));
             } catch (Exception $e) {
-                //gera exceção se solicicitar quantidade superior a existente em estoque
-                $this->flashMessenger->addMessage(array('danger' => $e->getMessage()));
-                $qtdsuperior = true;
+
+                $this->flashMessenger->addMessage(array('danger' => "O item não foi removido"));
+            }
+
+            return $this->forward('carrinhodecompras', 'produtocompra', null, ['produtoid' => $produtoId, 'id' => $produtoCompraId]);
+        }
+
+        if ($compraid) {
+
+            try {
+
+                $tProdutoCompra = new Produtocompra;
+                $tProdutoCompra->limparCarrinhoDeCompras($compraid);
+
+                $this->flashMessenger->addMessage(array('success' => "Carrinho limpo com sucesso"));
+
+                return $this->forward('buscarprodutosporcategoria', 'produtocompra', null, ['compraid' => $compraid]);
+                
+            } catch (Exception $e) {
+
+                $this->flashMessenger->addMessage(array('danger' => "Carrinho não foi limpo"));
+                return $this->forward('carrinhodecompras', 'produtocompra', null, ['produtoid' => $produtoId, 'id' => $produtoCompraId]);
             }
         }
-
-        $tsolicitacao = new Solicitacao();
-        if ($status == 'entregue') {
-            $statusatual = 'entregue';
-        } elseif ($status == 'recebida') {
-            $statusatual = 'recebida';
-        } else {
-            $statusatual = $tsolicitacao->mostrarStatusAtual($solicitacaoid)->current()->status;
-        }
-
-        if (!($qtdsuperior))
-            $tsolicitacao->atualizarStatus($solicitacaoid, $statusatual, $gerente_responsavel);
-
-
-        if ($data_recebimento) {
-
-            $tsolicitacao->atualizaDataDeRecebimento($solicitacaoid, $data_recebimento);
-        }
-
-        if ($data_aprovacao) {
-
-            $tsolicitacao->atualizaDataDeaprovação($solicitacaoid, $data_aprovacao);
-        }
-
-        $perfil = Zend_Auth::getInstance()->getIdentity()->perfilid;
-
-        if ($perfil == 1) {
-            return $this->_helper->redirector->gotoSimple('listar', 'solicitacao');
-        } elseif ($perfil == 2 || $perfil == 3) {
-            return $this->_helper->redirector->gotoSimple('listargerente', 'solicitacao');
-        }
+    }
+    
+    public function resumodepedidoAction(){
+        
+        
+        $tProdutoCompra = new DbTable_Produtocompra;
+        $resumoDePedido = $tProdutoCompra->fetchAll();
+        
+        $compraId = $resumoDePedido[0]->compraid;
+        
+        $this->view->resumoDePedido = $resumoDePedido;
+        $this->view->compraId = $compraId;
+        
+        
     }
 
-    
 }

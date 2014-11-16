@@ -23,7 +23,7 @@
                     <td><?= $fornecedor['telefone2']; ?></td>
                     <td><?= $fornecedor['contato']; ?></td>
                     <td><?= $fornecedor['email']; ?></td>
-                    <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'buscarprodutosporcategoria', 'fornecedorId' => $fornecedor['id'])); ?>"><span class="glyphicon glyphicon-edit"></span>Selecionar</a>
+                    <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'buscarprodutosporcategoria', 'fornecedorid' => $fornecedor['id'])); ?>"><span class="glyphicon glyphicon-edit"></span>Selecionar</a>
                     </td>
                 </tr>     
             <?php } ?>      

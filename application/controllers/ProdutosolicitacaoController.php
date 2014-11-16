@@ -107,6 +107,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
      */
 
     public function atualizarprodutosesolicitacaoAction() {
+        
 
         $produtos = $_POST['produto'];
         $operacao = '-';

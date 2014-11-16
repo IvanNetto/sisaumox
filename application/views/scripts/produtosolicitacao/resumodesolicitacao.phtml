@@ -101,7 +101,7 @@ if ($solicitacao->current()->status == 'recebida') {
                         ?>
 
                         <td style="width: 300px;"><?= $produto->current()->nome; ?></td>
-                        <td><?= $produtosolicitacao->current()->quantidade; ?>
+                        <td style="width: 300px;"><?= $produtosolicitacao->current()->quantidade; ?>
                             <?php if ($solicitacao->current()->status == 'recebida'){?>
                                 <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'devolveritemdasolicitacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'produtoid' => $produtosolicitacao->current()->produtoid, 'data' => $data = date("m-d-Y"), 'produtosolicitacaoid' => $produtosolicitacao->current()->id, 'status' => 'nova')); ?>" <span class="glyphicon glyphicon-arrow-left"></span> Devolver</a>
                              <?php }?>

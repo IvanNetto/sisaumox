@@ -1,11 +1,15 @@
 <h3>Lista de Produtos</h3>
 <hr>
 <div class="instrucao">
-    <p>Busque a categoria desejada e selecione os produtos que desejar e mova-os para o <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'carrinhodecompras', 'compraId' => $this->compraId)); ?>">carrinho de compras <span class="glyphicon glyphicon-shopping-cart"></span></a></p>
+    <p>Busque a categoria desejada e selecione os produtos que desejar e mova-os para o <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'carrinhodecompras', 'compraid' => $this->compraid, 'fornecedorid' => $this->fornecedorid)); ?>">carrinho de compras <span class="glyphicon glyphicon-shopping-cart"></span></a></p>
     
     <div class="combobox">
         <form class="form-horizontal" action="<?= $this->baseUrl() . '/produtocompra/buscarprodutosporcategoria' ?>" method="POST">
-            <input type="hidden" name="compraId" value="<?php echo $this->compraId ?>">
+            <input type="hidden" name="compraid" value="<?php echo $this->compraid ?>">
+            <input type="hidden" name="fornecedorid" value="<?php echo $this->fornecedorid ?>">
+            <input type="hidden" name="datapedido" value="<?php echo $this->datapedido ?>">
+            <input type="hidden" name="status" value="<?php echo $this->status ?>">
+            <input type="hidden" name="valortotal" value="<?php echo $this->valortotal ?>">
             <select name="categoriaId">
                 <option></option>
                 <?php foreach ($this->listadecategorias as $nomeCategoria): ?>
@@ -47,16 +51,14 @@
                             $tCategoria = new Categoria();
                             $categoriaNome = $tCategoria->findCategoriaById($produto['categoriaid']);
                             ?>
-                            <input type="hidden" name="compraId" value="<?php echo $this->compraId ?>">
+                            <input type="hidden" name="compraid" value="<?php echo $this->compraid ?>">
                             <input type="hidden" name="categoriaId" value="<?php echo $produto['categoriaid'] ?>">
+                            <input type="hidden" name="fornecedorid" value="<?php echo $this->fornecedorid ?>">
                             <td><input type="checkbox" id="checkbox" name="checkbox[]" value="<?= $produto['id']?>"/> <?= $produto['nome']; ?></td>
                             
                             <td name="teste" value="<?= $categoriaNome['nome']->nome; ?>"><?= $categoriaNome['nome']->nome; ?></td>
                             <td><?= $produto['descricao']; ?></td>
                             <td><?= $produto['quantidade']; ?></td>
-                            <?php if ($produto['quantidade'] == 0){ ?>
-                            <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirsolicitacaoagendada', 'produtoid' => $produto['id'])); ?>"><span class="glyphicon glyphicon-time"></span>Agendar</a></td>
-                            <?php } ?>
                         </tr>
                     <?php } ?>
                 </tbody>

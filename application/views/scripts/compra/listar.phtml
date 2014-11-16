@@ -33,25 +33,16 @@
                 <td><?= $compra['status']; ?></td>
                 <td class="text-center">
                     <?php if ($compra['status'] == 'nova'){?>
-                        <a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'listarfornecedores', 'compraId' => $compra['id'])); ?>"><span class="glyphicon glyphicon-edit"></span>Iniciar</a>
-                        <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'deletar', 'id' => $compra['id'])); ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Deletar</a>
-                    <?php }elseif ($compra['status'] == 'entregue'){ ?>
-
-                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $compra['id'],'status' => 'recebida' ,'data_recebimento' => $data_recebimento = date("m-d-Y"))); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Acusar recebimento</a>
-                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $compra['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Visualizar Carrinho</a>
-
-                    <?php  }else{  ?>
-                        <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'cancelarsolicitacao', 'solicitacaoid' => $compra['id'], 'status' => 'cancelada')); ?>" class='btn btn-danger btn-xs'><span class="glyphicon glyphicon-remove-circle"></span>Cancelar</a>
-                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $compra['id'])); ?>" class='btn btn-default btn-xs'><span class="glyphicon glyphicon-eye-open"></span>Visualizar</a>
-                    <?php } ?>
+                        <a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'listarfornecedores', 'compraid' => $compra['id'])); ?>"><span class="glyphicon glyphicon-edit"></span>Iniciar</a>
+                        <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'deletar')); ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span>Deletar</a>
+                    <?php } elseif($compra['status'] == 'aguardando fornecedor'){ ?>     
+                        <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'resumodepedido', 'compraid' => $compra['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Visualizar</a>
+                    <?php }?>     
                 </td>
-            </tr>
-            <?php
-            }
-            }
-            ?>
+            <?php }?>
             </tr>
             </tbody>
+            <?php } ?>
         </table>
     </div>
 </div>

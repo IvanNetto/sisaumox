@@ -101,11 +101,8 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
         
     }
 
-    public function registrarQuantidadeDoProdutoNaCompra($produtos, $quantidade, $solicitacaoid) {
+    public function registrarQuantidadeDoProdutoNaSolicitacao($produtos, $quantidade, $solicitacaoid) {
         
-        var_dump($produtos, $quantidade, $solicitacaoid);die;
-
-
         foreach ($produtos as $produto) {
 
             $itemSelecionado = $this->findByProdutoESolicitacao($solicitacaoid, $produto)->current();

@@ -12,16 +12,13 @@ class Produtocompra extends Zend_Db_Table_Row_Abstract {
         return $tProdutoCompra->fetchAll($query);
     }
 
-    public function findBySolicitacao($solicitacaoid){
+    public function findByCompra($compraId) {
 
+        $tProdutoCompra = new DbTable_Produtocompra();
+        $query = $tProdutoCompra->select()
+                ->where('compraid = (?)', $compraId);
 
-        $tProdutosolicitacao = new DbTable_Produtosolicitacao();
-        $query = $tProdutosolicitacao->select()
-            ->where('solicitacaoid = (?)', $solicitacaoid);
-
-        return $tProdutosolicitacao->fetchAll($query);
-
-
+        return $tProdutoCompra->fetchAll($query);
     }
 
     public function listarProdutosPermitidos($categoriaid, $listaItensProibidos) {
@@ -41,7 +38,7 @@ class Produtocompra extends Zend_Db_Table_Row_Abstract {
     }
 
     public function inserirProdutoCompra($compraId, $produtosEscolhidos) {
-        
+
         for ($i = 0; $i < count($produtosEscolhidos); $i++) {
 
             $jahExisteOItemNoCarrinho = $this->findByProdutoECompra($compraId, $produtosEscolhidos[$i])->current();
@@ -53,7 +50,7 @@ class Produtocompra extends Zend_Db_Table_Row_Abstract {
             } else {
 
                 $post = array('produtoid' => $produtosEscolhidos[$i], 'compraid' => $compraId);
-                
+
                 $tProdutoCompra = new DbTable_ProdutoCompra();
                 $novoItemNoCarrinho = $tProdutoCompra->createRow();
                 $novoItemNoCarrinho->setFromArray($post);
@@ -71,36 +68,25 @@ class Produtocompra extends Zend_Db_Table_Row_Abstract {
         return $tProdutoCompra->fetchAll($query);
     }
 
-    public function resumoDeSolicitacao($solicitacaoid) {
+    public function deletarItemDoCarrinho($produtoId, $produtoCompraId) {
 
-        $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
-        $query = $tProdutoSolicitacao->select()
-                ->where('solicitacaoid = (?)', $solicitacaoid);
+        $tProdutoCompra = new DbTable_Produtocompra;
 
-        return $tProdutoSolicitacao->fetchAll($query);
+        $where[] = $tProdutoCompra->getAdapter()->quoteInto('id = (?)', $produtoCompraId);
+        $where[] = $tProdutoCompra->getAdapter()->quoteInto('produtoid = (?)', $produtoId);
+
+        $tProdutoCompra->delete($where);
     }
 
-    public function limparCarrinhoDeSolicitacao($solicitacaoid) {
+    public function limparCarrinhoDeCompras($compraId) {
 
-        $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
-        $where = $tProdutoSolicitacao->getAdapter()->quoteInto('solicitacaoid = (?)', $solicitacaoid);
+        $tProdutoCompra = new DbTable_Produtocompra();
+        $where = $tProdutoCompra->getAdapter()->quoteInto('compraid = (?)', $compraId);
 
-        $tProdutoSolicitacao->delete($where);
-       
-    }
-    
-    public function deletarItemDeQuantidadeMaximaUltrapassada($solicitacaoid, $produto){
-        
-         $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
-         $where[] = $tProdutoSolicitacao->getAdapter()->quoteInto('solicitacaoid = (?)', $solicitacaoid);
-         $where[] = $tProdutoSolicitacao->getAdapter()->quoteInto('produtoid = (?)', $produto);
-                
-         $tProdutoSolicitacao->delete($where);
-        
+        $tProdutoCompra->delete($where);
     }
 
-    public function registrarQuantidadeDoProdutoNaSolicitacao($produtos, $quantidade, $solicitacaoid) {
-
+    public function registrarQuantidadeDoProdutoNaCompra($produtos, $quantidade, $solicitacaoid) {
 
         foreach ($produtos as $produto) {
 
@@ -113,24 +99,22 @@ class Produtocompra extends Zend_Db_Table_Row_Abstract {
         }
     }
 
-    public function inserirProdutoNaSolicitacaoAgendada($solicitacaoid, $produtoId, $quantidade, $data_agendamento) {
+    public function atualizarProdutoCompra($objProdutoCompra, $arrayQuantidade, $arrayValorUnitario) {
 
-        $post = array('solicitacaoid' => $solicitacaoid, 'produtoid' => $produtoId, 'quantidade' => $quantidade);
-
-        $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
-        $novaProdutoSolicitacao = $tProdutoSolicitacao->createRow();
-        $novaProdutoSolicitacao->setFromArray($post);
-        $novaProdutoSolicitacao->save();
-
-
-        //atualiza a data de agendamento da solicitação
-        $tSolicitacao = new DbTable_Solicitacao();
-        $solicitacao = $tSolicitacao->find($solicitacaoid);
-
-        $post = ['data_agendamento' => $data_agendamento];
+        $i =0;
+        foreach ($objProdutoCompra as $produtoCompra){
         
-        $solicitacao->current()->setFromArray($post);
-        $solicitacao->current()->save();
+            $tProdutoCompra = new Produtocompra;
+            $linha = $tProdutoCompra->findByProdutoECompra($produtoCompra->compraid, $produtoCompra->produtoid);
+            
+            $quantidade = $arrayQuantidade[$i];
+            $valorUnitario = $arrayValorUnitario[$i];
+            
+            $post = ['quantidade' => $quantidade, 'valor_unitario' => $valorUnitario];
+            
+            $linha->current()->setFromArray($post);           
+            $linha->current()->save();
+            $i++;
+        }
     }
-
 }
