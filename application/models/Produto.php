@@ -37,7 +37,7 @@ class Produto extends Zend_Db_Table_Row_Abstract {
         return $produtos = $tProduto->fetchAll($query);
     }
 
-    public function atualizarEstoque($produtos, $operacao, $quantidade, $compraId) {
+    public function atualizarEstoque($produtos, $operacao, $quantidade, $solicitacaoid) {
         
         foreach ($produtos as $produto) {
 
@@ -54,7 +54,7 @@ class Produto extends Zend_Db_Table_Row_Abstract {
                     $quantidadecorrente = $quantidadecorrente - $quantidade;
                 }
                 $post = ['quantidade' => $quantidadecorrente];
-                //var_dump($post);
+
                 $objetoProduto->setFromArray($post);
                 $objetoProduto->save();
 
@@ -72,7 +72,7 @@ class Produto extends Zend_Db_Table_Row_Abstract {
         }
     }
 
-    public function devolverItemProEstoque($produtodevolvido, $id){
+    public function devolverItemProEstoque($produtodevolvido){
         
         $tDevolucao = new DbTable_Devolucao;
         $devolucao= $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtodevolvido);

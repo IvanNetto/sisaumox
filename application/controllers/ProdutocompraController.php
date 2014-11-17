@@ -170,4 +170,19 @@ class ProdutocompraController extends Zend_Controller_Action {
         
     }
 
+    public function reporitensnoestoqueAction(){
+
+        //compra id
+        $compraId = $this->_getParam('id');
+
+        $produtoCompra = new Produtocompra;
+        $produtosComprados = $produtoCompra->findByCompra($compraId);
+
+        $produtoCompra->reporItensNoEstoque($produtosComprados, $compraId);
+
+        die('eta');
+
+
+    }
+
 }

@@ -21,6 +21,7 @@
                     <td><?php
                         $tFornecedor = new DbTable_Fornecedor;
                         $fornecedor = $tFornecedor->find($compra->fornecedorid);
+
                         echo $fornecedor->current()->razao_social;
                         ?>
                     </td>
@@ -52,6 +53,7 @@
                     <br><br>
                     <tfoot>
                     <h4 class="text-center">Valor total da compra: R$ <?= $compra->valor_total; ?></h4>
+                    <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'reporitensnoestoque', 'id' => $compra->id)); ?>">Repor no estoque</a>
                     </tfoot>
                     </tbody>
              

@@ -117,4 +117,34 @@ class Produtocompra extends Zend_Db_Table_Row_Abstract {
             $i++;
         }
     }
+
+    public function reporItensNoEstoque($produtosComprados, $compraId){
+
+        foreach  ($produtosComprados as $produtoComprado){
+
+            $quantidadeComprada = $produtoComprado->quantidade;
+
+            $tProduto = new DbTable_Produto();
+            $produtoDoEstoque = $tProduto->find($produtoComprado->produtoid);
+
+            $quantidadeAntiga = $produtoDoEstoque->current()->quantidade;
+
+            $quantidadeAtualizada = $quantidadeComprada + $quantidadeAntiga;
+
+            $post = ['quantidade' => $quantidadeAtualizada];
+
+            $produtoDoEstoque->current()->setFromArray($post);
+            $produtoDoEstoque->current()->save();
+
+        }
+            //atualizar compra com data_conclusao e status
+            $tCompra = new DbTable_Compra;
+            $objCompra = $tCompra->find($compraId)->current();
+
+            $post = ['data_conclusao' => $data_conclusao = date('d/m/Y'),'status' => 'concluida'];
+
+            $compra = new Compra;
+            $compra->atualizarCompra($objCompra, $post);
+
+    }
 }

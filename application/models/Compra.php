@@ -20,11 +20,10 @@ class Compra extends Zend_Db_Table_Row_Abstract {
     }
 
     public function atualizarCompra($objCompra, $post){
-        
-            $novaCompra = $objCompra->setFromArray($post);
-            $novaCompra = $objCompra->save();
-       
-        
+
+            $objCompra->setFromArray($post);
+            $objCompra->save();
+
     }
         
 }
