@@ -252,7 +252,9 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
             if ($devolucao) {
 
                 $quantidadeAntigaDevolvida = $devolucao[0]['quantidade'];
+
                 $quantidadetotal = $quantidadeescolhida + $quantidadeAntigaDevolvida;
+
             }
 
             if ($quantidadetotal <= $quantidadesolicitada) {
@@ -288,7 +290,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         $post = ['status_devolucao' => $status, 'gerente_responsavel' => $gerenteAprovador];
 
         $tDevolucao = new Devolucao();
-        $devolucaoAtualizada = $tDevolucao->atualizarStatusDevolucao($id, $post);
+        $tDevolucao->atualizarStatusDevolucao($id, $post);
         
         
         $tDevolucao = new DbTable_Devolucao;

@@ -38,27 +38,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                    <?php foreach ($this->listaDeProdutos as $produto) { ?>
+                    <tr>
 
-                            <?php foreach ($this->listaDeProdutos as $produto) { ?>
+
                                 <?php
                                 $tCategoria = new Categoria();
                                 $categoriaNome = $tCategoria->findCategoriaById($produto['categoriaid']);
                                 ?>
                         <input type="hidden" name="categoriaid" value="<?php echo $produto['categoriaid'] ?>">
-                       
+
                             <td><input type="checkbox" id="checkbox" name="checkbox[]" value="<?= $produto['id'] ?>"/> <?= $produto['nome']; ?></td>
-                       
-                            <td><?= $produto['nome']; ?></td>
-                        <?php } ?>
-                        <td name="teste" value="<?= $categoriaNome['nome']->nome; ?>"><?= $categoriaNome['nome']->nome; ?></td>
+
+                        <td><?= $categoriaNome['nome']->nome; ?></td>
                         <td><?= $produto['descricao']; ?></td>
                         <td><?= $produto['quantidade']; ?></td>
                         <?php if ($produto['quantidade'] == 0) { ?>
                             <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirsolicitacaoagendada', 'produtoid' => $produto['id'])); ?>"><span class="glyphicon glyphicon-time"></span>Agendar</a></td>
-                        <?php } ?>                                    
+                        <?php } ?>
                         </tr>
-                    <?php } ?>
+                    <?php }} ?>
                     </tbody>
                 </table>
             </form>

@@ -31,25 +31,19 @@ if ($solicitacao->current()->status == 'recebida') {
             </thead>
             <tbody>
             <tr>
-                <?php foreach ($this->resumoDeSolicitacao as $produtosolicitacao) { ?>
-
-                    <?php
-                    $tSolicitacao = new DbTable_Solicitacao();
-                    $solicitacao = $tSolicitacao->find($produtosolicitacao['solicitacaoid']);
-                    ?>
-
-                    <td><?= $produtosolicitacao['solicitacaoid']; ?></td>
-                    <td><?= $solicitacao->current()->data; ?></td>
-                    <?php if ($solicitacao->current()->status == 'agendada' || $solicitacao->current()->status == 'pendente') { ?>
-                        <td><?= $solicitacao->current()->data_agendamento; ?></td>
-                    <?php } elseif ($solicitacao->current()->status == 'reprovada') { ?>
-                        <td><?= $solicitacao->current()->data_atualizacao_status ?></td>
-                    <?php } else { ?>
-                        <td><?= $solicitacao->current()->data_aprovacao; ?></td>
-                        <td><?= $solicitacao->current()->data_recebimento; ?></td>
-
-                    <?php }
-                } ?>
+                <?php
+                $tSolicitacao = new DbTable_Solicitacao();
+                $solicitacao = $tSolicitacao->find($this->solicitacaoid);
+                ?>
+                <td><?= $solicitacao->current()->data; ?></td>
+                <?php if ($solicitacao->current()->status == 'agendada' || $solicitacao->current()->status == 'pendente') { ?>
+                    <td><?= $solicitacao->current()->data_agendamento; ?></td>
+                <?php } elseif ($solicitacao->current()->status == 'reprovada') { ?>
+                    <td><?= $solicitacao->current()->data_atualizacao_status ?></td>
+                <?php } else { ?>
+                    <td><?= $solicitacao->current()->data_aprovacao; ?></td>
+                    <td><?= $solicitacao->current()->data_recebimento; ?></td>
+                <?php } ?>
             </tr>
             <?php if (!empty($solicitacao->current()->observacao)) { ?>
                 <tr>
@@ -73,17 +67,6 @@ if ($solicitacao->current()->status == 'recebida') {
                     <th>Produto</th>
                     <th>Quantidade Solicitada</th>
                     <th></th>
-
-                    <?php
-                    $tDevolucao = new DbTable_Devolucao();
-
-                    $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtosolicitacao['produtoid']);
-
-                    $quantidadeDevolvida = $devolucao[0]['quantidade'];
-                    if ($quantidadeDevolvida) {
-                        ?>
-                        <th>Quantidade Devolvida</th>
-                    <?php } ?>
                 </tr>
                 </thead>
                 <br><br><br>
@@ -91,34 +74,36 @@ if ($solicitacao->current()->status == 'recebida') {
                 <br>
                 <div class="col-lg-2">
                     <tbody>
-                    <tr>
-                        <?php
-                        $tProduto = new DbTable_Produto();
-                        $produto = $tProduto->find($produtosolicitacao['produtoid']);
+                    <?php foreach($this->resumoDeSolicitacao as $produtosolicitacao){?>
+                        <tr>
+                            <?php
+                            $tProduto = new DbTable_Produto();
+                            $produto = $tProduto->find($produtosolicitacao['produtoid']);
 
-                        $tProdutosolicitacao = new Produtosolicitacao();
-                        $produtosolicitacao = $tProdutosolicitacao->findByProdutoESolicitacao($produtosolicitacao['solicitacaoid'], $produtosolicitacao['produtoid']);
-                        ?>
-
-                        <td style="width: 300px;"><?= $produto->current()->nome; ?></td>
-                        <td style="width: 300px;"><?= $produtosolicitacao->current()->quantidade; ?>
-                            <?php if ($solicitacao->current()->status == 'recebida'){?>
-                                <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'devolveritemdasolicitacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'produtoid' => $produtosolicitacao->current()->produtoid, 'data' => $data = date("m-d-Y"), 'produtosolicitacaoid' => $produtosolicitacao->current()->id, 'status' => 'nova')); ?>" <span class="glyphicon glyphicon-arrow-left"></span> Devolver</a>
-                             <?php }?>
-                        </td>
-
-                        <?php
-                        $tDevolucao = new DbTable_Devolucao();
-
-                        $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtosolicitacao['produtoid']->produtoid);
-
-                        $quantidadeDevolvida = $devolucao[0]['quantidade'];
-
-                        if ($quantidadeDevolvida) {
+                            $tProdutosolicitacao = new Produtosolicitacao();
+                            $produtosolicitacao = $tProdutosolicitacao->findByProdutoESolicitacao($produtosolicitacao['solicitacaoid'], $produtosolicitacao['produtoid']);
                             ?>
-                            <td><?php echo $quantidadeDevolvida; ?></td>
-                        <?php } ?>
-                    </tr>
+
+                            <td style="width: 300px;"><?= $produto->current()->nome; ?></td>
+                            <td style="width: 300px;"><?= $produtosolicitacao->current()->quantidade; ?>
+                                <?php if ($solicitacao->current()->status == 'recebida'){?>
+                                    <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'devolveritemdasolicitacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'produtoid' => $produtosolicitacao->current()->produtoid, 'data' => $data = date("m-d-Y"), 'produtosolicitacaoid' => $produtosolicitacao->current()->id, 'status' => 'nova')); ?>" <span class="glyphicon glyphicon-arrow-left"></span> Devolver</a>
+                             <?php }?>
+                            </td>
+
+                            <?php
+                            $tDevolucao = new DbTable_Devolucao();
+
+                            $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtosolicitacao['produtoid']->produtoid);
+
+                            $quantidadeDevolvida = $devolucao[0]['quantidade'];
+
+                            if ($quantidadeDevolvida) {
+                                ?>
+                                <td><?php echo $quantidadeDevolvida; ?> itens devolvidos</td>
+                            <?php } ?>
+                        </tr>
+                    <?php } ?>
                     </tbody>
                 </div>
             </table>
