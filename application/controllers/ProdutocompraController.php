@@ -54,9 +54,6 @@ class ProdutocompraController extends Zend_Controller_Action {
         $compraid = ($_POST['compraid']);
         $categoriaId = ($_POST['categoriaId']);
         $fornecedorId = ($_POST['fornecedorid']);
-        $datapedido = $this->_getParam("datapedido");
-        $status = $this->_getParam("status");
-        $valortotal = $this->_getParam("valortotal");
 
         try {
 
@@ -167,12 +164,10 @@ class ProdutocompraController extends Zend_Controller_Action {
         $this->view->resumoDePedido = $resumoDePedido;
         $this->view->compraId = $compraId;
         
-        
     }
 
     public function reporitensnoestoqueAction(){
 
-        //compra id
         $compraId = $this->_getParam('id');
 
         $produtoCompra = new Produtocompra;
@@ -180,7 +175,7 @@ class ProdutocompraController extends Zend_Controller_Action {
 
         $produtoCompra->reporItensNoEstoque($produtosComprados, $compraId);
 
-        die('eta');
+        return $this->_helper->redirector->gotoSimple('listargerente', 'solicitacao');
 
 
     }

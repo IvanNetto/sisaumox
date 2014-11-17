@@ -6,8 +6,8 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
 
         $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
         $query = $tProdutoSolicitacao->select()
-                ->where('solicitacaoid = (?)', $solicitacaoid)
-                ->where('produtoid = (?)', $produtoid);
+            ->where('solicitacaoid = (?)', $solicitacaoid)
+            ->where('produtoid = (?)', $produtoid);
 
         return $tProdutoSolicitacao->fetchAll($query);
     }
@@ -29,8 +29,8 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
         if ($listaItensProibidos) {
             $tProduto = new DbTable_Produto();
             $query = $tProduto->select()
-                    ->where('categoriaid = (?)', $categoriaid)
-                    ->where('id NOT IN (?)', $listaItensProibidos);
+                ->where('categoriaid = (?)', $categoriaid)
+                ->where('id NOT IN (?)', $listaItensProibidos);
 
             return $tProduto->fetchAll($query);
         } else {
@@ -67,7 +67,7 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
 
         $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
         $query = $tProdutoSolicitacao->select()
-                ->where('solicitacaoid = (?)', $solicitacaoid);
+            ->where('solicitacaoid = (?)', $solicitacaoid);
 
         return $tProdutoSolicitacao->fetchAll($query);
     }
@@ -77,7 +77,7 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
 
         $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
         $query = $tProdutoSolicitacao->select()
-                ->where('solicitacaoid = (?)', $solicitacaoid);
+            ->where('solicitacaoid = (?)', $solicitacaoid);
 
         return $tProdutoSolicitacao->fetchAll($query);
     }
@@ -88,30 +88,35 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
         $where = $tProdutoSolicitacao->getAdapter()->quoteInto('solicitacaoid = (?)', $solicitacaoid);
 
         $tProdutoSolicitacao->delete($where);
-       
-    }
-    
-    public function deletarItemDeQuantidadeMaximaUltrapassada($solicitacaoid, $produto){
-        
-         $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
-         $where[] = $tProdutoSolicitacao->getAdapter()->quoteInto('solicitacaoid = (?)', $solicitacaoid);
-         $where[] = $tProdutoSolicitacao->getAdapter()->quoteInto('produtoid = (?)', $produto);
-                
-         $tProdutoSolicitacao->delete($where);
-        
+
     }
 
-    public function registrarQuantidadeDoProdutoNaSolicitacao($produtos, $quantidade, $solicitacaoid) {
-        
+//    public function deletarItemDeQuantidadeMaximaUltrapassada($solicitacaoid, $produto){
+//
+//        $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
+//        $where[] = $tProdutoSolicitacao->getAdapter()->quoteInto('solicitacaoid = (?)', $solicitacaoid);
+//        $where[] = $tProdutoSolicitacao->getAdapter()->quoteInto('produtoid = (?)', $produto);
+//
+//        $tProdutoSolicitacao->delete($where);
+//
+//    }
+
+    public function registrarQuantidadeDoProdutoNaSolicitacao($produtos, $arrayQuantidade, $solicitacaoid) {
+
+        $i =0;
         foreach ($produtos as $produto) {
 
             $itemSelecionado = $this->findByProdutoESolicitacao($solicitacaoid, $produto)->current();
+
+            $quantidade = $arrayQuantidade[$i];
 
             $post = ['quantidade' => $quantidade];
 
             $itemSelecionado->setFromArray($post);
             $itemSelecionado->save();
+            $i++;
         }
+
     }
 
     public function inserirProdutoNaSolicitacaoAgendada($solicitacaoid, $produtoId, $quantidade, $data_agendamento) {
@@ -129,7 +134,7 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
         $solicitacao = $tSolicitacao->find($solicitacaoid);
 
         $post = ['data_agendamento' => $data_agendamento];
-        
+
         $solicitacao->current()->setFromArray($post);
         $solicitacao->current()->save();
     }

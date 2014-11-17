@@ -108,12 +108,12 @@ class CompraController extends Zend_Controller_Action {
         $objTcompra = $tCompra->find($compraId)->current();
 
         $compra = new Compra;
-        $objCompra = $compra->atualizarCompra($objTcompra, $post);
+        $compra->atualizarCompra($objTcompra, $post);
                 
         //atualiza t_produto_compra
         $tProdutoCompra = new Produtocompra;
         $objTProdutocompra = $tProdutoCompra->findByCompra($compraId);
-        $objTProdutocompra = $tProdutoCompra->atualizarProdutoCompra($objTProdutocompra, $arrayQuantidade, $arrayValorunitario);
+        $tProdutoCompra->atualizarProdutoCompra($objTProdutocompra, $arrayQuantidade, $arrayValorunitario);
         
         return $this->_helper->redirector('listar');
         

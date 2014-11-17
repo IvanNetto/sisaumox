@@ -86,18 +86,6 @@ class Produtocompra extends Zend_Db_Table_Row_Abstract {
         $tProdutoCompra->delete($where);
     }
 
-    public function registrarQuantidadeDoProdutoNaCompra($produtos, $quantidade, $solicitacaoid) {
-
-        foreach ($produtos as $produto) {
-
-            $itemSelecionado = $this->findByProdutoESolicitacao($solicitacaoid, $produto)->current();
-
-            $post = ['quantidade' => $quantidade];
-
-            $itemSelecionado->setFromArray($post);
-            $itemSelecionado->save();
-        }
-    }
 
     public function atualizarProdutoCompra($objProdutoCompra, $arrayQuantidade, $arrayValorUnitario) {
 

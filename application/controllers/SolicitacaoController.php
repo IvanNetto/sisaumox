@@ -115,7 +115,7 @@ class SolicitacaoController extends Zend_Controller_Action {
      public function listarCanceladasAction() {
 
         $tSolicitacao = new Solicitacao();
-        $reprovadas = $tSolicitacao->listarCanceladas();
+        $canceladas = $tSolicitacao->listarCanceladas();
 
         $this->view->canceladas = $canceladas;
         
@@ -124,7 +124,7 @@ class SolicitacaoController extends Zend_Controller_Action {
     public function inserirAction() {
 
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
-        $data = date("d/m/y");
+        $data = date("d/m/Y");
         $status = "nova";
 
         $post = array(

@@ -32,60 +32,47 @@ class Produto extends Zend_Db_Table_Row_Abstract {
 
         $tProduto = new DbTable_Produto();
         $query = $tProduto->select()
-                ->where('categoriaid = (?)', $categoriaid);
+            ->where('categoriaid = (?)', $categoriaid);
 
         return $produtos = $tProduto->fetchAll($query);
     }
 
-    public function atualizarEstoque($produtos, $operacao, $quantidade, $solicitacaoid) {
-        
+    public function atualizarEstoque($produtos, $operacao, $quantidade) {
+
+        $i = 0;
         foreach ($produtos as $produto) {
 
             $objetoProduto = $this->findProdutoById($produto)->current();
             $quantidadecorrente = $objetoProduto->quantidade;
-            $quanditademinima = $objetoProduto->quantidademinima;
+
+            $quant = $quantidade[$i];
 
 
+            $quantidadecorrente = $quantidadecorrente - $quant;
 
-            if ($quantidadecorrente >= $quantidade) {
 
+            $post = ['quantidade' => $quantidadecorrente];
 
-                if ($operacao == '-') {
-                    $quantidadecorrente = $quantidadecorrente - $quantidade;
-                }
-                $post = ['quantidade' => $quantidadecorrente];
-
-                $objetoProduto->setFromArray($post);
-                $objetoProduto->save();
-
-                if ($quantidadecorrente <= $quanditademinima) {
-
-                    return $mensagem = "Solicitação enviada com sucesso, mas a quantidade mínima do produto em estoque foi atingida. O produto deve ser reposto para que as próximas solicitações para este produto possam ser realizadas.";
-                }
-            } else {
-                
-               $tProdutoSolicitacao = new Produtosolicitacao;
-               $tProdutoSolicitacao->deletarItemDeQuantidadeMaximaUltrapassada($solicitacaoid, $produto);
-                
-                throw new exception("A quantidade escolhida para algum(ns) item(ns) excede a quantidade mínima. Favor verificar a quantidade existente em estoque.");
-            }
+            $objetoProduto->setFromArray($post);
+            $objetoProduto->save();
+            $i++;
         }
     }
 
     public function devolverItemProEstoque($produtodevolvido){
-        
+
         $tDevolucao = new DbTable_Devolucao;
         $devolucao= $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtodevolvido);
-        
+
         $quantidadeDevolvida = $devolucao[0]['quantidade'];
-                
+
         $tProduto = new DbTable_Produto;
         $produto = $tProduto->find($produtodevolvido);
-        
+
         $quantidadeAtualizada = $produto->current()->quantidade + $quantidadeDevolvida;
-        
+
         $produto->current()->setFromArray(['quantidade' => $quantidadeAtualizada]);
         $produto->current()->save();
-        
+
     }
 }

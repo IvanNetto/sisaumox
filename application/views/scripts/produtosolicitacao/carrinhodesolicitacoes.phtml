@@ -28,12 +28,12 @@
                         $produto = $tProduto->findProdutoById($item->produtoid);
                         ?>
 
-                        <div class="row" class="carrinho">
+                        <div class="row linhaCarrinhoSolicitacao">
                             <br>
                             <div class="col-xs-4 produtoCart">
                                 <input type="hidden" name="produto[]" value="<?= $item->produtoid ?>"/>                                                                   
                                 <input type="hidden" name="solicitacaoid" value="<?php echo $this->solicitacaoid ?>"/>       
-                                <h4 class="product-name"><strong><?php echo $produto[0]->nome;?><small> <b id="disponiveis"><?php echo $produto->current()->quantidade?></b> itens disponíveis</small></h4><h4><small><?php echo $produto[0]->descricao; ?></strong></small></h4>
+                                <h4 class="product-name"><strong><?php echo $produto[0]->nome;?><small> <b class="disponiveis"><?php echo $produto->current()->quantidade?></b> itens disponíveis</small></h4><h4><small><?php echo $produto[0]->descricao; ?></strong></small></h4>
                                 <br>    
                             </div>
                             <div class="col-xs-3">
@@ -41,7 +41,7 @@
                                     <h6>Qtd</h6>
                                 </div>
                                 <div class="col-xs-4">
-                                    <input type="number" max ="" class="form-control input-sm" name = "quantidade"  id="quantidadeSolicitada">
+                                    <input type="number" max ="" class="form-control input-sm quantidadeSolicitada" name = "quantidade[]">
                                 </div>
                                 <div class="col-xs-2">
                                     <a class="btn btn-link btn-xs" href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'deletaritemdocarrinho', 'solicitacaoid' => $this->solicitacaoid, 'produtoid' => $item->produtoid)); ?>"><span class="glyphicon glyphicon-trash"> </span></a>    

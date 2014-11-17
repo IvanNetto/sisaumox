@@ -16,11 +16,6 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
     public function buscarprodutosporcategoriaAction() {
 
-        if ($this->_getParam('deucerto') == true) {
-
-            $this->flashMessenger->addMessage(array('success' => "Movido com sucesso para o carrinho de solicitações"));
-        }
-
         $categoriaid = $this->_getParam("categoriaid");
         $solicitacaoid = $this->_getParam("solicitacaoid");
 
@@ -131,20 +126,15 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
             try {
                 $tProduto = new Produto();
-                $mensagem = $tProduto->atualizarEstoque($produtos, $operacao, $quantidade, $_POST['solicitacaoid']);
+                $tProduto->atualizarEstoque($produtos, $operacao, $quantidade, $_POST['solicitacaoid']);
 
                 $tProdutosolicitacao = new Produtosolicitacao();
                 $tProdutosolicitacao->registrarQuantidadeDoProdutoNaSolicitacao($produtos, $quantidade, $solicitacaoid);
 
-                //mensagem de estoque minimo atingido
-                if ($mensagem) {
-                    
-                    $this->flashMessenger->addMessage(array('danger' => $mensagem));
-                }
+
             } catch (Exception $e) {
-                //gera exceção se solicicitar quantidade superior a existente em estoque
-                $this->flashMessenger->addMessage(array('danger' => $e->getMessage()));
-                $qtdsuperior = true;
+
+
             }
         }
 
@@ -157,8 +147,8 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
             $statusatual = $tsolicitacao->mostrarStatusAtual($solicitacaoid)->current()->status;
         }
 
-        if (!($qtdsuperior))
-            $tsolicitacao->atualizarStatus($solicitacaoid, $statusatual, $gerente_responsavel);
+
+        $tsolicitacao->atualizarStatus($solicitacaoid, $statusatual, $gerente_responsavel);
 
 
         if ($data_recebimento) {

@@ -1,4 +1,3 @@
-/* FILTER */
 $(document).ready(function(){
     $('.filterable .btn-filter').click(function(){
         var $panel = $(this).parents('.filterable'),
@@ -42,8 +41,6 @@ $(document).ready(function(){
     });
 
     /*MODAL*/
-
-
     var panels = $('.vote-results');
     var panelsButton = $('.dropdown-results');
     panels.hide();
@@ -70,9 +67,14 @@ $(document).ready(function(){
     });
 
     /*Carrinho de solicitações*/
-    var disponiveis = $("#disponiveis").text();
+    $('.linhaCarrinhoSolicitacao').each(function(){
 
-    $('#quantidadeSolicitada').attr("max", disponiveis);
+        var disponiveis = $(this).find('.disponiveis').text();
+
+        $('.quantidadeSolicitada').attr("max", disponiveis);
+
+
+    });
 
 
     /*Carrinho de compras*/
