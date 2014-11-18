@@ -55,23 +55,20 @@ class SolicitacaoController extends Zend_Controller_Action {
     }
 
     public function buscarsolicitacaoAction() {
-        
+
         $solicitacaoid = $_POST['solicitacaoid'];
-        
+
         try {
-        $tSolicitacao = new DbTable_Solicitacao;
-        $solicitacao = $tSolicitacao->find($solicitacaoid);
-        
-        $this->view->solicitacao = $solicitacao;
-        
+            $tSolicitacao = new DbTable_Solicitacao;
+            $solicitacao = $tSolicitacao->find($solicitacaoid);
+
+            $this->view->solicitacao = $solicitacao;
         } catch (Exception $ex) {
-        
+
             $this->flashMessenger->addMessage(array('danger' => "Solicitação não encontrada!"));
-            
         }
-        
     }
-    
+
     public function listargerenteAction() {
 
         $tSolicitacao = new Solicitacao();
@@ -111,16 +108,15 @@ class SolicitacaoController extends Zend_Controller_Action {
 
         $this->view->reprovadas = $reprovadas;
     }
-    
-     public function listarCanceladasAction() {
+
+    public function listarCanceladasAction() {
 
         $tSolicitacao = new Solicitacao();
         $canceladas = $tSolicitacao->listarCanceladas();
 
         $this->view->canceladas = $canceladas;
-        
     }
-    
+
     public function inserirAction() {
 
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
@@ -139,15 +135,12 @@ class SolicitacaoController extends Zend_Controller_Action {
             $tSolicitacao->inserirSolicitacao($post, $usuarioId);
 
             $this->flashMessenger->addMessage(array('success' => "Solicitação criada com sucesso! Você já pode iniciar sua lista de solicitações agora!"));
-
-
         } catch (Exception $e) {
 
             $this->flashMessenger->addMessage(array('danger' => $e->getMessage()));
         };
 
         return $this->_helper->redirector('listar');
-
     }
 
     public function inserirsolicitacaoagendadaAction() {
@@ -192,11 +185,10 @@ class SolicitacaoController extends Zend_Controller_Action {
         return $this->_helper->redirector('listar');
     }
 
-    public function cancelarsolicitacaoAction()
-    {
+    public function cancelarsolicitacaoAction() {
         $solicitacaoid = $this->_getParam("solicitacaoid");
         $gerente_responsavel = $this->_getParam("gerente_responsavel");
-        
+
         $tProdutosolicitacao = new Produtosolicitacao();
         $produtosolicitacao = $tProdutosolicitacao->findBySolicitacao($solicitacaoid);
 
@@ -209,62 +201,34 @@ class SolicitacaoController extends Zend_Controller_Action {
         $this->flashMessenger->addMessage(array('success' => "Solicitação cancelada com sucesso!"));
 
         return $this->_helper->redirector('listar');
-
     }
 
-    public function inserirobservacaoAction(){
-
+    public function inserirobservacaoAction() {
         $idDevolucao = $solicitacaoid = $this->_getParam("id_devolucao");
-        
-        
         $solicitacaoid = $this->_getParam("solicitacaoid");
-        
         $status = $this->_getParam("status");
         $gerente_responsavel = $this->_getParam("gerente_responsavel");
         
-
         $param = ['solicitacaoid' => $solicitacaoid];
-
         $this->view->solicitacaoid = $solicitacaoid;
-
-        if ($_POST){
-
+        if ($_POST) {
             $observacao = $_POST['observacao'];
             $data_atualizacao_status = $this->_getParam("data_atualizacao_status");
-            
-           if ($idDevolucao){
-               
-            $tDevolucao = new DbTable_Devolucao();
-            $devolucao = $tDevolucao->find($idDevolucao);
-
-            $post = (['observacao' => $observacao, 'status_devolucao' => 'reprovada', 'data_atualizacao_status' => $data_atualizacao_status, 'gerente_responsavel' => $gerente_responsavel]);
-
-            $devolucao->current()->setFromArray($post);
-            $devolucao->current()->save();
-               
-               
-           }else{
-            $tSolicitacao = new DbTable_Solicitacao();
-            $solicitacao = $tSolicitacao->find($solicitacaoid);
-
-            $post = (['observacao' => $observacao, 'status' => $status, 'data_atualizacao_status' => $data_atualizacao_status, 'gerente_responsavel' => $gerente_responsavel]);
-
-            $solicitacao->current()->setFromArray($post);
-            $solicitacao->current()->save();
-           
-
-            $this->forward('atualizarprodutosesolicitacao', 'produtosolicitacao', null, $param);
-
+            if ($idDevolucao) {
+                $tDevolucao = new DbTable_Devolucao();
+                $devolucao = $tDevolucao->find($idDevolucao);
+                $post = (['observacao' => $observacao, 'status_devolucao' => 'reprovada', 'data_atualizacao_status' => $data_atualizacao_status, 'gerente_responsavel' => $gerente_responsavel]);
+                $devolucao->current()->setFromArray($post);
+                $devolucao->current()->save();
+            } else {
+                $tSolicitacao = new DbTable_Solicitacao();
+                $solicitacao = $tSolicitacao->find($solicitacaoid);
+                $post = (['observacao' => $observacao, 'status' => $status, 'data_atualizacao_status' => $data_atualizacao_status, 'gerente_responsavel' => $gerente_responsavel]);
+                $solicitacao->current()->setFromArray($post);
+                $solicitacao->current()->save();
+                $this->forward('atualizarprodutosesolicitacao', 'produtosolicitacao', null, $param);
             }
-            
-            
-            //pra onde vou se for devolução?
-            
         }
-
-
-
-
     }
 
 }

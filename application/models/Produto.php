@@ -47,9 +47,8 @@ class Produto extends Zend_Db_Table_Row_Abstract {
 
             $quant = $quantidade[$i];
 
-
+            if ($operacao == '-')
             $quantidadecorrente = $quantidadecorrente - $quant;
-
 
             $post = ['quantidade' => $quantidadecorrente];
 
@@ -57,6 +56,36 @@ class Produto extends Zend_Db_Table_Row_Abstract {
             $objetoProduto->save();
             $i++;
         }
+    }
+    
+    public function atualizarEstoqueComProdutosRejeitados($produtos){
+        
+        foreach ($produtos as $produto){
+            
+            $quantidadeRejeitada = $produto->quantidade;
+            
+            $tProduto = new DbTable_Produto();
+            $produtoCorrente = $tProduto->find($produto->produtoid)->current();
+            $quantidadeExistente = $produtoCorrente->quantidade;
+            
+            $quantidade = $quantidadeRejeitada + $quantidadeExistente;
+            
+            $produtoCorrente->setFromArray(['quantidade' => $quantidade]);
+            $produtoCorrente->save();
+            
+            
+        }
+        
+        //pegar produto na t_produto_solicitacao
+        //pegar quantidade do produto t_produto_solicitacao
+        //pegar produto no estoque
+        //atualizar quantidade do produto no estoque
+        
+        
+        
+        
+        
+        
     }
 
     public function devolverItemProEstoque($produtodevolvido){

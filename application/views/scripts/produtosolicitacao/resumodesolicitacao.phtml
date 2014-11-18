@@ -16,101 +16,92 @@ if ($solicitacao->current()->status == 'recebida') {
         </div>
         <table class="table">
             <thead>
-            <tr>
-                <th>Solicitação</th>
-                <th>Data da solicitação</th>
-                <?php if ($solicitacao->current()->status == 'agendada' || $solicitacao->current()->status == 'pendente') { ?>
-                    <th>Data de agendametno</th>
-                <?php } elseif ($solicitacao->current()->status == 'reprovada') { ?>
-                    <th>Data de Reprovação</th>
-                <?php } else { ?>
-                    <th>Data de aprovação</th>
-                    <th>Data de recebimento</th>
-                <?php } ?>
-            </tr>
+                <tr>
+                    <th>Solicitação</th>
+                    <th>Data da solicitação</th>
+                    <?php if ($solicitacao->current()->status == 'agendada' || $solicitacao->current()->status == 'pendente') { ?>
+                        <th>Data de agendametno</th>
+                    <?php } elseif ($solicitacao->current()->status == 'reprovada') { ?>
+                        <th>Data de Reprovação</th>
+                    <?php } else { ?>
+                        <th>Data de aprovação</th>
+                        <th>Data de recebimento</th>
+                    <?php } ?>
+                </tr>
             </thead>
             <tbody>
-            <tr>
-                <?php
-                $tSolicitacao = new DbTable_Solicitacao();
-                $solicitacao = $tSolicitacao->find($this->solicitacaoid);
-                ?>
-                <td><?= $solicitacao->current()->data; ?></td>
-                <?php if ($solicitacao->current()->status == 'agendada' || $solicitacao->current()->status == 'pendente') { ?>
-                    <td><?= $solicitacao->current()->data_agendamento; ?></td>
-                <?php } elseif ($solicitacao->current()->status == 'reprovada') { ?>
-                    <td><?= $solicitacao->current()->data_atualizacao_status ?></td>
-                <?php } else { ?>
-                    <td><?= $solicitacao->current()->data_aprovacao; ?></td>
-                    <td><?= $solicitacao->current()->data_recebimento; ?></td>
-                <?php } ?>
-            </tr>
-            <?php if (!empty($solicitacao->current()->observacao)) { ?>
                 <tr>
-                    <th>Observação</th>
-                </tr>
-            <?php } ?>
-            <tr>
-                <td>
                     <?php
-                    $login = Zend_Auth::getInstance()->getIdentity()->login;
-                    if ($solicitacao->current()->status == 'agendada' || $solicitacao->current()->status == 'pendente') {
-                        ?>
-                        <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'status' => 'pendente', 'data_atualizacao_status' => $data_atualizacao_status = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" <span class="glyphicon glyphicon-plus"></span>Atualizar</a>
-<?php } ?>
-                    <?= $solicitacao->current()->observacao; ?>
-                </td>
-            </tr>
+                    $tSolicitacao = new DbTable_Solicitacao();
+                    $solicitacao = $tSolicitacao->find($this->solicitacaoid);
+                    ?>
+                    <td><?= $solicitacao->current()->data; ?></td>
+                    <?php if ($solicitacao->current()->status == 'agendada' || $solicitacao->current()->status == 'pendente') { ?>
+                        <td><?= $solicitacao->current()->data_agendamento; ?></td>
+                    <?php } elseif ($solicitacao->current()->status == 'reprovada') { ?>
+                        <td><?= $solicitacao->current()->data_atualizacao_status ?></td>
+                    <?php } else { ?>
+                        <td><?= $solicitacao->current()->data_aprovacao; ?></td>
+                        <td><?= $solicitacao->current()->data_recebimento; ?></td>
+                    <?php } ?>
+                </tr>
+                <?php if (!empty($solicitacao->current()->observacao)) { ?>
+                    <tr>
+                        <th>Observação</th>
+                    </tr>
+                <?php } ?>
+                <tr>
+                    <td>
+                        <?php
+                        $login = Zend_Auth::getInstance()->getIdentity()->login;
+                        if ($solicitacao->current()->status == 'agendada' || $solicitacao->current()->status == 'pendente') {
+                            ?>
+                            <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'status' => 'pendente', 'data_atualizacao_status' => $data_atualizacao_status = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" <span class="glyphicon glyphicon-plus"></span>Atualizar</a>
+                        <?php } ?>
+                        <?= $solicitacao->current()->observacao; ?>
+                    </td>
+                </tr>
             <table style="border: 1px">
                 <thead>
-                <tr>
-                    <th>Produto</th>
-                    <th>Quantidade Solicitada</th>
-                    <th></th>
-                </tr>
+                    <tr>
+                        <th>Produto</th>
+                        <th>Quantidade Solicitada</th>
+                        <th></th>
+                    </tr>
                 </thead>
                 <br><br><br>
-                <tr  ><h4 class="text-center">Produtos escolhidos nesta solicitação:</h4></tr>
+                <tr ><h4 class="text-center">Produtos escolhidos nesta solicitação:</h4></tr>
                 <br>
                 <div class="col-lg-2">
                     <tbody>
-                    <?php foreach($this->resumoDeSolicitacao as $produtosolicitacao){?>
-                        <tr>
-                            <?php
-                            $tProduto = new DbTable_Produto();
-                            $produto = $tProduto->find($produtosolicitacao['produtoid']);
-
-                            $tProdutosolicitacao = new Produtosolicitacao();
-                            $produtosolicitacao = $tProdutosolicitacao->findByProdutoESolicitacao($produtosolicitacao['solicitacaoid'], $produtosolicitacao['produtoid']);
-                            ?>
-
-                            <td style="width: 300px;"><?= $produto->current()->nome; ?></td>
-                            <td style="width: 300px;"><?= $produtosolicitacao->current()->quantidade; ?>
-                                <?php if ($solicitacao->current()->status == 'recebida'){?>
-                                    <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'devolveritemdasolicitacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'produtoid' => $produtosolicitacao->current()->produtoid, 'data' => $data = date("m-d-Y"), 'produtosolicitacaoid' => $produtosolicitacao->current()->id, 'status' => 'nova')); ?>" <span class="glyphicon glyphicon-arrow-left"></span> Devolver</a>
-                             <?php }?>
-                            </td>
-
-                            <?php
-                            $tDevolucao = new DbTable_Devolucao();
-
-                            $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtosolicitacao['produtoid']->produtoid);
-
-                            $quantidadeDevolvida = $devolucao[0]['quantidade'];
-
-                            if ($quantidadeDevolvida) {
+                        <?php foreach ($this->resumoDeSolicitacao as $produtosolicitacao) { ?>
+                            <tr>
+                                <?php
+                                $tProduto = new DbTable_Produto();
+                                $produto = $tProduto->find($produtosolicitacao['produtoid']);
+                                $tProdutosolicitacao = new Produtosolicitacao();
+                                $produtosolicitacao = $tProdutosolicitacao->findByProdutoESolicitacao($produtosolicitacao['solicitacaoid'], $produtosolicitacao['produtoid']);
                                 ?>
-                                <td><?php echo $quantidadeDevolvida; ?> itens devolvidos</td>
-                            <?php } ?>
-                        </tr>
-                    <?php } ?>
+                                <td style="width: 300px;"><?= $produto->current()->nome; ?></td>
+                                <td style="width: 300px;"><?= $produtosolicitacao->current()->quantidade; ?>
+                                    <?php if ($solicitacao->current()->status == 'recebida') { ?>
+                                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'devolveritemdasolicitacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'produtoid' => $produtosolicitacao->current()->produtoid, 'data' => $data = date("m-d-Y"), 'produtosolicitacaoid' => $produtosolicitacao->current()->id, 'status' => 'nova')); ?>" <span class="glyphicon glyphicon-arrow-left"></span> Devolver</a>
+                                    <?php } ?>
+                                </td>
+                                <?php
+                                $tDevolucao = new DbTable_Devolucao();
+                                $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtosolicitacao['produtoid']->produtoid);
+                                $quantidadeDevolvida = $devolucao[0]['quantidade'];
+                                if ($quantidadeDevolvida) {
+                                    ?>
+                                    <td><?php echo $quantidadeDevolvida; ?> itens devolvidos</td>
+                                <?php } ?>
+                            </tr>
+                        <?php } ?>
                     </tbody>
                 </div>
             </table>
-
             </tbody>
         </table>
     </div>
 </div>
-
-
