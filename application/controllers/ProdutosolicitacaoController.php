@@ -247,6 +247,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
                 $quantidadeAntigaDevolvida = $devolucao[0]['quantidade'];
 
                 $quantidadetotal = $quantidadeescolhida + $quantidadeAntigaDevolvida;
+
             }
 
             if ($quantidadetotal <= $quantidadesolicitada) {
@@ -255,6 +256,11 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
                 $tDevolucao = new Devolucao();
                 $tDevolucao->inserirDevolucao($post);
+
+                $quantidadeFinal = $quantidadetotal - $quantidadeAntigaDevolvida;
+
+                $tProduto = new Produto();
+                $tProduto->atualizarEstoqueComProdutoDevolvido($produtoid, $quantidadeFinal);
 
                 $this->flashMessenger->addMessage(array('success' => "Este item de sua solicitação foi devolvido com sucesso!"));
             } else {

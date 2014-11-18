@@ -185,5 +185,12 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
         
     }
 
+    public function deletarUltimaAgendada($maxSolicitacaoId){
 
+        $solicitacao = new DbTable_Solicitacao();
+        $where = $solicitacao->getAdapter()->quoteInto('id = (?)', $maxSolicitacaoId);
+
+        $solicitacao->delete($where);
+
+    }
 }

@@ -166,6 +166,21 @@ class SolicitacaoController extends Zend_Controller_Action {
         return $this->forward('inserirprodutoemsolicitacaoagendada', 'produtosolicitacao', null, $param);
     }
 
+    public function deletaragendadaAction(){
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+
+        $tSolicitacao = new DbTable_Solicitacao();
+        $maxSolicitacaoId = $tSolicitacao->mostrarUltimaSolicitacaoAgendada();
+
+        $tSolicitacao = new Solicitacao();
+        $tSolicitacao->deletarUltimaAgendada($maxSolicitacaoId[0]['id']);
+
+        return $this->_helper->redirector('listar');
+
+    }
+
     public function deletarAction() {
 
         $this->_helper->layout->disableLayout();
@@ -186,6 +201,7 @@ class SolicitacaoController extends Zend_Controller_Action {
     }
 
     public function cancelarsolicitacaoAction() {
+
         $solicitacaoid = $this->_getParam("solicitacaoid");
         $gerente_responsavel = $this->_getParam("gerente_responsavel");
 
@@ -205,6 +221,7 @@ class SolicitacaoController extends Zend_Controller_Action {
 
     public function inserirobservacaoAction() {
         $idDevolucao = $solicitacaoid = $this->_getParam("id_devolucao");
+        var_dump($idDevolucao);die;
         $solicitacaoid = $this->_getParam("solicitacaoid");
         $status = $this->_getParam("status");
         $gerente_responsavel = $this->_getParam("gerente_responsavel");
@@ -220,6 +237,7 @@ class SolicitacaoController extends Zend_Controller_Action {
                 $post = (['observacao' => $observacao, 'status_devolucao' => 'reprovada', 'data_atualizacao_status' => $data_atualizacao_status, 'gerente_responsavel' => $gerente_responsavel]);
                 $devolucao->current()->setFromArray($post);
                 $devolucao->current()->save();
+
             } else {
                 $tSolicitacao = new DbTable_Solicitacao();
                 $solicitacao = $tSolicitacao->find($solicitacaoid);

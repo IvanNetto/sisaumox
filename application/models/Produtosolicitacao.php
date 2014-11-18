@@ -74,7 +74,6 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
 
     public function resumoDeSolicitacao($solicitacaoid) {
 
-
         $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
         $query = $tProdutoSolicitacao->select()
             ->where('solicitacaoid = (?)', $solicitacaoid);
@@ -90,16 +89,6 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
         $tProdutoSolicitacao->delete($where);
 
     }
-
-//    public function deletarItemDeQuantidadeMaximaUltrapassada($solicitacaoid, $produto){
-//
-//        $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
-//        $where[] = $tProdutoSolicitacao->getAdapter()->quoteInto('solicitacaoid = (?)', $solicitacaoid);
-//        $where[] = $tProdutoSolicitacao->getAdapter()->quoteInto('produtoid = (?)', $produto);
-//
-//        $tProdutoSolicitacao->delete($where);
-//
-//    }
 
     public function registrarQuantidadeDoProdutoNaSolicitacao($produtos, $arrayQuantidade, $solicitacaoid) {
 

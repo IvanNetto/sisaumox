@@ -76,18 +76,9 @@ class Produto extends Zend_Db_Table_Row_Abstract {
             
         }
         
-        //pegar produto na t_produto_solicitacao
-        //pegar quantidade do produto t_produto_solicitacao
-        //pegar produto no estoque
-        //atualizar quantidade do produto no estoque
-        
-        
-        
-        
-        
-        
     }
 
+    //usado na rejeição da solicitação toda
     public function devolverItemProEstoque($produtodevolvido){
 
         $tDevolucao = new DbTable_Devolucao;
@@ -102,6 +93,19 @@ class Produto extends Zend_Db_Table_Row_Abstract {
 
         $produto->current()->setFromArray(['quantidade' => $quantidadeAtualizada]);
         $produto->current()->save();
+
+    }
+
+    public function atualizarEstoqueComProdutoDevolvido($produto, $quantidade){
+
+        $tProduto = new DbTable_Produto;
+        $produto = $tProduto->find($produto);
+
+        $quantidadeNova = $produto->current()->quantidade + $quantidade;
+
+        $produto->current()->setFromArray(['quantidade' => $quantidadeNova]);
+        $produto->current()->save();
+
 
     }
 }

@@ -40,16 +40,11 @@
                     <tbody>
                     <?php foreach ($this->listaDeProdutos as $produto) { ?>
                     <tr>
-
-
                                 <?php
                                 $tCategoria = new Categoria();
                                 $categoriaNome = $tCategoria->findCategoriaById($produto['categoriaid']);
                                 ?>
                         <input type="hidden" name="categoriaid" value="<?php echo $produto['categoriaid'] ?>">
-
-                            <td><input type="checkbox" id="checkbox" name="checkbox[]" value="<?= $produto['id'] ?>"/> <?= $produto['nome']; ?></td>
-
                         <td><?= $categoriaNome['nome']->nome; ?></td>
                         <td><?= $produto['descricao']; ?></td>
                         <td><?= $produto['quantidade']; ?></td>
