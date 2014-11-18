@@ -50,6 +50,25 @@ class CompraController extends Zend_Controller_Action {
         return $this->_helper->redirector('listar');
     }
 
+    public function deletarAction() {
+
+        $this->_helper->layout->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+
+        $compraid = $this->_getParam("id");
+
+        $tCompra = new DbTable_Compra();
+        $compra = $tCompra->find($compraid);
+
+        try {
+            $compra->current()->delete();
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+
+        return $this->_helper->redirector('listar');
+    }
+
     public function listarhistoricoAction() {
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
 
@@ -57,25 +76,6 @@ class CompraController extends Zend_Controller_Action {
         $historico = $tSolicitacao->listarHistorico($usuarioId);
 
         $this->view->historico = $historico;
-    }
-
-    public function deletarAction() {
-
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender();
-
-        $id = $this->_getParam("id");
-
-        $tSolicitacao = new DbTable_Solicitacao();
-        $solicitacao = $tSolicitacao->find($id);
-
-        try {
-            $solicitacao->current()->delete();
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
-
-        return $this->_helper->redirector('listar');
     }
 
     public function atualizarcompraAction() {
