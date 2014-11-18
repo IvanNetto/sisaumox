@@ -221,7 +221,7 @@ class SolicitacaoController extends Zend_Controller_Action {
 
     public function inserirobservacaoAction() {
         $idDevolucao = $solicitacaoid = $this->_getParam("id_devolucao");
-        var_dump($idDevolucao);die;
+
         $solicitacaoid = $this->_getParam("solicitacaoid");
         $status = $this->_getParam("status");
         $gerente_responsavel = $this->_getParam("gerente_responsavel");

@@ -1,20 +1,18 @@
-<?php var_dump($this->pedidoDeCompra);die;?>
-
-<h3>Resumo da solicitação</h3>
+<h3>Resumo da compra</h3>
 <?php
 $tSolicitacao = new DbTable_Solicitacao;
 $solicitacao = $tSolicitacao->find($this->resumoDeSolicitacao[0]->solicitacaoid);
 if ($solicitacao->current()->status == 'recebida') {
     ?>
     <hr>
-    <p> Abaixo segue o resumo de sua solicitação já finalizada, <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>">clique aqui</a> e retorne ao histórico de solicitações.</p>
+    <p> Abaixo segue o resumo de sua compra já finalizada, <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>">clique aqui</a> e retorne ao histórico de compras.</p>
 <?php } elseif ($solicitacao->current()->status == 'em analise' || $solicitacao->current()->status == 'aprovada') { ?>
-    <p> Abaixo segue o resumo de sua solicitação ainda não finalizada, selecione <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listar')); ?>">Voltar</a> para retornar para sua lista de solicitações.</p>
+    <p> Abaixo segue o resumo de sua compra ainda não finalizada, selecione <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listar')); ?>">Voltar</a> para retornar para sua lista de compras.</p>
 <?php } ?>
 <div class="row">
     <div class="panel panel-primary filterable">
         <div class="panel-heading">
-            <span class="glyphicon glyphicon-list"></span>Resumo da solicitção
+            <span class="glyphicon glyphicon-list"></span>Resumo da compra
         </div>
         <table class="table">
             <thead>
@@ -73,7 +71,7 @@ if ($solicitacao->current()->status == 'recebida') {
                 <thead>
                 <tr>
                     <th>Produto</th>
-                    <th>Quantidade Solicitada</th>
+                    <th>Quantidade pedida</th>
                     <th></th>
 
                     <?php
@@ -89,7 +87,7 @@ if ($solicitacao->current()->status == 'recebida') {
                 </tr>
                 </thead>
                 <br><br><br>
-                <tr  ><h4 class="text-center">Produtos escolhidos nesta solicitação:</h4></tr>
+                <tr  ><h4 class="text-center">Produtos escolhidos nesta compra:</h4></tr>
                 <br>
                 <div class="col-lg-2">
                     <tbody>

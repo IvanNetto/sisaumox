@@ -1,40 +1,44 @@
 <h3>Lista de solicitações concretizadas</h3>
 <hr>
 <p> Abaixo segue sua solicitação produrada. </p>
-
 <div class="row">
     <div class="panel panel-primary filterable">
         <div class="panel-heading">
             <span class="glyphicon glyphicon-list"></span>Solicitação
         </div>
-        <table class="table">
-           
+        <?php if ($this->solicitacao->current() <> null){ ?>
+            <table class="table">
+
                 <thead>
-                    <tr class="filters">
-                        <th><input type="text" class="form-control" placeholder="Código" disabled></th>
-                        <th><input type="text" class="form-control" placeholder="Data" disabled></th>
-                        <th><input type="text" class="form-control" placeholder="Status" disabled></th>
-                        <?php if ($this->solicitacao->current()->status <> 'nova'){?>
-                             <th class="text-center">Ação</th>
-                        <?php } ?>
-                    </tr>
+                <tr class="filters">
+                    <th><input type="text" class="form-control" placeholder="Código" disabled></th>
+                    <th><input type="text" class="form-control" placeholder="Data" disabled></th>
+                    <th><input type="text" class="form-control" placeholder="Status" disabled></th>
+                    <?php if ($this->solicitacao->current()->status <> 'nova'){?>
+                        <th class="text-center">Ação</th>
+                    <?php } ?>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <?php foreach ($this->solicitacao as $solicitacao) { ?>
-                            <td><?= $solicitacao['id']; ?></td>
-                            <td><?= $solicitacao['data']; ?></td>
-                            <td><?= $solicitacao['status']; ?></td>
-                            <?php if ($solicitacao['status'] <> 'nova'){?>
-                            <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>"><span class="glyphicon glyphicon-edit"></span>Resumo</a> 
-                            <?php } ?>
-                        </tr> 
-                    <?php }
-                ?>
+
+                <tr>
+                    <?php foreach ($this->solicitacao as $solicitacao) { ?>
+                    <td><?= $solicitacao['id']; ?></td>
+                    <td><?= $solicitacao['data']; ?></td>
+                    <td><?= $solicitacao['status']; ?></td>
+                    <?php if ($solicitacao['status'] <> 'nova'){?>
+                    <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>"><span class="glyphicon glyphicon-edit"></span>Resumo</a>
+                        <?php } ?>
                 </tr>
-            </tbody>
-        </table>
-    </div>     
+                <?php } ?>
+
+                </tbody>
+            </table>
+        <?php
+        }else{ ?>
+            <center><strong><h4>Solicitação não encontrada</h4></strong></center>
+        <?php } ?>
+    </div>
 </div>
 
 
