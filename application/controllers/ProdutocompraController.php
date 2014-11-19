@@ -180,4 +180,62 @@ class ProdutocompraController extends Zend_Controller_Action {
 
     }
 
+    public function entregaparcialAction(){
+
+        if (!($_POST)) {
+
+            $compraid = $this->_getParam("compraid");
+            $produtoid = $this->_getParam("produtoid");
+
+            $this->view->compraid = $compraid;
+            $this->view->produtoid = $produtoid;
+
+        } else {
+
+            $compraid = $_POST['compraid'];
+            $produtoid = $_POST['produtoid'];
+            $quantidadeescolhida = $_POST['quantidade'];
+            $observacao = $_POST['observacao'];
+
+
+            $tProdutoCompra = new Produtocompra();
+            $produtocompra = $tProdutoCompra->findByProdutoECompra($compraid, $produtoid);
+
+            //retorna quantidade solicitada ao fornecedor
+            $quantidadeDoPedido = $produtocompra->current()->quantidade;
+            
+            //verifica se já existe entrega parcial
+            $tProdutoCompra = new DbTable_Produtocompra();
+            $entregaParcial = $tProdutoCompra->quantidadeJahEntregueParcialmente($compraid, $produtoid);
+            
+            $quantidadeParcialAntiga = $entregaParcial[0]['entrega_parcial'];
+
+            $totalParcial = $quantidadeescolhida + $quantidadeParcialAntiga;
+            
+            
+            if ($totalParcial <= $quantidadeDoPedido) {
+                
+                $tProduto = new Produto;
+                $quantidadeProduto = $tProduto->findProdutoById($produtoid)->current()->quantidade;
+
+                $quantidadeFinal = $totalParcial - $quantidadeParcialAntiga + $quantidadeProduto;
+                
+                $post = array('entrega_parcial' => $totalParcial, 'observacao' => $observacao);
+
+                $tProdutoCompra = new Produtocompra();
+                $tProdutoCompra->inserirEntregaParcial($post, $produtocompra);
+
+                $tProdutoCompra->atualizarEstoqueComEntregaParcial($produtoid, $quantidadeFinal);
+
+                $this->flashMessenger->addMessage(array('success' => "Entrega parcial realizada com sucesso!"));
+            } else {
+die('caralho');
+                $this->flashMessenger->addMessage(array('danger' => "Entrega parcial não pode ultrapassar a quantidade solicitada ao fornecedor!"));
+            }
+
+            return $this->_helper->redirector->gotoSimple('listargerente', 'solicitacao');
+        }
+
+    }
+
 }

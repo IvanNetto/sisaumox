@@ -135,4 +135,24 @@ class Produtocompra extends Zend_Db_Table_Row_Abstract {
             $compra->atualizarCompra($objCompra, $post);
 
     }
+    
+    public function inserirEntregaParcial($post, $produtoCompra){
+        
+        $produtoCompra->current()->setFromArray($post);
+        $produtoCompra->current()->save();
+        
+        
+    }
+    
+    public function atualizarEstoqueComEntregaParcial($produtoid, $quantidadeNova){
+        
+        $tProduto = new DbTable_Produto;
+        $produto = $tProduto->find($produtoid);
+        
+        $post = ['quantidade' => $quantidadeNova];
+        
+        $produto->current()->setFromArray($post);
+        $produto->current()->save();
+        
+    }
 }

@@ -25,5 +25,12 @@ class Compra extends Zend_Db_Table_Row_Abstract {
             $objCompra->save();
 
     }
+
+    public function findByProdutoECompra($produtoid, $compraid){
+
+
+
+
+    }
         
 }

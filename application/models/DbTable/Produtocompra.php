@@ -14,5 +14,14 @@ class DbTable_Produtocompra extends Zend_Db_Table_Abstract {
 
         return $this->getAdapter()->fetchAll($sql);
     }
+    
+    public function quantidadeJahEntregueParcialmente($compraId, $produtoId){
+        
+        $sql = "select entrega_parcial from t_produto_compra 
+                where compraid = $compraId and produtoid = $produtoId";
+                
+        return $this->getAdapter()->fetchAll($sql);
+        
+    }
 
 }

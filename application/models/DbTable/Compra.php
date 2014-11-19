@@ -15,4 +15,5 @@ class DbTable_Compra extends Zend_Db_Table_Abstract
             
         }
 
+
 }

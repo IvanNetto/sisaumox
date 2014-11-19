@@ -6,57 +6,70 @@
         </div>
         <table class="table">
             <thead>
-                <tr>
-                    <th>Compra Nº</th>
-                    <th>Fornecedor selecionado</th>
-                </tr>
+            <tr>
+                <th>Compra Nº</th>
+                <th>Fornecedor selecionado</th>
+            </tr>
             </thead>
             <tbody>
-                <?php
-                $tCompra = new DbTable_Compra();
-                $compra = $tCompra->find($this->compraId)->current();
-                ?>
-                <tr>
-                    <td><?= $compra->id; ?></td>
-                    <td><?php
-                        $tFornecedor = new DbTable_Fornecedor;
-                        $fornecedor = $tFornecedor->find($compra->fornecedorid);
+            <?php
+            $tCompra = new DbTable_Compra();
+            $compra = $tCompra->find($this->compraId)->current();
+            ?>
+            <tr>
+                <td><?= $compra->id; ?></td>
+                <td><?php
+                    $tFornecedor = new DbTable_Fornecedor;
+                    $fornecedor = $tFornecedor->find($compra->fornecedorid);
 
-                        echo $fornecedor->current()->razao_social;
-                        ?>
-                    </td>
-                </tr>
+                    echo $fornecedor->current()->razao_social;
+                    ?>
+                </td>
+            </tr>
             <table style="border: 1px">
                 <thead >
-                    <tr>
-                        <th>Produto</th>
-                        <th>Quantidade Solicitada</th>
-                        <th>Valor unitário</th>
-                    </tr>
+                <tr>
+                    <th>Produto</th>
+                    <th>Quantidade Solicitada</th>
+                    <th></th>
+                    <th>Valor unitário</th>
+                    
+                </tr>
                 </thead>
                 <br><br><br>
                 <tr><h4 class="text-center">Produtos solicitados ao fornecedor:</h4></tr>
                 <br>
-                
-                    <tbody>
-                        <?php
-                        foreach ($this->resumoDePedido as $pedido) {
-                            $tProduto = new DbTable_Produto;
-                            $produto = $tProduto->find($pedido->produtoid);
-                            ?>
-                            <tr>
-                                <td style="width: 300px;"><?php echo $produto[0]->nome; ?></td>
-                                <td><?= $pedido->quantidade; ?></td>
-                                <td><?= $pedido->valor_unitario; ?></td>
-                            </tr>
-                        <?php } ?>
-                    <br><br>
-                    <tfoot>
-                    <h4 class="text-center">Valor total da compra: R$ <?= $compra->valor_total; ?></h4>
-                    <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'reporitensnoestoque', 'id' => $compra->id)); ?>">Repor no estoque</a>
-                    </tfoot>
-                    </tbody>
-             
+
+                <tbody>
+                <?php
+                foreach ($this->resumoDePedido as $pedido) {
+                    $tProduto = new DbTable_Produto;
+                    $produto = $tProduto->find($pedido->produtoid);
+
+                    ?>
+                    <tr>
+                        <td style="width: 300px;"><?php echo $produto[0]->nome; ?></td>
+                        <td><?= $pedido->quantidade; ?>
+                            <?php if ($compra->status == 'aguardando fornecedor') {?>
+                            
+                                <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'entregaparcial', 'compraid' => $compra->id, 'produtoid' => $pedido->produtoid)); ?>" <span class="glyphicon glyphicon-arrow-left"></span> Entrega parcial</a>
+                                    <?php } ?></td>
+                         <?php
+                                $quantidade = $pedido->entrega_parcial;
+                                if ($quantidade) {
+                                    ?>
+                                    <td><?php echo $quantidade; ?> itens devolvidos</td>
+                                <?php } ?>
+                        <td><?= $pedido->valor_unitario; ?></td>
+                    </tr>
+                <?php } ?>
+                <br><br>
+                <tfoot>
+                <h4 class="text-center">Valor total da compra: R$ <?= $compra->valor_total; ?></h4>
+                <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'reporitensnoestoque', 'id' => $compra->id)); ?>">Repor no estoque</a>
+                </tfoot>
+                </tbody>
+
             </table>
             </tbody>
         </table>
