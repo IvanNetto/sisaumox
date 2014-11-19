@@ -86,73 +86,83 @@ class Produtocompra extends Zend_Db_Table_Row_Abstract {
         $tProdutoCompra->delete($where);
     }
 
-
     public function atualizarProdutoCompra($objProdutoCompra, $arrayQuantidade, $arrayValorUnitario) {
 
-        $i =0;
-        foreach ($objProdutoCompra as $produtoCompra){
-        
+        $i = 0;
+        foreach ($objProdutoCompra as $produtoCompra) {
+
             $tProdutoCompra = new Produtocompra;
             $linha = $tProdutoCompra->findByProdutoECompra($produtoCompra->compraid, $produtoCompra->produtoid);
-            
+
             $quantidade = $arrayQuantidade[$i];
             $valorUnitario = $arrayValorUnitario[$i];
-            
+
             $post = ['quantidade' => $quantidade, 'valor_unitario' => $valorUnitario];
-            
-            $linha->current()->setFromArray($post);           
+
+            $linha->current()->setFromArray($post);
             $linha->current()->save();
             $i++;
         }
     }
 
-    public function reporItensNoEstoque($produtosComprados, $compraId){
+    public function reporItensNoEstoque($produtosComprados, $compraId) {
+        
+        
 
-        foreach  ($produtosComprados as $produtoComprado){
-
+        foreach ($produtosComprados as $produtoComprado) {
+            
+            $entregaParcial = $produtoComprado->entrega_parcial;
             $quantidadeComprada = $produtoComprado->quantidade;
 
             $tProduto = new DbTable_Produto();
             $produtoDoEstoque = $tProduto->find($produtoComprado->produtoid);
 
-            $quantidadeAntiga = $produtoDoEstoque->current()->quantidade;
+            $quantidadeCorrenteNoEstoque = $produtoDoEstoque->current()->quantidade;
 
-            $quantidadeAtualizada = $quantidadeComprada + $quantidadeAntiga;
+            if ($entregaParcial == 0) {
+            
+                $quantidadeAtualizada = $quantidadeComprada + $quantidadeCorrenteNoEstoque;
+                
+            }//faço normal tudo }
+
+            if (($entregaParcial <> 0) && ($entregaParcial < $quantidadeComprada)) {
+                
+                $quantidadeAtualizada = $quantidadeComprada - $entregaParcial + $quantidadeCorrenteNoEstoque;
+                
+            }//diminuo a quantidade que vai ser atualizada com a quantidade parcial. pra não dar merda}
 
             $post = ['quantidade' => $quantidadeAtualizada];
 
             $produtoDoEstoque->current()->setFromArray($post);
             $produtoDoEstoque->current()->save();
 
-        }
+
             //atualizar compra com data_conclusao e status
             $tCompra = new DbTable_Compra;
             $objCompra = $tCompra->find($compraId)->current();
 
-            $post = ['data_conclusao' => $data_conclusao = date('d/m/Y'),'status' => 'concluida'];
+            $post = ['data_conclusao' => $data_conclusao = date('d/m/Y'), 'status' => 'concluida'];
 
             $compra = new Compra;
             $compra->atualizarCompra($objCompra, $post);
-
+        }
     }
-    
-    public function inserirEntregaParcial($post, $produtoCompra){
-        
+
+    public function inserirEntregaParcial($post, $produtoCompra) {
+
         $produtoCompra->current()->setFromArray($post);
         $produtoCompra->current()->save();
-        
-        
     }
-    
-    public function atualizarEstoqueComEntregaParcial($produtoid, $quantidadeNova){
-        
+
+    public function atualizarEstoqueComEntregaParcial($produtoid, $quantidadeNova) {
+
         $tProduto = new DbTable_Produto;
         $produto = $tProduto->find($produtoid);
-        
+
         $post = ['quantidade' => $quantidadeNova];
-        
+
         $produto->current()->setFromArray($post);
         $produto->current()->save();
-        
     }
+
 }

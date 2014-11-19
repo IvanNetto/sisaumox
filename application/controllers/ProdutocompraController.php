@@ -229,7 +229,7 @@ class ProdutocompraController extends Zend_Controller_Action {
 
                 $this->flashMessenger->addMessage(array('success' => "Entrega parcial realizada com sucesso!"));
             } else {
-die('caralho');
+
                 $this->flashMessenger->addMessage(array('danger' => "Entrega parcial não pode ultrapassar a quantidade solicitada ao fornecedor!"));
             }
 
