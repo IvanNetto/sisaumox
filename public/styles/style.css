@@ -175,7 +175,6 @@ border-bottom: 1px;
     color: #333;
 }
 
-
 /*NAV BAR PAINEL DE CONTROLE*/
 .controle{
    
@@ -204,12 +203,9 @@ margin-bottom: 15px;
     background-color: #899d9f;
 }
 
-
-/*SELECIONAR CATEGORIA*/
-
-.combo{    
-   
-   height: 15px;
+/*listar categorias*/
+.instrucao .combobox{    
+   width: inherit;
+   text-align: center;    
    padding-top: 10px;
-   
 }

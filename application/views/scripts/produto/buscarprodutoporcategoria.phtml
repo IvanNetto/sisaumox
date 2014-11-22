@@ -14,7 +14,7 @@
                 endforeach;
                 ?>
             </select>
-            <button class="btn btn-default btn-xs btn-filter" ><span class="glyphicon glyphicon-search"></span> Buscar</button>
+            <button class="btn btn-info btn-filter btn-sm"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
         </form>
     </div>
 </div>
@@ -25,7 +25,7 @@
                 <div class="pull-right">
                     <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Buscar na lista</button>
                 </div>
-                <span class="glyphicon glyphicon-list"></span>Lista de produtos da categoria <strong><?php echo $nomeCategoria['nome']; ?></strong>
+                <span class="glyphicon glyphicon-list"></span> Lista de produtos da categoria <strong><?php echo $nomeCategoria['nome']; ?></strong>
             </div>
             <form action="<?= $this->baseUrl() . '/produtosolicitacao/inserir' ?>" method="POST">
                 <table class="table">
