@@ -5,7 +5,6 @@
 <?php } else { ?>
     <p> Não consta nenhma solicitação cancelada até o momento na base de dados.</a> </p>
 <?php } ?>
-
 <div class="row">
     <div class="panel panel-primary filterable">
         <div class="panel-heading">
@@ -29,7 +28,7 @@
                     <tr>
                         <?php foreach ($this->canceladas as $solicitacao) { ?>
                             <td><?= $solicitacao['id']; ?></td>
-                            <td><?= $solicitacao['data_atualizacao']; ?></td>
+                            <td><?= $solicitacao['data_atualizacao_status']; ?></td>
                             
                             <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>"><span class="glyphicon glyphicon-edit"></span>Visualizar</a>
 

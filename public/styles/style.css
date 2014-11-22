@@ -141,15 +141,16 @@ border-bottom: 1px;
     color: #074C80;
 }
 
+/*NAVBAR*/
+.navbar {margin-bottom: 0px; height: 15px;}
 
 /*CART*/
 .produtoCart{margin-left: 60px;}
 .col-xs-8 button, h4{padding-bottom: 2px;}
-.carrinho{with:600px; text-align: center;}
+.carrinho{with:600px; text-align: center; margin-top: 100px;}
 
 
 /*LIST COM FILTER*/
-
 .filterable {
     margin-top: 15px;
 }
@@ -174,71 +175,41 @@ border-bottom: 1px;
     color: #333;
 }
 
-.instrucao .combobox{    
-    width: inherit;
-    text-align: center;    
-   padding-top: 10px;
-}
 
-/* MODAL */
-.modal-body:not(.two-col) { padding:0px }
-.glyphicon { margin-right:5px; }
-.glyphicon-new-window { margin-left:5px; }
-.modal-body .radio,.modal-body .checkbox {margin-top: 0px;margin-bottom: 0px;}
-.modal-body .list-group {margin-bottom: 0;}
-.margin-bottom-none { margin-bottom: 0; }
-.modal-body .radio label,.modal-body .checkbox label { display:block; }
-.modal-footer {margin-top: 0px;}
-@media screen and (max-width: 325px){
-    .btn-close {
-        margin-top: 5px;
-        width: 100%;
-    }
-    .btn-results {
-        margin-top: 5px;
-        width: 100%;
-    }
-    .btn-vote{
-        margin-top: 5px;
-        width: 100%;
-    }
-
-}
-.modal-footer .btn+.btn {
-    margin-left: 0px;
-}
-.progress {
-    margin-right: 10px;
-}
-
-.navbar {margin-bottom: 0px; height: 15px;}
-
-/*NAVBAR ADMIN/GERENTE*/
-
+/*NAV BAR PAINEL DE CONTROLE*/
 .controle{
+   
+background-color: #e7eaee;
+border-radius: 37px;
+height: 70px;
+margin-bottom: 15px;
+
+}
+
+.botao{
     
-    margin-top: 0px;
-    margin-bottom: 15px;
+    padding: 15px 0px 0px 75px;
     
 }
 
+.botao-admin{
+    
+   background-color: #899d9f;
+   font-style: inherit;
+}
 
-.carrinho{
+.teste{
     
-    margin-top: 100px;
-    
+    height: 43px;
+    background-color: #899d9f;
 }
 
 
-.controle .navbar-default{
-    
-    background-color: #7BBCE8 !important;
+/*SELECIONAR CATEGORIA*/
+
+.combo{    
+   
+   height: 15px;
+   padding-top: 10px;
+   
 }
-
-
-
-
-
-
-
-

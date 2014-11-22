@@ -109,7 +109,7 @@ class SolicitacaoController extends Zend_Controller_Action {
         $this->view->reprovadas = $reprovadas;
     }
 
-    public function listarCanceladasAction() {
+    public function listarcanceladasAction() {
 
         $tSolicitacao = new Solicitacao();
         $canceladas = $tSolicitacao->listarCanceladas();

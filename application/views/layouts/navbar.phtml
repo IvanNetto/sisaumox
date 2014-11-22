@@ -9,7 +9,6 @@
     </div>
     <div class="navbar-collapse collapse navbar-responsive-collapse">
         <ul class="nav navbar-nav">
-            <!--<li class="active"><a href="#">Active</a></li>-->
             <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-th-large"></i> Produto <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -32,80 +31,29 @@
                     </li>
                     <li class="dropdown-header">Solicitações em andamento</li>
                     <li>
-                        <li><a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listaragendadas')); ?>"> Minhas agendadas</a></li>
-                    </li>
-                    <li>
-                        <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarreprovadas')); ?>">Minhas reprovadas</a>
-                    </li>  
-                    <li class="dropdown-header">Devolução</li>
-                     <li>
-                           <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>" > Devoluções ativas</a>
-                     </li>
-                    <li class="dropdown-header">Histórico</li>
-                    <li>
-                        <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>" > Solicitações antigas</a>
-                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'listardevolucaoantiga')); ?>" > Devoluções antigas</a>
-                    </li>
-                     
-                    <li class="divider"></li>
-                </ul>                
+                    <li><a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listaragendadas')); ?>"> Minhas agendadas</a></li>
             </li>
+            <li>
+                <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarreprovadas')); ?>">Minhas reprovadas</a>
+            </li>  
+            <li class="dropdown-header">Devolução</li>
+            <li>
+                <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>" > Devoluções ativas</a>
+            </li>
+            <li class="dropdown-header">Histórico</li>
+            <li>
+                <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>" > Solicitações antigas</a>
+                <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'listardevolucaoantiga')); ?>" > Devoluções antigas</a>
+            </li>
+
+            <li class="divider"></li>
+        </ul>                
+        </li>
         </ul>
         <form class="navbar-form navbar-left" action="<?= $this->baseUrl() . '/solicitacao/buscarsolicitacao' ?>" method="POST">
             <input class="form-control col-lg-8" placeholder="Nº da solicitação" type="text" name="solicitacaoid">
         </form>
-        <!-- <form class="navbar-form navbar-left">
-                    <input class="form-control col-lg-8" placeholder="Search" type="text">
-                </form>-->
         <ul class="nav navbar-nav navbar-right">    
-            <!-- 
-            <li class="dropdown">
-                
-                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-
-                    <font color="white"><i class="glyphicon glyphicon-bell" draggable="true"></i>  <i class="caret" draggable="true"></i></font>
-
-                </a>
-               <ul class="dropdown-menu dropdown-alerts">
-                    <li>
-                        <a href="#">
-
-                            <div>
-
-                                <i class="glyphicon glyphicon-envelope"></i> Comprar lápis ref 0081
-
-                            </div>
-
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-
-                    <li>
-                        <a href="#">
-
-                            <div>
-
-                                <i class="glyphicon glyphicon-envelope"></i> Comprar borracha azul
-
-
-                            </div>
-
-                        </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
-                        <a href="#" class="text-center">
-
-                            <strong>Ver todos os alertas</strong>
-
-                            <i class="glyphicon glyphicon-chevron-right"></i>
-
-                        </a>
-                    </li>
-                </ul>
-               
-            </li>
-            -->
             <li class="dropdown">
                 <a href ="" class="dropdown-toggle" data-toggle="dropdown"><i class="glyphicon glyphicon-cog"></i> <b class="caret"></b></a>
                 <ul class="dropdown-menu">
@@ -120,7 +68,7 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                         <a href="<?php echo $this->url(array('controller' => 'auth', 'action' => 'logout')); ?>">Sair</a>
+                        <a href="<?php echo $this->url(array('controller' => 'auth', 'action' => 'logout')); ?>">Sair</a>
                     </li>
                 </ul>
             </li>
