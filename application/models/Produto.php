@@ -58,17 +58,22 @@ class Produto extends Zend_Db_Table_Row_Abstract {
         }
     }
     
-    public function atualizarEstoqueComProdutosRejeitados($produtos){
+    public function atualizarEstoqueComProdutosRejeitados($produtos, $produtoSolicitacao){
         
         foreach ($produtos as $produto){
-            
+    
             $quantidadeRejeitada = $produto->quantidade;
+            
+            $tProdutoSolicitacao = new Produtosolicitacao;
+            $produtoSolicitacao = $tProdutoSolicitacao->findByProdutoESolicitacao($produtoSolicitacao->solicitacaoid, $produto->produtoid);
+            
+            $quantidadeParcial = $produtoSolicitacao->current()->aprovacao_parcial;
             
             $tProduto = new DbTable_Produto();
             $produtoCorrente = $tProduto->find($produto->produtoid)->current();
             $quantidadeExistente = $produtoCorrente->quantidade;
             
-            $quantidade = $quantidadeRejeitada + $quantidadeExistente;
+            $quantidade = $quantidadeRejeitada + $quantidadeExistente - $quantidadeParcial;
             
             $produtoCorrente->setFromArray(['quantidade' => $quantidade]);
             $produtoCorrente->save();
@@ -107,5 +112,25 @@ class Produto extends Zend_Db_Table_Row_Abstract {
         $produto->current()->save();
 
 
+    }
+    
+    public function atualizarEstoqueComProdutosCancelados($produtoSolicitacao, $solicitacaoId){
+        
+        foreach ($produtoSolicitacao as $linha){
+            
+                $quantidadeQueSoma = $linha->quantidade;
+                
+                $produtoId = $linha->produtoid;
+               
+                $tProduto = new DbTable_Produto;
+                $produto = $tProduto->find($produtoId);
+                
+                $quantidadeAtual = $produto->current()->quantidade;
+                
+                $quantidadeAtualizada = $quantidadeQueSoma + $quantidadeAtual;
+                
+                $produto->current()->setFromArray(['quantidade' => $quantidadeAtualizada]);
+                $produto->current()->save();
+        }
     }
 }

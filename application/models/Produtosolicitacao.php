@@ -6,22 +6,20 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
 
         $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
         $query = $tProdutoSolicitacao->select()
-            ->where('solicitacaoid = (?)', $solicitacaoid)
-            ->where('produtoid = (?)', $produtoid);
+                ->where('solicitacaoid = (?)', $solicitacaoid)
+                ->where('produtoid = (?)', $produtoid);
 
         return $tProdutoSolicitacao->fetchAll($query);
     }
 
-    public function findBySolicitacao($solicitacaoid){
+    public function findBySolicitacao($solicitacaoid) {
 
 
         $tProdutosolicitacao = new DbTable_Produtosolicitacao();
         $query = $tProdutosolicitacao->select()
-            ->where('solicitacaoid = (?)', $solicitacaoid);
+                ->where('solicitacaoid = (?)', $solicitacaoid);
 
         return $tProdutosolicitacao->fetchAll($query);
-
-
     }
 
     public function listarProdutosPermitidos($categoriaid, $listaItensProibidos) {
@@ -29,8 +27,8 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
         if ($listaItensProibidos) {
             $tProduto = new DbTable_Produto();
             $query = $tProduto->select()
-                ->where('categoriaid = (?)', $categoriaid)
-                ->where('id NOT IN (?)', $listaItensProibidos);
+                    ->where('categoriaid = (?)', $categoriaid)
+                    ->where('id NOT IN (?)', $listaItensProibidos);
 
             return $tProduto->fetchAll($query);
         } else {
@@ -62,12 +60,18 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
         }
     }
 
+    public function inserirAprovacaoParcial($post, $produtosolicitacao) {
+        
+        $produtosolicitacao->current()->setFromArray($post);
+        $produtosolicitacao->current()->save();
+    }
+
     public function exibirCarrinhoDeSolicitacoes($solicitacaoid) {
 
 
         $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
         $query = $tProdutoSolicitacao->select()
-            ->where('solicitacaoid = (?)', $solicitacaoid);
+                ->where('solicitacaoid = (?)', $solicitacaoid);
 
         return $tProdutoSolicitacao->fetchAll($query);
     }
@@ -76,7 +80,7 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
 
         $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
         $query = $tProdutoSolicitacao->select()
-            ->where('solicitacaoid = (?)', $solicitacaoid);
+                ->where('solicitacaoid = (?)', $solicitacaoid);
 
         return $tProdutoSolicitacao->fetchAll($query);
     }
@@ -87,12 +91,11 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
         $where = $tProdutoSolicitacao->getAdapter()->quoteInto('solicitacaoid = (?)', $solicitacaoid);
 
         $tProdutoSolicitacao->delete($where);
-
     }
 
     public function registrarQuantidadeDoProdutoNaSolicitacao($produtos, $arrayQuantidade, $solicitacaoid) {
 
-        $i =0;
+        $i = 0;
         foreach ($produtos as $produto) {
 
             $itemSelecionado = $this->findByProdutoESolicitacao($solicitacaoid, $produto)->current();
@@ -105,7 +108,6 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
             $itemSelecionado->save();
             $i++;
         }
-
     }
 
     public function inserirProdutoNaSolicitacaoAgendada($solicitacaoid, $produtoId, $quantidade, $data_agendamento) {

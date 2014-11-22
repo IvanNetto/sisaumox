@@ -32,6 +32,7 @@
                     <th>Produto</th>
                     <th>Quantidade Solicitada</th>
                     <th></th>
+                    <th></th>
                     <th>Valor unitário</th>
                     
                 </tr>
@@ -51,9 +52,9 @@
                         <td style="width: 300px;"><?php echo $produto[0]->nome; ?></td>
                         <td><?= $pedido->quantidade; ?>
                             <?php if ($compra->status == 'aguardando fornecedor') {?>
-                            
                                 <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'entregaparcial', 'compraid' => $compra->id, 'produtoid' => $pedido->produtoid)); ?>" <span class="glyphicon glyphicon-arrow-left"></span> Entrega parcial</a>
-                                    <?php } ?></td>
+                                    <?php } ?>
+                        </td>
                          <?php
                                 $quantidade = $pedido->entrega_parcial;
                                 if ($quantidade) {

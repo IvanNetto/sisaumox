@@ -159,7 +159,7 @@ class ProdutocompraController extends Zend_Controller_Action {
         $tProdutoCompra = new DbTable_Produtocompra;
         $resumoDePedido = $tProdutoCompra->fetchAll();
         
-        $compraId = $resumoDePedido[0]->compraid;
+        $compraId = $this->getParam('compraid');
         
         $this->view->resumoDePedido = $resumoDePedido;
         $this->view->compraId = $compraId;

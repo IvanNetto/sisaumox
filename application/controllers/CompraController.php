@@ -19,7 +19,6 @@ class CompraController extends Zend_Controller_Action {
 
         $status = ['nova', 'aguardando fornecedor'];
 
-        //Retorna as solicitações do usuário logado que estejam ativas
         $tCompra = new Compra();
         $listaDeCompras = $tCompra->listarComprasAtivas($status);
 

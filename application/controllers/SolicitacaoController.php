@@ -207,12 +207,19 @@ class SolicitacaoController extends Zend_Controller_Action {
 
         $tProdutosolicitacao = new Produtosolicitacao();
         $produtosolicitacao = $tProdutosolicitacao->findBySolicitacao($solicitacaoid);
-
-        $produtosolicitacao->current()->delete();
+        
+        //atualiza o estoque antes de deletar
+        $produto = new Produto();
+        $produto->atualizarEstoqueComProdutosCancelados($produtosolicitacao, $solicitacaoid);
+        
+        //deleta linhas da t_produto_solicitacao
+        $tProdutosolicitacao->limparCarrinhoDeSolicitacao($solicitacaoid);
 
         $status = 'cancelada';
         $tSolicitacao = new Solicitacao();
         $tSolicitacao->atualizarStatus($solicitacaoid, $status, $gerente_responsavel);
+        
+        //atualizar o estoque retirando os valores que foram solicitados !!!!!
 
         $this->flashMessenger->addMessage(array('success' => "Solicitação cancelada com sucesso!"));
 
@@ -220,14 +227,16 @@ class SolicitacaoController extends Zend_Controller_Action {
     }
 
     public function inserirobservacaoAction() {
-        $idDevolucao = $solicitacaoid = $this->_getParam("id_devolucao");
-
+        $idDevolucao = $this->_getParam("id_devolucao");
         $solicitacaoid = $this->_getParam("solicitacaoid");
+        $produtosolicitacaoid = $this->_getParam("produtosolicitacaoid");
         $status = $this->_getParam("status");
         $gerente_responsavel = $this->_getParam("gerente_responsavel");
         
-        $param = ['solicitacaoid' => $solicitacaoid];
-        $this->view->solicitacaoid = $solicitacaoid;
+        $param = ['solicitacaoid' => $solicitacaoid, 'produtosolicitacaoid' => $produtosolicitacaoid];
+        
+        $this->view->produtosolicitacaoid = $produtosolicitacaoid;
+        $this->view->solicitacaoid = $solicitacaoid;        
         if ($_POST) {
             $observacao = $_POST['observacao'];
             $data_atualizacao_status = $this->_getParam("data_atualizacao_status");
@@ -239,8 +248,11 @@ class SolicitacaoController extends Zend_Controller_Action {
                 $devolucao->current()->save();
 
             } else {
+                      
                 $tSolicitacao = new DbTable_Solicitacao();
-                $solicitacao = $tSolicitacao->find($solicitacaoid);
+                
+                $solicitacao = $tSolicitacao->find($_POST['solicitacaoid']);
+                
                 $post = (['observacao' => $observacao, 'status' => $status, 'data_atualizacao_status' => $data_atualizacao_status, 'gerente_responsavel' => $gerente_responsavel]);
                 $solicitacao->current()->setFromArray($post);
                 $solicitacao->current()->save();
