@@ -1,8 +1,8 @@
 <?php $perfil = Zend_Auth::getInstance()->getIdentity()->perfilid; ?>
-<h3>Lista de Produtos</h3>
+<h3>Pesquisar produto por categoria</h3>
 <hr>
 <div class="instrucao">
-    <p>Busque a categoria desejada e visualize os produtos cadastrados</p>
+    <p>Escolha uma das categorias cadastradas abaixo para listar seus produtos:</p>
 
     <div class="combobox">
         <form class="form-horizontal" action="<?= $this->baseUrl() . '/produto/buscarprodutoporcategoria' ?>" method="POST">
@@ -43,9 +43,11 @@
                                 <?php
                                 $tCategoria = new Categoria();
                                 $categoriaNome = $tCategoria->findCategoriaById($produto['categoriaid']);
+                                
                                 ?>
                         <input type="hidden" name="categoriaid" value="<?php echo $produto['categoriaid'] ?>">
-                        <td><?= $categoriaNome['nome']->nome; ?></td>
+                        <td><?= $produto['nome']; ?></td>
+                        <td><?= $categoriaNome[0]->nome; ?></td>
                         <td><?= $produto['descricao']; ?></td>
                         <td><?= $produto['quantidade']; ?></td>
                         <?php if ($produto['quantidade'] == 0) { ?>
