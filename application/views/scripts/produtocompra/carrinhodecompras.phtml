@@ -33,7 +33,7 @@
                                 <input type="hidden" name="fornecedorid" value="<?php echo $this->fornecedorid ?>"/>
                                 <input type="hidden" name="datapedido" value="<?php echo $data = date('d/m/Y'); ?>">
                                 <input type="hidden" name="status" value="<?php echo 'aguardando fornecedor' ?>">
-                                <h4 class="product-name"><strong><?php echo $produto[0]->nome; ?> <small>(<?php echo $produto->current()->quantidade ?> itens disponíveis)</small></h4><h4><small><?php echo $produto[0]->descricao; ?></strong></small></h4>
+                                <h4 class="product-name"><strong><?php echo $produto[0]->nome; ?> <small class="label label-warning"> <?php echo $produto->current()->quantidade ?> itens disponíveis</small></h4>
                             </div>
                             <div class="col-xs-7">
                                 <div class="col-xs-1 text-right">
@@ -59,26 +59,19 @@
                 }
                 ?>
                 <hr>
-                <div class="row">
-                    <div class="text-center">
-                        <div class="col-xs-8">
-                            <h4 class="text-right" id="total" name="teste"><strong></strong></h4>
-                        </div>
-                        <div class="col-xs-3">
-                            <input type="submit" class="btn btn-success btn-sm" value ="Gerar pedido">
-                        </div>
-
+             <div class="row">
+                    <div class="botaopedido">
+                        <button id="moverProCarrinhoSolicitacao" class="btn btn-success btn-xs">
+                            <span class="glyphicon glyphicon-barcode"></span> Gerar pedido de compra
+                        </button>
                     </div>
-
                 </div>
             </form>
         </div>
-        <div class="panel-footer">
-            <div class="row text-center">
-                <div class="col-xs-2">
-                    <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'deletar')); ?>"><span class="glyphicon glyphicon-edit"></span>Limpar carrinho</a> 
-                </div>
+        <center>
+            <div class="panel-footer">
+                <td><a class='btn btn-danger btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'deletar')); ?>"><span class="glyphicon glyphicon-floppy-remove"></span> Limpar carrinho</a> 
             </div>
-        </div>
+        </center>
     </div>
 </div>

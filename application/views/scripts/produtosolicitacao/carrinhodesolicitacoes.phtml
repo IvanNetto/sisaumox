@@ -1,5 +1,5 @@
 <div class="carrinho">    
-<div class="carrinho panel panel-primary">
+    <div class="carrinho panel panel-primary">
         <div class="panel-heading">
             <div class="panel-title">
                 <div class="row">
@@ -30,10 +30,10 @@
 
                         <div class="row linhaCarrinhoSolicitacao">
                             <br>
-                            <div class="col-xs-4 produtoCart">
+                            <div class="col-xs-6 produtoCart">
                                 <input type="hidden" name="produto[]" value="<?= $item->produtoid ?>"/>                                                                   
                                 <input type="hidden" name="solicitacaoid" value="<?php echo $this->solicitacaoid ?>"/>       
-                                <h4 class="product-name"><strong><?php echo $produto[0]->nome;?><small> <b class="disponiveis"><?php echo $produto->current()->quantidade?></b> itens disponíveis</small></h4><h4><small><?php echo $produto[0]->descricao; ?></strong></small></h4>
+                                <h4 class="product-name"><strong><?php echo $produto[0]->nome; ?> <small class="label label-warning"> <b class="disponiveis"><?php echo $produto->current()->quantidade ?></b> itens disponíveis</small></h4>
                                 <br>    
                             </div>
                             <div class="col-xs-3">
@@ -49,30 +49,23 @@
                             </div>
 
                         </div>
-                    <hr>
-                    <?php }
+                        <hr>
+                    <?php
+                    }
                 }
                 ?>
                 <hr>
-
                 <div class="row">
-                    <div class="text-center">
-                        <div class="col-xs-2">
-                            <button id="moverProCarrinhoSolicitacao" class="btn btn-success btn-sm">
-                                Enviar solicitação
-                            </button>
-                        </div>
+                    <div class="col-xs-12">
+                        <button id="moverProCarrinhoSolicitacao" class="btn btn-success btn-xs">
+                            <span class="glyphicon glyphicon-send"></span> Enviar solicitação
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
         <div class="panel-footer">
-            <div class="row text-center">
-                <div class="col-xs-2">
-                    <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'limparcarrinhodesolicitacao', 'solicitacaoid' => $this->solicitacaoid)); ?>"><span class="glyphicon glyphicon-edit"></span>Limpar carrinho</a> 
-                </div>
-            </div>
+            <td class="text-center"><a class='btn btn-danger btn-xs' href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'limparcarrinhodesolicitacao', 'solicitacaoid' => $this->solicitacaoid)); ?>"><span class="glyphicon glyphicon-floppy-remove"></span> Esvaziar carrinho</a> 
         </div>
-
     </div>
 </div>
