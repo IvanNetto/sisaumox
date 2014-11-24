@@ -14,7 +14,7 @@
                 endforeach;
                 ?>
             </select>
-            <button class="btn btn-info btn-filter btn-sm"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+            <button class="btn btn-default btn-filter btn-sm"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
         </form>
     </div>
 
@@ -29,7 +29,7 @@
                 <span class="glyphicon glyphicon-list"></span>Lista de produtos da categoria <strong><?php echo $nomeCategoria['nome']; ?></strong>
             </div>
             <form action="<?= $this->baseUrl() . '/produtosolicitacao/inserir' ?>" method="POST">
-                <table class="table">
+                <table class="table table-striped table-hover tabela-busca">
                     <thead>
                         <tr class="filters">
                             <th><input type="text" class="form-control" placeholder="Produto" disabled></th>
@@ -40,7 +40,6 @@
                     </thead>
                     <tbody>
                         <tr>
-
                             <?php foreach ($this->listaDeProdutos as $produto) { ?>
                                 <?php
                                 $tCategoria = new Categoria();
@@ -52,16 +51,21 @@
 
                         <td name="teste" value="<?= $categoriaNome['nome']->nome; ?>"><?= $categoriaNome['nome']->nome; ?></td>
                         <td><?= $produto['descricao']; ?></td>
-                        <td><?= $produto['quantidade']; ?></td>
+
                         <?php if ($produto['quantidade'] == 0) { ?>
-                            <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirsolicitacaoagendada', 'produtoid' => $produto['id'])); ?>"><span class="glyphicon glyphicon-time"></span>Agendar</a></td>
+                            <td><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirsolicitacaoagendada', 'produtoid' => $produto['id'])); ?>"><span class="glyphicon glyphicon-time"></span> Agendar</a></td>
+                            <?php } else {
+                            ?>
+                            <td> <?= $produto['quantidade']; ?></td>
                         <?php } ?>
+
                         </tr>
-                    <?php } ?>
+                    <?php }
+                    ?>
                     </tbody>
                 </table>
-                <div class="panel-footer">
-                        <button class="btn btn-success btn-xs"><span class="glyphicon glyphicon-shopping-cart"></span>Mover pro carrinho</button>
+                <div class="panel-footer text-center">
+                    <button class="btn btn-success btn-xs"><span class="glyphicon glyphicon-shopping-cart"></span>Mover pro carrinho</button>
                 </div>
             </form>
         </div>

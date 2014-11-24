@@ -330,12 +330,14 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
                 $tProduto->atualizarEstoqueComProdutoDevolvido($produtoid, $quantidadeFinal);
 
                 $this->flashMessenger->addMessage(array('success' => "Este item de sua solicitação foi devolvido com sucesso!"));
+                return $this->_helper->redirector->gotoSimple('listardevolucao', 'produtosolicitacao');
             } else {
 
                 $this->flashMessenger->addMessage(array('danger' => "Quantidades devolvidas não podem ultrapassar a quantidade solicitada para o produto!"));
+                return $this->_helper->redirector->gotoSimple('listardevolucao', 'produtosolicitacao');
             }
 
-            //redirecionar pra onde?
+            
         }
     }
 

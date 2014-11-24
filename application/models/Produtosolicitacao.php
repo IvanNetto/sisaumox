@@ -124,7 +124,7 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
         $tSolicitacao = new DbTable_Solicitacao();
         $solicitacao = $tSolicitacao->find($solicitacaoid);
 
-        $post = ['data_agendamento' => $data_agendamento];
+        $post = ['data_agendamento' => $data_agendamento, 'status' => 'agendada'];
 
         $solicitacao->current()->setFromArray($post);
         $solicitacao->current()->save();

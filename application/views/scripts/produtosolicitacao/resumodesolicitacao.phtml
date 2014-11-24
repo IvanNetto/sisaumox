@@ -73,6 +73,7 @@ if ($solicitacao->current()->status == 'recebida') {
                     <tr class= "resumo-solicitacao-head">
                         <th>Produto</th>
                         <th>Quantidade Solicitada</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -95,7 +96,8 @@ if ($solicitacao->current()->status == 'recebida') {
                                     if (($solicitacao->current()->status == 'em analise') || ($solicitacao->current()->status == 'aprovada')) {
                                         ?>
                                         <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'aprovarparcialitemdasolicitacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'produtoid' => $produtosolicitacao->current()->produtoid)); ?>" class="btn btn-info btn-xs botaoinfo"><span class="glyphicon glyphicon-tag"></span> Entrega parcial</a>
-                                    <?php }
+                                    <?php
+                                    }
                                 }
                                 ?>
                             </td>
@@ -103,17 +105,16 @@ if ($solicitacao->current()->status == 'recebida') {
                             $tDevolucao = new DbTable_Devolucao();
                             $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtosolicitacao['produtoid']->produtoid);
                             $quantidadeDevolvida = $devolucao[0]['quantidade'];
-                            if ($quantidadeDevolvida) {
-                                ?>
-                                <td><?php echo $quantidadeDevolvida; ?> itens devolvidos</td>
+                            if ($quantidadeDevolvida) { ?>
+                            <td><h4 class="label label-warning alerta-resumo"><?php echo $quantidadeDevolvida; ?> itens devolvidos</h4></td>
                             <?php } ?>
                             <?php
                             $tProdutoSolicitacao = new DbTable_Produtosolicitacao;
                             $entregaParcial = $tProdutoSolicitacao->quantidadeJahAprovadaParcialPorProdutoESolicitacao($produtosolicitacao['produtoid']->produtoid, $produtosolicitacao->current()->solicitacaoid);
                             $quantidadeEntregueParcial = $entregaParcial[0]['aprovacao_parcial'];
-                            if ($quantidadeEntregueParcial > 0) {
+                            if (($quantidadeEntregueParcial > 0) && ($solicitacao->current()->status <> 'entregue') && ($solicitacao->current()->status <> 'recebida')) {
                                 ?>
-                                <td><?php echo $quantidadeEntregueParcial; ?> já aprovados</td> 
+                                <td><h4 class="label label-warning alerta-resumo"><?php echo $quantidadeEntregueParcial; ?> já aprovados</h4></td> 
                             <?php }
                             ?>    
 
@@ -131,8 +132,9 @@ if ($solicitacao->current()->status == 'recebida') {
             <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao->current()->id, 'status' => 'aprovada', 'data_aprovacao' => $data_aprovacao = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-thumbs-up"></span> Aprovar</a>
         <?php } if (($solicitacao->current()->status == 'em analise') || ($solicitacao->current()->status == 'aprovada')) { ?>
             <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $produtosolicitacao['solicitacaoid']->solicitacaoid, 'status' => 'reprovada', 'data_atualizacao_status' => $data_reprovacao = date("m-d-Y"), 'gerente_responsavel' => $login, 'produtosolicitacaoid' => $produtosolicitacao['id']->id)); ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-thumbs-down"></span> Reprovar</a>
-    <?php }
-} ?>
+        <?php }
+    }
+    ?>
 </center>
 
 

@@ -92,9 +92,9 @@
 }
 
 #logos{
-    
+
     text-align: center; 
-    
+
 }
 
 #logosisaumox, #logoprefeitura{
@@ -103,22 +103,22 @@
 }
 
 #logoprefeitura{
-    
+
     border-radius: 5px;
     height: 103px;
     margin-left: 15px;
-    
+
 }
 
 /* HEADER */
 .header{
-height: 150px;
-width: 100%;
-background-image:url("../img/header_fundo.png");
-background-repeat: repeat-x;
-text-align: center;
-margin-bottom: 100px;
-border-bottom: 1px;
+    height: 150px;
+    width: 100%;
+    background-image:url("../img/header_fundo.png");
+    background-repeat: repeat-x;
+    text-align: center;
+    margin-bottom: 100px;
+    border-bottom: 1px;
 
 }
 
@@ -131,11 +131,11 @@ border-bottom: 1px;
     width: 499px;
     margin-top: 20px;
     display: inline-block;
-    
+
 }
 
 .headercontent{
-    
+
     margin-top: 110px;
     display: inline-block;
     color: #074C80;
@@ -178,69 +178,90 @@ border-bottom: 1px;
 
 /*NAV BAR PAINEL DE CONTROLE*/
 .controle{
-   
-background-color: #e7eaee;
-border-radius: 37px;
-height: 70px;
-margin-bottom: 15px;
+
+    background-color: #e7eaee;
+    border-radius: 37px;
+    height: 70px;
+    margin-bottom: 15px;
 
 }
 
 .botao{
-    
+
     padding: 15px 0px 0px 75px;
-    
+
 }
 
 .botao-admin{
-    
-   background-color: #899d9f;
-   font-style: inherit;
+
+    background-color: #899d9f;
+    font-style: inherit;
 }
 
 .teste{
-    
     height: 43px;
     background-color: #899d9f;
 }
 
+.botaoinfo{
+
+    margin-left: 18px;
+
+}
+
+.tabela-busca td {
+
+    text-align: left;
+
+}
+
 /*listar categorias*/
 .instrucao .combobox{    
-   width: inherit;
-   text-align: center;    
-   padding-top: 10px;
+    width: inherit;
+    text-align: center;    
+    padding-top: 10px;
 }
 
 /*resumo de solicitação*/
 
 .tabela-resumo{
-    
-    width: 50%;
-    
-}
 
+    width: 50%;
+
+}
 .tabela-resumo th,td{
-    
+
     border: 1px;
     border-style: solid;
     border-color: black;
     text-align: center;
 }
-
 .resumo-solicitacao-head{
-    
-   background-color: #cfdbdb;
-    
-}
 
+    background-color: #cfdbdb;
+
+}
 .tabela-resumo tbody{
-    
+
     background-color: #e5f8f8;
-    
+
+}
+.alerta-resumo{
+
+    float: left;
+    margin-left: 2px;
+    margin-top: 5px;
 }
 
-.botaoinfo{
+/*listas de solicitações*/
+.acao a{
+
+    width: 120px;
     
-    margin-left: 18px;
-    
+
 }
+
+
+
+
+

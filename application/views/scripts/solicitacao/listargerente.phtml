@@ -8,19 +8,19 @@
 
 <div class="panel panel-primary filterable conteudogerente">
     <div class="panel-heading">
-        <span class="glyphicon glyphicon-list"></span>Lista de Solicitações
+        <span class="glyphicon glyphicon-list"></span> Lista de Solicitações
     </div>
-    <table class="table">
+    <table class="table table-striped table-hover ">
         <tr>
             <?php if ($this->listaDeSolicitacoes->current() == null) { ?>
             <center><strong><h4>sem solicitações</h4></strong></center>
             </tr>
         <?php } else { ?>
             <thead>
-                <tr class="filters">
-                    <th><input type="text" class="form-control" placeholder="Código" disabled></th>
-                    <th><input type="text" class="form-control" placeholder="Data" disabled></th>
-                    <th><input type="text" class="form-control" placeholder="Status" disabled></th>  
+                <tr class="filters text-center">
+                    <th class="text-center">Código</th>
+                    <th class="text-center">Data de criação</th>
+                    <th class="text-center">Status</th>  
                     <th class="text-center">Ação</th>
                 </tr>
             </thead>
@@ -31,10 +31,10 @@
                         <td><?= $solicitacao['data']; ?></td>
                         <td><?= $solicitacao['status']; ?></td>
                         <?php $login = Zend_Auth::getInstance()->getIdentity()->login; ?>
-                        <td class="text-center">
-                            <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Visualizar</a>
+                        <td class="text-center acao">
+                            <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>" class='btn btn-default btn-xs'><span class="glyphicon glyphicon-eye-open"></span> Visualizar</a>
                             <?php if($solicitacao['status'] == 'aprovada'){?>
-                                <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'entregue', 'data_atualizacao_status' => $data_atualizacao_status = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Acusar entrega</a>
+                                <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'entregue', 'data_atualizacao_status' => $data_atualizacao_status = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span> Acusar entrega</a>
                             <?php } ?>
                         </td>
                     </tr> 

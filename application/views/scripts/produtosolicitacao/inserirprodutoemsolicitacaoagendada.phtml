@@ -1,35 +1,27 @@
-<h3>Cadastro de agendamento</h3>
+<h3>Agendamento de produto</h3>
 <hr>
 <div class="instrucao">
-    <p>Insira uma data limite que deseja receber seu produto e a quantidade de itens que precisar. Após, clique em "agendar" para finalizar seu agendamento</p>
+    Para agendar o produto, escolha a data que deseja receber o produto, insira a quantidade necessária e clique em Agendar. Caso queira voltar ao menu anterior, clique <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'deletaragendada')); ?>">Aqui</a>.</p>
     <form class="form-horizontal" action="<?= $this->baseUrl() . '/produtosolicitacao/inserirprodutoemsolicitacaoagendada' ?>" method="POST">
         <input type="hidden" name="produtoid" value="<?php echo $this->produtoid ?>">
         <br><br>
-            <div class="form-group">
-                <div class="col-lg-5 col-lg-offset-5">
-                    <legend>Agendando seu produto</legend>
-                    <input type="text" name="data_agendamento" placeholder="Data de Agendamento">
+             <div class="form-group">
+                <div class="col-lg-3  col-lg-offset-4">
+                    <input class="form-control" id="data_agendamento" type="date" value="2011-01-13" name="data_agendamento" placeholder="Data de agendamento">
+                 </div>   
+                 <div class="col-lg-1">
+                    <input class="form-control" id="quantidade" type="number" name="quantidade" min="1" value="1">
                 </div>
-            </div>    
+                
+            </div>       
             <div class="form-group">
-                <div class="col-lg-5 col-lg-offset-5">
-                    <input type="text" name="quantidade" placeholder="Quantidade">
-                </div>
-            </div>    
-            <div class="form-group">
-                <div class="col-lg-5 col-lg-offset-5">
-                    <!--        <button class="btn btn-default">Cancelar</button>-->
-                    <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'deletaragendada')); ?>">Vosssltar</a>
-                    <button type="submit" class="btn btn-primary">Agendar</button>
+                <div class="col-lg-4 col-lg-offset-4">
+                    <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-calendar"></span> Agendar</button>
                 </div>
             </div>
     </form>
 
 </div>
-
-
-
-
 
 
 
