@@ -9,14 +9,15 @@ if ($solicitacao->current()->status == 'recebida') {
 <?php } elseif ($solicitacao->current()->status == 'em analise' || $solicitacao->current()->status == 'aprovada') { ?>
     <p> Abaixo segue o resumo de sua solicitação ainda não finalizada, selecione <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listar')); ?>">Voltar</a> para retornar para sua lista de solicitações.</p>
 <?php } ?>
-<div class="row">
-    <div class="panel panel-primary filterable">
-        <div class="panel-heading">
-            <span class="glyphicon glyphicon-list"></span>Resumo da solicitção
-        </div>
-        <table class="table">
+<div class="panel panel-primary filterable">
+    <div class="panel-heading">
+        <span class="glyphicon glyphicon-list"></span> Resumo da solicitção
+    </div>
+    <br>
+    <center>
+        <table class="table tabela-resumo">
             <thead>
-                <tr>
+                <tr class= "resumo-solicitacao-head">
                     <th>Solicitação</th>
                     <th>Data da solicitação</th>
                     <?php if ($solicitacao->current()->status == 'agendada' || $solicitacao->current()->status == 'pendente') { ?>
@@ -36,6 +37,7 @@ if ($solicitacao->current()->status == 'recebida') {
                     $tSolicitacao = new DbTable_Solicitacao();
                     $solicitacao = $tSolicitacao->find($this->solicitacaoid);
                     ?>
+                    <td><?= $solicitacao->current()->id; ?></td>
                     <td><?= $solicitacao->current()->data; ?></td>
                     <?php if ($solicitacao->current()->status == 'agendada' || $solicitacao->current()->status == 'pendente') { ?>
                         <td><?= $solicitacao->current()->data_agendamento; ?></td>
@@ -50,85 +52,87 @@ if ($solicitacao->current()->status == 'recebida') {
                     <tr>
                         <th>Observação</th>
                     </tr>
-                <?php } ?>
-                <tr>
-                    <td>
-                        <?php
-                        $login = Zend_Auth::getInstance()->getIdentity()->login;
-                        if ($solicitacao->current()->status == 'agendada' || $solicitacao->current()->status == 'pendente') {
-                            ?>
-                            <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'status' => 'pendente', 'data_atualizacao_status' => $data_atualizacao_status = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" <span class="glyphicon glyphicon-plus"></span>Atualizar</a>
-                        <?php } ?>
-                        <?= $solicitacao->current()->observacao; ?>
-                    </td>
-                </tr>
-            <table style="border: 1px">
-                <thead>
                     <tr>
+                        <td>
+                            <?php
+                            $login = Zend_Auth::getInstance()->getIdentity()->login;
+                            if ($solicitacao->current()->status == 'agendada' || $solicitacao->current()->status == 'pendente') {
+                                ?>
+                                <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'status' => 'pendente', 'data_atualizacao_status' => $data_atualizacao_status = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" <span class="glyphicon glyphicon-plus"></span>Atualizar</a>
+                            <?php } ?>
+                            <?= $solicitacao->current()->observacao; ?>
+                        </td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+        <center>
+            <h4><i class="glyphicon glyphicon-th-large"></i> Produtos escolhidos nesta solicitação:</h4>
+            <table class="table tabela-resumo">
+                <thead>
+                    <tr class= "resumo-solicitacao-head">
                         <th>Produto</th>
                         <th>Quantidade Solicitada</th>
-                        <th></th>
-                        <th></th>
                     </tr>
                 </thead>
-                <br><br><br>
-                <tr ><h4 class="text-center">Produtos escolhidos nesta solicitação:</h4></tr>
-                <br>
-                <div class="col-lg-2">
-                    <tbody>
-                        <?php foreach ($this->resumoDeSolicitacao as $produtosolicitacao) { ?>
-                            <tr>
+                <tbody>
+                    <?php foreach ($this->resumoDeSolicitacao as $produtosolicitacao) { ?>
+                        <tr>
+                            <?php
+                            $tProduto = new DbTable_Produto();
+                            $produto = $tProduto->find($produtosolicitacao['produtoid']);
+                            $tProdutosolicitacao = new Produtosolicitacao();
+                            $produtosolicitacao = $tProdutosolicitacao->findByProdutoESolicitacao($produtosolicitacao['solicitacaoid'], $produtosolicitacao['produtoid']);
+                            ?>
+                            <td><?= $produto->current()->nome; ?></td>
+                            <td><?= $produtosolicitacao->current()->quantidade; ?>
+                                <?php if ($solicitacao->current()->status == 'recebida') { ?>
+                                    <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'devolveritemdasolicitacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'produtoid' => $produtosolicitacao->current()->produtoid, 'data' => $data = date("m-d-Y"), 'produtosolicitacaoid' => $produtosolicitacao->current()->id, 'status' => 'nova')); ?>" class="btn btn-info btn-xs botaoinfo"><span class="glyphicon glyphicon-tag"></span> Devolver</a>
+                                <?php } ?>
                                 <?php
-                                
-                                $tProduto = new DbTable_Produto();
-                                $produto = $tProduto->find($produtosolicitacao['produtoid']);
-                                $tProdutosolicitacao = new Produtosolicitacao();
-                                $produtosolicitacao = $tProdutosolicitacao->findByProdutoESolicitacao($produtosolicitacao['solicitacaoid'], $produtosolicitacao['produtoid']);
-                                ?>
-                                <td style="width: 300px;"><?= $produto->current()->nome; ?></td>
-                                <td style="width: 300px;"><?= $produtosolicitacao->current()->quantidade; ?>
-                                    <?php if ($solicitacao->current()->status == 'recebida') { ?>
-                                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'devolveritemdasolicitacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'produtoid' => $produtosolicitacao->current()->produtoid, 'data' => $data = date("m-d-Y"), 'produtosolicitacaoid' => $produtosolicitacao->current()->id, 'status' => 'nova')); ?>" <span class="glyphicon glyphicon-arrow-left"></span> Devolver</a>
-                                    <?php } ?>
-                                    <?php
-                                    $perfil = Zend_Auth::getInstance()->getIdentity()->perfilid;
-                                    if (($solicitacao->current()->status == 'em analise') || ($solicitacao->current()->status == 'aprovada') && ($perfil == 2)) {
+                                $perfil = Zend_Auth::getInstance()->getIdentity()->perfilid;
+                                if ($perfil == 2) {
+                                    if (($solicitacao->current()->status == 'em analise') || ($solicitacao->current()->status == 'aprovada')) {
                                         ?>
-                                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'aprovarparcialitemdasolicitacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'produtoid' => $produtosolicitacao->current()->produtoid)); ?>" <span class="glyphicon glyphicon-arrow-left"></span> Aprovação parcial</a>
-                                <?php } ?>
-                                </td>
-                                <?php
-                                $tDevolucao = new DbTable_Devolucao();
-                                $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtosolicitacao['produtoid']->produtoid);
-                                $quantidadeDevolvida = $devolucao[0]['quantidade'];
-                                if ($quantidadeDevolvida) {
-                                    ?>
-                                    <td><?php echo $quantidadeDevolvida; ?> itens devolvidos</td>
-                                <?php } ?>
-                                <?php
-                                $tProdutoSolicitacao = new DbTable_Produtosolicitacao;
-                                $entregaParcial = $tProdutoSolicitacao->quantidadeJahAprovadaParcialPorProdutoESolicitacao($produtosolicitacao['produtoid']->produtoid, $produtosolicitacao->current()->solicitacaoid);
-                                $quantidadeEntregueParcial = $entregaParcial[0]['aprovacao_parcial'];
-                                if ($entregaParcial) { ?>
-                                   <td><?php echo $quantidadeEntregueParcial; ?> já aprovados</td> 
-                              <?php  }
-                                ?>    
-                                
-                            </tr>
-                        <?php } ?>
-                    </tbody>
-                </div>
-            </table>
-            </tbody>
+                                        <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'aprovarparcialitemdasolicitacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'produtoid' => $produtosolicitacao->current()->produtoid)); ?>" class="btn btn-info btn-xs botaoinfo"><span class="glyphicon glyphicon-tag"></span> Entrega parcial</a>
+                                    <?php }
+                                }
+                                ?>
+                            </td>
+                            <?php
+                            $tDevolucao = new DbTable_Devolucao();
+                            $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtosolicitacao['produtoid']->produtoid);
+                            $quantidadeDevolvida = $devolucao[0]['quantidade'];
+                            if ($quantidadeDevolvida) {
+                                ?>
+                                <td><?php echo $quantidadeDevolvida; ?> itens devolvidos</td>
+                            <?php } ?>
+                            <?php
+                            $tProdutoSolicitacao = new DbTable_Produtosolicitacao;
+                            $entregaParcial = $tProdutoSolicitacao->quantidadeJahAprovadaParcialPorProdutoESolicitacao($produtosolicitacao['produtoid']->produtoid, $produtosolicitacao->current()->solicitacaoid);
+                            $quantidadeEntregueParcial = $entregaParcial[0]['aprovacao_parcial'];
+                            if ($quantidadeEntregueParcial > 0) {
+                                ?>
+                                <td><?php echo $quantidadeEntregueParcial; ?> já aprovados</td> 
+                            <?php }
+                            ?>    
 
-        </table>
-    </div>
-    <center>
-        <?php if ($solicitacao->current()->status == 'em analise') { ?>
-            <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao->current()->id, 'status' => 'aprovada', 'data_aprovacao' => $data_aprovacao = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Aprovar</a>
-<?php } if (($solicitacao->current()->status == 'em analise') || ($solicitacao->current()->status == 'aprovada')) {?>
-            <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $produtosolicitacao['solicitacaoid']->solicitacaoid, 'status' => 'reprovada', 'data_atualizacao_status' => $data_reprovacao = date("m-d-Y"), 'gerente_responsavel' => $login, 'produtosolicitacaoid' => $produtosolicitacao['id']->id)); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-ok"></span>Reprovar</a>
+                        </tr>
 <?php } ?>
-    </center>
+                </tbody>
+            </table>
+        </center>
 </div>
+<center>
+    <?php
+    if ($perfil == 2) {
+        if ($solicitacao->current()->status == 'em analise') {
+            ?>
+            <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao->current()->id, 'status' => 'aprovada', 'data_aprovacao' => $data_aprovacao = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-thumbs-up"></span> Aprovar</a>
+        <?php } if (($solicitacao->current()->status == 'em analise') || ($solicitacao->current()->status == 'aprovada')) { ?>
+            <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $produtosolicitacao['solicitacaoid']->solicitacaoid, 'status' => 'reprovada', 'data_atualizacao_status' => $data_reprovacao = date("m-d-Y"), 'gerente_responsavel' => $login, 'produtosolicitacaoid' => $produtosolicitacao['id']->id)); ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-thumbs-down"></span> Reprovar</a>
+    <?php }
+} ?>
+</center>
+
 

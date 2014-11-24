@@ -210,3 +210,37 @@ margin-bottom: 15px;
    text-align: center;    
    padding-top: 10px;
 }
+
+/*resumo de solicitação*/
+
+.tabela-resumo{
+    
+    width: 50%;
+    
+}
+
+.tabela-resumo th,td{
+    
+    border: 1px;
+    border-style: solid;
+    border-color: black;
+    text-align: center;
+}
+
+.resumo-solicitacao-head{
+    
+   background-color: #cfdbdb;
+    
+}
+
+.tabela-resumo tbody{
+    
+    background-color: #e5f8f8;
+    
+}
+
+.botaoinfo{
+    
+    margin-left: 18px;
+    
+}
