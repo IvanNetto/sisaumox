@@ -33,7 +33,7 @@
                     <td><?= $compra['status']; ?></td>
                     <td class="text-center acao">
                         <?php if ($compra['status'] == 'nova'){?>
-                            <a class='btn btn-success btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'listarfornecedores', 'compraid' => $compra['id'])); ?>"><span class="glyphicon glyphicon-shopping-cart"></span> Iniciar</a>
+                            <a class='btn btn-success btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'listarfornecedores', 'compraid' => $compra['id'])); ?>"><span class="glyphicon glyphicon-usd"></span> Iniciar</a>
                             <a href="<?php echo $this->url(array('controller' => 'compra', 'action' => 'deletar', 'id' => $compra['id'])); ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Deletar</a>
                         <?php } elseif($compra['status'] == 'aguardando fornecedor'){ ?>
                             <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'resumodepedido', 'compraid' => $compra['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span> Visualizar</a>
@@ -41,9 +41,7 @@
                     </td>
                 </tr>
                 <?php }?>
-
                 </tbody>
             <?php } ?>
-        </table>
     </div>
 </div>

@@ -16,12 +16,13 @@
 
             <form action="<?= $this->baseUrl() . '/produtosolicitacao/atualizarprodutosesolicitacao' ?>" method="POST">
 
-                <?php if ($this->conteudoDoCarrinho->current() == null) { ?>
+                <?php if ($this->conteudoDoCarrinho->current() == null) { $temRegistro = false; ?>
+                
                     <br>
                     <center><strong><h4>Você ainda não escolheu produtos para esta solicitação, clique em "Continue escolhendo".</h4></strong></center>
                     <?php
                 } else {
-                    $temRegistro = "true";
+                    $temRegistro = true;
                     foreach ($this->conteudoDoCarrinho as $item) {
 
                         $tProduto = new Produto();
@@ -57,7 +58,7 @@
                 <hr>
                 <div class="row">
                     <div class="col-xs-12">
-                        <?php if ($temRegistro) { ?>
+                        <?php if ($temRegistro == true) { ?>
                             <button id="moverProCarrinhoSolicitacao" class="btn btn-success btn-xs">
                                 <span class="glyphicon glyphicon-send"></span> Enviar solicitação
                             </button>
@@ -66,7 +67,7 @@
                 </div>
             </form>
         </div>
-        <?php if ($temRegistro) { ?>
+        <?php if ($temRegistro == true) { ?>
             <div class="panel-footer">
                 <td class="text-center"><a class='btn btn-danger btn-xs' href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'limparcarrinhodesolicitacao', 'solicitacaoid' => $this->solicitacaoid)); ?>"><span class="glyphicon glyphicon-floppy-remove"></span> Esvaziar carrinho</a> 
                 <?php } ?>

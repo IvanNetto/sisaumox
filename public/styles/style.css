@@ -253,6 +253,28 @@
     margin-top: 5px;
 }
 
+/*resumo de pedido*/
+
+.linha-pedido{
+    
+    background-color: #e5f8f8;
+    
+}
+
+.valor-total {
+    
+    padding-right: 40px;
+    
+}
+
+.alerta-pedido{
+    
+     float: left;
+    margin-left: -158px;
+    margin-top: 5px;
+
+}
+
 /*listas de solicitações*/
 .acao a{
 

@@ -1,5 +1,5 @@
 <div class="col-lg-12 col-xs-8">
-    <div class="panel panel-primary">
+    <div class="carrinho panel panel-primary">
         <div class="panel-heading">
             <div class="panel-title">
                 <div class="row">
@@ -14,12 +14,14 @@
         </div>
         <div class="panel-body">
             <form action="<?= $this->baseUrl() . '/compra/atualizarcompra' ?>" method="POST">
-                <?php if ($this->conteudoDoCarrinho->current() == null) { ?>
+                <?php if ($this->conteudoDoCarrinho->current() == null) {
+                    $temRegistro = false ?>
+
                     <br>
                     <center><strong><h4>Você ainda não escolheu produtos para esta solicitação, clique em "Continue escolhendo".</h4></strong></center>
                     <?php
                 } else {
-
+                    $temRegistro = true;
                     foreach ($this->conteudoDoCarrinho as $item) {
 
                         $tProduto = new Produto();
@@ -59,19 +61,23 @@
                 }
                 ?>
                 <hr>
-             <div class="row">
-                    <div class="botaopedido">
-                        <button id="moverProCarrinhoSolicitacao" class="btn btn-success btn-xs">
-                            <span class="glyphicon glyphicon-barcode"></span> Gerar pedido de compra
-                        </button>
+<?php if ($temRegistro) { ?>
+                    <div class="row">
+                        <div class="botaopedido">
+                            <button id="moverProCarrinhoSolicitacao" class="btn btn-success btn-xs">
+                                <span class="glyphicon glyphicon-barcode"></span> Gerar pedido de compra
+                            </button>
+                        </div>
                     </div>
-                </div>
+<?php } ?>
             </form>
         </div>
-        <center>
-            <div class="panel-footer">
-                <td><a class='btn btn-danger btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'deletar')); ?>"><span class="glyphicon glyphicon-floppy-remove"></span> Limpar carrinho</a> 
-            </div>
-        </center>
+<?php if ($temRegistro) { ?>
+            <center>
+                <div class="panel-footer">
+                    <td><a class='btn btn-danger btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'deletar')); ?>"><span class="glyphicon glyphicon-floppy-remove"></span> Limpar carrinho</a> 
+                </div>
+            </center>
+<?php } ?>
     </div>
 </div>

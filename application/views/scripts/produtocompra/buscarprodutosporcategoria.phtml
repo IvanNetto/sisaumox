@@ -57,18 +57,12 @@
 
                         <td name="teste" value="<?= $categoriaNome['nome']->nome; ?>"><?= $categoriaNome['nome']->nome; ?></td>
                         <td><?= $produto['descricao']; ?></td>
-                        <?php if ($produto['quantidade'] == 0) { ?>
-                            <td><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirsolicitacaoagendada', 'produtoid' => $produto['id'])); ?>"><span class="glyphicon glyphicon-time"></span> Agendar</a></td>
-                        <?php } else {
-                            ?>
-                            <td> <?= $produto['quantidade']; ?></td>
-                        <?php } ?>
-
+                        <td> <?= $produto['quantidade']; ?></td>
                         </tr>
                     <?php } ?>
                     </tbody>
                 </table>
-                <div class="panel-footer">
+                <div class="panel-footer text-center">
                     <button class="btn btn-success btn-xs"><span class="glyphicon glyphicon-shopping-cart"></span>Mover pro carrinho</button>
                 </div>
             </form>
