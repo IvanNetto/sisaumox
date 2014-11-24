@@ -39,8 +39,6 @@
                         <?php echo $this->partial("controle.phtml"); ?>
                     </div>
                 <?php } }?>
-
-
                 <?php $mensagens = isset($this->layout()->flashMessenger) ? $this->layout()->flashMessenger->getMessages() : array() ?>
                 <?php foreach ($mensagens as $key => $mensagem): ?>
 

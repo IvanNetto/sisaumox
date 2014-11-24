@@ -83,10 +83,10 @@ class PessoaController extends Zend_Controller_Action {
             try {
                 
                 $pessoaEditada = $tPessoa->editarPessoa($post, $pessoa);
-                $this->flashMessenger->addMessage(array('success' => "tudo ok"));
+                $this->flashMessenger->addMessage(array('success' => "Funcionario cadastrado com sucesso"));
             } catch (Exception $e) {
 
-                $this->flashMessenger->addMessage(array('danger' => "ops!"));
+                $this->flashMessenger->addMessage(array('danger' => "Bem, isto e constrangedor. Algum erro ocorreu!"));
             };
 
             $this->forward('index', 'pessoa', $post);

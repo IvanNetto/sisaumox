@@ -1,52 +1,53 @@
-<?php ?>
 <form class="form-horizontal" action="<?= $this->baseUrl() . '/usuario/inserir' ?>" method="POST">
     <fieldset>
         <legend>Criando novo usuário</legend>        
         <div class="form-group">
-            <label for="select" class="col-lg-2 control-label">Funcionário</label>
-            <div class="col-lg-10">
+            <label for="select" class="col-lg-4 control-label">Funcionário</label>
+            <div class="col-lg-6">
                 <select class="form-control" id="select" name="pessoaid">
-                    <option></option>
+                    <option>--selecione--</option>
                     <?php foreach ($this->pessoas as $nomePessoa): ?> 
                         <option value="<?php echo $nomePessoa['id']; ?>"><?php echo $nomePessoa['nome']; ?></option> 
                         <?php
                     endforeach;
                     ?> 
-                </select>     
+                </select>   
+                <span class="help-block">O funcionário precisa estar cadastrado</span>
                 <br>
             </div>
         </div>
         <div class="form-group">
-            <label for="select" class="col-lg-2 control-label">Perfil</label>
-            <div class="col-lg-10">
+            <label for="select" class="col-lg-4 control-label">Perfil</label>
+            <div class="col-lg-6">
                 <select class="form-control" id="select" name="perfilid">
-                    <option></option>
+                    <option>--selecione--</option>
                     <?php foreach ($this->perfis as $nomePerfil): ?> 
                         <option value="<?php echo $nomePerfil['id']; ?>"><?php echo $nomePerfil['nome']; ?></option> 
                         <?php
                     endforeach;
                     ?> 
-                </select>     
+                </select>   
+                <span class="help-block">Perfil dá permissões de acesso ao usuário</span>
                 <br>
             </div>
         </div>
         <div class="form-group">
-            <label for="inputLogin" class="col-lg-2 control-label">Login</label>
-            <div class="col-lg-10">
+            <label for="inputLogin" class="col-lg-6 control-label">Login</label>
+            <div class="col-lg-2">
                 <input class="form-control" id="inputLogin" placeholder="" type="text" name="login">
             </div>
         </div>
         <div class="form-group">
-            <label for="inputSenha" class="col-lg-2 control-label">Senha</label>
-            <div class="col-lg-10">
-                <input class="form-control" id="inputSenha" placeholder="" type="text" name="senha">
+            <label for="inputSenha" class="col-lg-6 control-label">Senha</label>
+            <div class="col-lg-2">
+                <input class="form-control" id="inputSenha" placeholder="" type="password" name="senha">
             </div>
         </div>
         <div class="form-group">
-            <div class="col-lg-10 col-lg-offset-2">
+            <div class="col-lg-6 col-lg-offset-6">
                 <!-- <button class="btn btn-default">Cancelar</button>-->
-                <a href="<?php echo $this->url(array('controller' => 'usuario', 'action' => 'listar')); ?>">Voltar</a>
-                <button type="submit" class="btn btn-primary">Inserir</button>
+                <a class="btn btn-primary" href="<?php echo $this->url(array('controller' => 'usuario', 'action' => 'listar')); ?>">Voltar</a>
+                <button type="submit" class="btn btn-success">Inserir</button>
             </div>
         </div>
     </fieldset>

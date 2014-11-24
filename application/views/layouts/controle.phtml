@@ -50,15 +50,15 @@
             <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle teste" data-toggle="dropdown"><span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li class="dropdown-header">Cadastro para usuário</li>
-                <li><a href="#"><i class="glyphicon glyphicon-hand-up"></i> Funcionário</a></li>
+                <li><a href="<?php echo $this->url(array('controller' => 'pessoa', 'action' => 'listar')); ?>"><i class="glyphicon glyphicon-hand-up"></i> Funcionário</a></li>
                 <li class="divider"></li>
-                <li><a href="#"><i class="glyphicon glyphicon-user"></i> Usuário</a></li>
+                <li><a href="<?php echo $this->url(array('controller' => 'usuario', 'action' => 'listar')); ?>"><i class="glyphicon glyphicon-user"></i> Usuário</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Cadastro para estoque</li>
-                <li><a href="#"><i class="glyphicon glyphicon-th-large"></i> Produtos</a></li>
+                <li><a href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'inserir')); ?>"><i class="glyphicon glyphicon-th-large"></i> Produtos</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Cadastro para compra</li>
-                <li><a href="#"><i class="glyphicon glyphicon-road"></i> Fornecedor</a></li>
+                <li><a href="<?php echo $this->url(array('controller' => 'fornecedor', 'action' => 'listar')); ?>"><i class="glyphicon glyphicon-road"></i> Fornecedor</a></li>
             </ul>
         </div>
     </center>

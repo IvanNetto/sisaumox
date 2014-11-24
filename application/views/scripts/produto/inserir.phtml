@@ -1,16 +1,9 @@
-<?php ?>
 <form class="form-horizontal" action="<?= $this->baseUrl() . '/produto/inserir' ?>" method="POST">
     <fieldset>
-        <legend>Criando novo perfil</legend>
+        <legend>Criar produto</legend>
         <div class="form-group">
-            <label for="inputCodigo" class="col-lg-2 control-label">Código</label>
-            <div class="col-lg-10">
-                <input class="form-control" id="inputCodigo" placeholder="" type="text" name="codigo">
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="select" class="col-lg-2 control-label">Categoria</label>
-            <div class="col-lg-10">
+            <label for="select" class="col-lg-4 control-label">Categoria</label>
+            <div class="col-lg-2">
                 <select class="form-control" id="select" name="categoriaid">
                     <option></option>
                     <?php foreach ($this->categorias as $nomeCategoria): ?> 
@@ -23,40 +16,40 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="inputNome" class="col-lg-2 control-label">Nome</label>
-            <div class="col-lg-10">
+            <label for="inputNome" class="col-lg-4 control-label">Nome</label>
+            <div class="col-lg-6">
                 <input class="form-control" id="inputNome" placeholder="" type="text" name="nome">
             </div>
         </div>
         <div class="form-group">
-            <label for="Descrição" class="col-lg-2 control-label">Descrição</label>
-            <div class="col-lg-10">
+            <label for="Descrição" class="col-lg-4 control-label">Descrição</label>
+            <div class="col-lg-6">
                 <textarea class="form-control" rows="3" id="descricao" name="descricao"></textarea>
                 <span class="help-block">Faça uma breve descrição sobre o perfil a ser criado</span>
             </div>
         </div>
         <div class="form-group">
-            <label for="inputQuantidade" class="col-lg-2 control-label">Quantidade</label>
-            <div class="col-lg-10">
-                <input class="form-control" id="quantidade" placeholder="" type="text" name="quantidade">
+            <label for="inputQuantidade" class="col-lg-4 control-label">Quantidade</label>
+            <div class="col-lg-3">
+                <input class="form-control" id="quantidade" placeholder="" type="number" min="1" name="quantidade">
             </div>
         </div>
         <div class="form-group">
-            <label for="inputQuantidademinima" class="col-lg-2 control-label" >Quantidade mínima</label>
-            <div class="col-lg-10">
+            <label for="inputQuantidademinima" class="col-lg-4 control-label" >Quantidade mínima</label>
+            <div class="col-lg-3">
                 <input class="form-control" id="quantidademinima" placeholder="" type="text" name="quantidademinima">
+                <span class="help-block">Informativo para reposição de estoque</span>
             </div>
         </div>
         <div class="form-group">
-            <label for="inputValidade" class="col-lg-2 control-label">Validade</label>
-            <div class="col-lg-10">
-                <input class="form-control" id="inputValidade" placeholder="" type="text" name="validade">
+            <label for="inputValidade" class="col-lg-4 control-label">Validade</label>
+            <div class="col-lg-4">
+                <input class="form-control" id="inputValidade" placeholder="" type="date" name="validade">
+                <span class="help-block">Preencha se for necessário</span>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-lg-10 col-lg-offset-2">
-                <!-- <button class="btn btn-default">Cancelar</button>-->
-                <a href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'listar')); ?>">Voltar</a>
+            <div class="col-lg-6 col-lg-offset-6">
                 <button type="submit" class="btn btn-primary" id="enviar">Inserir</button>
             </div>
         </div>

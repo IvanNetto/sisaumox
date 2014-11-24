@@ -112,7 +112,7 @@
 
 /* HEADER */
 .header{
-    height: 150px;
+    height: 90px;
     width: 100%;
     background-image:url("../img/header_fundo.png");
     background-repeat: repeat-x;
@@ -283,6 +283,12 @@
 
 }
 
+/*forms*/
+table th{
+    
+    text-align: center;
+    
+}
 
 
 
