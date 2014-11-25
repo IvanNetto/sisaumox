@@ -32,7 +32,7 @@
                     $perfil = Zend_Auth::getInstance()->getIdentity()->perfilid; ?>
                 <?php
                 if ($perfil == 2 || $perfil == 3) {
-                    echo $this->partial("controle.phtml");
+                    echo $this->partial("controle.phtml");                    
                 } else {
                     ?>
                     <div class="somecontrole" style= "display: none">

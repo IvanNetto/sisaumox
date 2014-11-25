@@ -63,6 +63,7 @@ class FornecedorController extends Zend_Controller_Action {
 
         if ($this->getRequest()->isPost()) {
 
+            var_dump($_POST);die;
             $nome = $_POST['nome'];
             $descricao = $_POST['descricao'];
 

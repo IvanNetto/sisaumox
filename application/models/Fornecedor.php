@@ -8,25 +8,25 @@ class Fornecedor extends Zend_Db_Table_Row_Abstract {
         return $listaDeFornecedores = $tFornecedor->fetchAll();
     }
 
-    public function findPerfilById($id) {
+    public function findFornecedorById($id) {
 
-        $tPerfil = new DbTable_Perfil();
-        return $listaDePerfis = $tPerfil->find($id);
+        $tFornecedor = new DbTable_Fornecedor();
+        return $fornecedor = $tFornecedor->find($id);
         
     }
 
-    public function inserirPerfil($post) {
+    public function inserirFornecedor($post) {
 
-        $tPerfil = new DbTable_Perfil();
-        $novoPerfil = $tPerfil->createRow();
-        $novoPerfil->setFromArray($post);
-        $novoPerfil->save();
+        $tFornecedor = new DbTable_Fornecedor();
+        $novoFornecedor = $tFornecedor->createRow();
+        $novoFornecedor->setFromArray($post);
+        $novoFornecedor->save();
     }
 
-    public function editarPerfil($post, $perfil) {
+    public function editarFornecedor($post, $fornecedor) {
         
-        $perfil->current()->setFromArray($post);    
-        $perfil->current()->save();
+        $fornecedor->current()->setFromArray($post);    
+        $fornecedor->current()->save();
         
         
     }

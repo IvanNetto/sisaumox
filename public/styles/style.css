@@ -182,7 +182,7 @@
     background-color: #e7eaee;
     border-radius: 37px;
     height: 70px;
-    margin-bottom: 15px;
+    margin-bottom: 55px;
 
 }
 
@@ -256,20 +256,20 @@
 /*resumo de pedido*/
 
 .linha-pedido{
-    
+
     background-color: #e5f8f8;
-    
+
 }
 
 .valor-total {
-    
+
     padding-right: 40px;
-    
+
 }
 
 .alerta-pedido{
-    
-     float: left;
+
+    float: left;
     margin-left: -158px;
     margin-top: 5px;
 
@@ -279,21 +279,54 @@
 .acao a{
 
     width: 120px;
-    
+
 
 }
 
 /*forms*/
 table th{
-    
+
     text-align: center;
-    
+
 }
 
 .tabela-fornecedor{
-    
+
     font-size: 9pt;
-    
+
 }
 
+.lado-direito{
 
+    float: right;
+    margin-left: 555px;
+    margin-top: -302px;
+    position: absolute;
+    width: 936px;
+
+}
+
+.numero{
+
+    padding-left: 309px;
+    margin-top: -59px;
+    position: absolute;
+}
+
+.complemento{
+
+    position: absolute;
+    float: right;
+    padding-left: 440px;
+    margin-top: -60px;
+
+}
+
+.uf{
+
+    position: absolute;
+    float: right;
+    padding-left: 471px;
+    margin-top: -58px;
+
+}
