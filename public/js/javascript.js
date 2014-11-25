@@ -103,6 +103,10 @@ $(document).ready(function(){
         $('#total').text("Valor total: " + total);
 
     });
+    
+    $("select").attr('required', 'required');
+    
+    
 });
 
 

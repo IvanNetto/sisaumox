@@ -11,9 +11,9 @@
 
                 <thead>
                 <tr class="filters">
-                    <th><input type="text" class="form-control" placeholder="Código" disabled></th>
-                    <th><input type="text" class="form-control" placeholder="Data" disabled></th>
-                    <th><input type="text" class="form-control" placeholder="Status" disabled></th>
+                   <th class="text-center">Código</th>
+                        <th class="text-center">Data de criação</th>
+                        <th class="text-center">Status</th>
                     <?php if ($this->solicitacao->current()->status <> 'nova'){?>
                         <th class="text-center">Ação</th>
                     <?php } ?>

@@ -18,8 +18,8 @@
         <div class="form-group">
             <label for="select" class="col-lg-2 control-label">Função</label>
             <div class="col-lg-2">
-                <select class="form-control" id="select" name="funcaoid">
-                    <option>--selecione--</option>
+                <select class="form-control" id="select" name="funcaoid" required="true">
+                    <option value="">--selecione--</option>
                     <?php foreach ($this->funcoes as $nomeFuncao):?> 
                         <option value="<?php echo $nomeFuncao['id']; ?>"><?php echo $nomeFuncao['nome']; ?></option> 
                         <?php

@@ -2,10 +2,10 @@
 
 class Fornecedor extends Zend_Db_Table_Row_Abstract {
 
-    public function listarPerfis() {
+    public function listarFornecedores() {
 
-        $tPerfil = new DbTable_Perfil();
-        return $listaDePerfis = $tPerfil->fetchAll();
+        $tFornecedor = new DbTable_Fornecedor();
+        return $listaDeFornecedores = $tFornecedor->fetchAll();
     }
 
     public function findPerfilById($id) {
