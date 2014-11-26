@@ -27,9 +27,7 @@
                     <td><?= $pessoa['id']; ?></td>
                     <td><?= $pessoa['matricula']; ?></td>
                     <td><?= $pessoa['nome']; ?></td>
-                    <td><?= $funcaoNome['funcaoid']->nome;
-                ;
-                    ?></td>
+                    <td><?= $funcaoNome['funcaoid']->nome;?></td>
                     <td><?= $pessoa['telefone1']; ?></td>
                     <td><?= $pessoa['telefone2']; ?></td>
                     <td class="text-center"><a class='btn btn-warning btn-block btn-xs' href="<?php echo $this->url(array('controller' => 'pessoa', 'action' => 'editar', 'id' => $pessoa['id'])); ?>"><span class="glyphicon glyphicon-edit"></span>Editar</a></td> 
