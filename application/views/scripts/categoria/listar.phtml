@@ -1,9 +1,9 @@
 <legend>Categorias cadastrados</legend>
 <hr>
 <div class="panel panel-primary"> 
-   <div class="panel-heading" id="actions"><span class="glyphicon glyphicon-list"></span> Lista de categorias cadastrados
-      <a href="<?php echo $this->url(array('controller' => 'categoria', 'action' => 'inserir')); ?>" class="btn btn-info btn-xs pull-right" style="border:2"><span class="glyphicon glyphicon-plus"></span>Nova categoria</a>
-   </div>
+    <div class="panel-heading" id="actions"><span class="glyphicon glyphicon-list"></span> Lista de categorias cadastrados
+        <a href="<?php echo $this->url(array('controller' => 'categoria', 'action' => 'inserir')); ?>" class="btn btn-info btn-xs pull-right" style="border:2"><span class="glyphicon glyphicon-plus"></span>Nova categoria</a>
+    </div>
     <div class="panel-body">
         <table class="table table-striped table-hover"> 
             <thead>             
@@ -14,14 +14,14 @@
                     <th></th>
                 </tr>
             </thead>
-            <tr>
-                <?php foreach ($this->listaDeCategorias as $categoria) { ?>
+            <?php foreach ($this->listaDeCategorias as $categoria) { ?>
+                <tr>
                     <td><?= $categoria['nome']; ?></td>
                     <td><?= $categoria['descricao']; ?></td>
                     <td class="text-center"><a class='btn btn-warning btn-block btn-xs' href="<?php echo $this->url(array('controller' => 'categoria', 'action' => 'editar', 'id' => $categoria['id'])); ?>"><span class="glyphicon glyphicon-edit"></span> Editar</a></td> 
                     <td class="text-center"><a href="<?php echo $this->url(array('controller' => 'categoria', 'action' => 'deletar', 'id' => $categoria['id'])); ?>" class="btn btn-danger btn-block btn-xs"><span class="glyphicon glyphicon-remove-circle"></span> Excluir</a></td>
                 </tr>     
-<?php } ?>      
+            <?php } ?>      
         </table>
     </div>
 </div>

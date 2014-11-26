@@ -146,4 +146,26 @@ class ProdutoController extends Zend_Controller_Action {
        
     }
     
+    public function listarprodutosindisponiveisAction(){
+        
+
+        $tProduto = new Produto();
+        $produtosIndisponiveis = $tProduto->listarIndisponiveis();
+
+        $this->view->lisdaDeIndisponiveis = $produtosIndisponiveis;
+        
+        
+    }
+    
+    public function listarprodutosquantidademinimaAction(){
+        
+
+        $tProduto = new DbTable_Produto();
+        $produtosIndisponiveis = $tProduto->listarIndisponiveis();
+
+        $this->view->lisdaDeQuantidadeMinima = $produtosIndisponiveis;
+        
+        
+    }
+    
 }

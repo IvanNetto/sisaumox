@@ -40,9 +40,8 @@
             <ul class="dropdown-menu">
                 <li class="dropdown-header">Produtos cadastrados</li>
                 <li><a href="<?php echo $this->url(array('controller' => 'categoria', 'action' => 'selecionarcategoria')); ?>"><i class="glyphicon glyphicon-th-large"></i> Produtos</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Produtos indisponíveis</li>
-                <li><a href="#"><i class="glyphicon glyphicon-warning-sign"></i> Indisponíveis</a></li>
+                
+                
             </ul>
         </div>
         <div class="btn-group botao">
@@ -61,6 +60,37 @@
                 <li><a href="<?php echo $this->url(array('controller' => 'fornecedor', 'action' => 'listar')); ?>"><i class="glyphicon glyphicon-road"></i> Fornecedor</a></li>
             </ul>
         </div>
+        <div class="btn-group botao">
+            <a href="#" class="btn btn-default botao-admin"><i class="glyphicon glyphicon-list-alt"></i>  Relatórios</a>
+            <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle teste" data-toggle="dropdown"><span class="caret"></span></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown-header"><i class="glyphicon glyphicon-user"></i> Usuário</li>
+                <li><a href="">Relatório </a></li>
+                <li><a href="">Relatório </a></li>
+                <li><a href="">Relatório </a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header"><i class="glyphicon glyphicon-folder-close"></i> Estoque</li>
+                <li><a href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'listarprodutosindisponiveis')); ?>"> Produtos indisponíveis</a></li>
+                <li><a href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'listarprodutosquantidademinima')); ?>"> Produtos com baixa quantidade</a></li>
+                <li><a href="">Relatório </a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header"><i class="glyphicon glyphicon-road"></i> Fornecedor</a></li>
+                <li><a href="">Relatório </a></li>
+                <li><a href="">Relatório </a></li>
+                <li><a href="">Relatório </a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header"><i class="glyphicon glyphicon-usd"></i> Compra</li>
+                <li><a href="">Relatório </a></li>
+                <li><a href="">Relatório </a></li>
+                <li><a href="">Relatório </a></li>
+                <li class="divider"></li>
+                <li class="dropdown-header"><i class="glyphicon glyphicon-usd"></i> Solicitação</li>
+                <li><a href="">Relatório </a></li>
+                <li><a href="">Relatório </a></li>
+                <li><a href="">Relatório </a></li>
+            </ul>
+        </div>
     </center>
 </div>
 <hr class="linha-controle">
+
