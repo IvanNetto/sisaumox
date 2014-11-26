@@ -44,38 +44,45 @@
             </div>
             <div class="form-group complemento">
                 <div class="col-lg-8">
-                    <input class="form-control" type="text" placeholder="Complemento"/>
+                    <input class="form-control" type="text" name="complemento" placeholder="Complemento"/>
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputTelefone1" class="col-lg-2 control-label">Bairro</label>
+                <label for="inputBairro" class="col-lg-2 control-label">Bairro</label>
                 <div class="col-lg-4">
-                    <input class="form-control" type="text" required="required" maxlength="15" name="telefone1" pattern="[0-9]+$" placeholder="ex: 98556452"/>
+                    <input class="form-control" type="text" required="required" name="bairro" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputTelefone2" class="col-lg-2 control-label">Município</label>
+                <label for="inputMunicipio" class="col-lg-2 control-label">Município</label>
                 <div class="col-lg-4">
-                    <input class="form-control" type="text" maxlength="15" name="telefone2" pattern="[0-9]+$" placeholder="ex: 2124647256"/>
+                    <input class="form-control" type="text" name="cidade"/>
                 </div>
             </div>
             <div class="form-group uf">
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <input class="form-control" id="inputId" type="text"  name="estado" placeholder="uf" required="true">
                 </div>
             </div>
             <div class="form-group">
                 <label for="Contato" class="col-lg-2 control-label">Contato</label>
                 <div class="col-lg-5">
-                    <textarea class="form-control" rows="3" id="descricao" name="descricao" placeholder=" Ex: João Ribeiro do almoxarifado, Ramal 5378."></textarea>
+                    <textarea class="form-control" rows="3" id="contato" name="contato" placeholder=" Ex: João Ribeiro do almoxarifado, Ramal 5378."></textarea>
                     <span class="help-block">Quais funionários você se relaciona?</span>
                 </div>
             </div>
+             <div class="form-group">
+                <label for="Contato" class="col-lg-2 control-label">Email</label>
+                <div class="col-lg-5">
+            <input type="email" required="required" class="input-text" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" />
+                </div>
+            </div>
+            
         </div>
         <br><br><br>
         <div class="form-group">
             <div class="col-lg-5 col-lg-offset-5">
-                <a class="btn btn-primary" href="<?php echo $this->url(array('controller' => 'funcionario', 'action' => 'listar')); ?>">Voltar</a>
+                <a class="btn btn-primary" href="<?php echo $this->url(array('controller' => 'fornecedor', 'action' => 'listar')); ?>">Voltar</a>
                 <button type="submit" class="btn btn-success">Criar</button>
             </div>
         </div>

@@ -34,18 +34,18 @@ class FornecedorController extends Zend_Controller_Action {
         
         if ($this->getRequest()->isPost()) {
 
-            $nome = $_POST['nome'];
-            $descricao = $_POST['descricao'];
 
-            $post = array('nome' => $nome, 'descricao' => $descricao);
+            $post = array('id'=> $_POST['id'], 'razao_social' => $_POST['razao_social'], 'telefone1' => $_POST['telefone1'], 'telefone2' => $_POST['telefone2'],
+                    'rua' => $_POST['rua'], 'bairro' => $_POST['bairro'], 'numero' => $_POST['numero'], 'complemento' => $_POST['complemento'], 
+                    'cidade' => $_POST['cidade'], 'estado' => $_POST['estado'], 'contato' => $_POST['contato'], 'email' => $_POST['email']);
             
             try {
                 $novoFornecedor = $perfil->inserirFornecedor($post);                
-                $this->flashMessenger->addMessage(array( 'success' => "tudo ok"));
+                $this->flashMessenger->addMessage(array( 'success' => "Um novo fornecedor foi cadastrado com sucesso!"));
 
             }catch (Exception $e){
 
-                $this->flashMessenger->addMessage(array( 'danger' => "ops!"));
+                $this->flashMessenger->addMessage(array( 'danger' => "Bem, isto é constrangedor. Um novo fornecedor não foi cadastrado. Tente novamente!"));
 
             };
 
@@ -57,30 +57,29 @@ class FornecedorController extends Zend_Controller_Action {
         
         $id = $this->_getParam("id");
         $tFornecedor = new Fornecedor();
-        $perfil = $tFornecedor->findFornecedorById($id);
+        $fornecedor = $tFornecedor->findFornecedorById($id);
 
-        $this->view->perfil = $perfil->current();
+        $this->view->fornecedor = $fornecedor->current();
 
         if ($this->getRequest()->isPost()) {
 
-            var_dump($_POST);die;
-            $nome = $_POST['nome'];
-            $descricao = $_POST['descricao'];
-
-            $post = array('nome' => $nome, 'descricao' => $descricao);
+            
+            $post = array('id'=> $_POST['id'], 'razao_social' => $_POST['razao_social'], 'telefone1' => $_POST['telefone1'], 'telefone2' => $_POST['telefone2'],
+                    'rua' => $_POST['rua'], 'bairro' => $_POST['bairro'], 'numero' => $_POST['numero'], 'complemento' => $_POST['complemento'], 
+                    'cidade' => $_POST['cidade'], 'estado' => $_POST['estado'], 'contato' => $_POST['contato'], 'email' => $_POST['email']);
 
             try {
                
                 $perfilEditado = $tFornecedor->editarFornecedor($post, $perfil);
-                $this->flashMessenger->addMessage(array('success' => "tudo ok"));
+                $this->flashMessenger->addMessage(array('success' => "O fornecedor foi editado com sucesso!"));
 
             }catch (Exception $e){
 
-                $this->flashMessenger->addMessage(array( 'danger' => "ops!"));
+                $this->flashMessenger->addMessage(array( 'danger' => "Bem, isto é constrangedor. O fornecedor não foi editado. Tente novamente!"));
 
             };
 
-             $this->forward('index','perfil', null, $post);
+             $this->_helper->redirector('listar');
         }
     }
     public function deletarAction() {
@@ -96,12 +95,12 @@ class FornecedorController extends Zend_Controller_Action {
         try {
 
             $perfil->current()->delete();
-            $this->flashMessenger->addMessage(array( 'success' => "tudo ok"));
+            $this->flashMessenger->addMessage(array( 'success' => "Fornecedor excluido com sucesso!"));
 
         } catch (Exception $e) {
 
             echo $e->getMessage();
-            $this->flashMessenger->addMessage(array( 'success' => "tudo ok"));
+            $this->flashMessenger->addMessage(array( 'success' => "Bem, isto é constrangedor. O fornecedor não foi excluido. Tente novamente!"));
         }
 
         return $this->_helper->redirector('listar');
