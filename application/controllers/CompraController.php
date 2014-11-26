@@ -69,10 +69,9 @@ class CompraController extends Zend_Controller_Action {
     }
 
     public function listarhistoricoAction() {
-        $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
 
-        $tSolicitacao = new Solicitacao();
-        $historico = $tSolicitacao->listarHistorico($usuarioId);
+        $tCompra = new Compra();
+        $historico = $tCompra->listarHistorico();
 
         $this->view->historico = $historico;
     }

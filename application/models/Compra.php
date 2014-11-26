@@ -26,11 +26,14 @@ class Compra extends Zend_Db_Table_Row_Abstract {
 
     }
 
-    public function findByProdutoECompra($produtoid, $compraid){
+    public function listarHistorico(){
+        
+        $tCompra = new DbTable_Compra();
+        $query = $tCompra->select()
+                ->where('status in (?)', 'concluida');
 
-
-
-
+        return $tCompra->fetchAll($query);
+        
     }
         
 }

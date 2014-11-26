@@ -1,0 +1,46 @@
+<h3>Lista de compras concretizadas</h3>
+<hr>
+<?php if ($this->historico->current() <> null) { ?>
+    <p> Abaixo seguem suas compras finalizadas. </p>
+<?php } else { ?>
+    <p> Você não tem ainda compras concretizadas, porisso seu histórico encontra-se vazio.</a> </p>
+<?php } ?>
+
+<div class="row">
+    <div class="panel panel-primary filterable">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-list"></span> Histórico
+        </div>
+        <table class="table table-striped table-hover ">
+            <tr>
+                <?php if ($this->historico->current() == null) { ?>
+                <center><strong><h4>sem solicitações concretizadas</h4></strong></center>
+                </tr>
+            <?php } else { ?>
+                <thead>
+                    <tr class="filters">
+                        <th class="text-center">Código</th>
+                        <th class="text-center">Data da compra</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <?php foreach ($this->historico as $compra) { ?>
+                            <td><?= $compra['id']; ?></td>
+                            <td><?= $compra['data_pedido']; ?></td>
+                            <td><?= $compra['status']; ?></td>
+                            <td class="text-center"><a class='btn btn-info btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'resumodepedido', 'compraid' => $compra['id'])); ?>"><span class="glyphicon glyphicon-list-alt"></span> Resumo</a> 
+                        </tr> 
+                    <?php
+                    }
+                }
+                ?>
+                </tr>
+            </tbody>
+        </table>
+    </div>     
+</div>
+
+

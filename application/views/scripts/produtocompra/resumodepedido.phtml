@@ -66,6 +66,8 @@
         </tbody>
 
 </div>
+<?php if ($compra->status <> 'concluida'){?>
 <center>
     <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'reporitensnoestoque', 'id' => $compra->id)); ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-thumbs-up"></span> Repor todos</a>
 </center>
+<?php } ?>
