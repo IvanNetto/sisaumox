@@ -1,0 +1,39 @@
+<h3>Troca de senha</h3>
+<hr>
+
+<div class="trocadesenha">
+
+    <form class="form-horizontal" action="<?= $this->baseUrl() . '/usuario/trocadesenha' ?>" method="POST">
+        <input type="hidden" name="produtoid" value="<?php echo $this->produtoid ?>">
+        
+        <div class="form-group">
+            <div class="col-lg-3  col-lg-offset-4">
+                <input class="form-control" id="senhaatual" type="password"  name="senha" placeholder="" required="true">
+                <span class="help-block">Digite sua senha</span>
+            </div> 
+        </div> 
+        <div class="form-group">
+            <div class="col-lg-3  col-lg-offset-4">
+                <input class="form-control" id="novasenha" type="password"  name="novasenha" placeholder="" required="true">
+                <span class="help-block">Insira uma nova senha</span>
+            </div>  
+        </div>
+        <div class="form-group">
+            <div class="col-lg-3  col-lg-offset-4">
+                <input class="form-control" id="resenha" type="password"  name="resenha" placeholder="" required="true">
+                <span class="help-block">Confirme sua nova senha</span>
+            </div>   
+
+        </div> 
+        <div class="form-group">
+            <div class="col-lg-4 col-lg-offset-4">
+                <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span> Confirmar troca</button>
+            </div>
+        </div>
+        
+    </form>
+
+</div>
+
+
+

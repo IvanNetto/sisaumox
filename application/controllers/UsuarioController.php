@@ -69,7 +69,7 @@ class UsuarioController extends Zend_Controller_Action {
 
     public function editarAction() {
 
-       $tPessoa = new Pessoa();
+        $tPessoa = new Pessoa();
         $pessoas = $tPessoa->listarPessoas();
 
         $tPerfil = new Perfil();
@@ -123,6 +123,66 @@ class UsuarioController extends Zend_Controller_Action {
         }
 
         return $this->_helper->redirector('listar');
+    }
+
+    public function perfilusuarioAction() {
+
+
+        $usuario = Zend_Auth::getInstance()->getIdentity()->id;
+
+        $tUsuario = new DbTable_Usuario();
+        $perfilusuario = $tUsuario->perfilUsuario($usuario);
+
+        $this->view->perfilusuario = $perfilusuario;
+    }
+
+    public function trocadesenhaAction() {
+
+        $usuario = Zend_Auth::getInstance()->getIdentity()->id;
+
+        if (!$_POST) {
+
+            $this->view->usuario = $usuario;
+        } else {
+
+            $tUsuario = new DbTable_Usuario();
+            $usuario = $tUsuario->find($usuario);
+
+            $senhaAtual = $usuario->current()->senha;
+
+            $senha = trim($_POST['senha']);
+            $novasenha = trim($_POST['novasenha']);
+            $resenha = trim($_POST['resenha']);
+
+            $post = array('senha' => $resenha);
+
+            try {
+
+                if ($senha == $senhaAtual) {
+
+                    if ($novasenha == $resenha) {
+
+                        $usuario->current()->setFromArray($post);
+                        $usuario->current()->save();
+
+                        $this->flashMessenger->addMessage(array('success' => "Troca de senha efetuada com sucesso!"));
+                        return $this->_helper->redirector('perfilusuario');
+                    } else {
+
+                        $this->flashMessenger->addMessage(array('danger' => "Confirmação de senha não confere!"));
+                        return $this->_helper->redirector('trocadesenha');
+                    }
+                } else {
+
+                    $this->flashMessenger->addMessage(array('danger' => "Senha atual não existe!"));
+                    return $this->_helper->redirector('trocadesenha');
+                }
+            } catch (Exception $e) {
+
+                $this->flashMessenger->addMessage(array('danger' => "Bem, isto é constrangedor! Sua senha não foi trocada. Tente novamente!"));
+                return $this->_helper->redirector('trocadesenha');
+            };
+        }
     }
 
 }

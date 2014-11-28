@@ -1,8 +1,8 @@
-$(document).ready(function(){
-    $('.filterable .btn-filter').click(function(){
+$(document).ready(function () {
+    $('.filterable .btn-filter').click(function () {
         var $panel = $(this).parents('.filterable'),
-            $filters = $panel.find('.filters input'),
-            $tbody = $panel.find('.table tbody');
+                $filters = $panel.find('.filters input'),
+                $tbody = $panel.find('.table tbody');
         if ($filters.prop('disabled') == true) {
             $filters.prop('disabled', false);
             $filters.first().focus();
@@ -13,19 +13,20 @@ $(document).ready(function(){
         }
     });
 
-    $('.filterable .filters input').keyup(function(e){
+    $('.filterable .filters input').keyup(function (e) {
         /* Ignore tab key */
         var code = e.keyCode || e.which;
-        if (code == '9') return;
+        if (code == '9')
+            return;
         /* Useful DOM data and selectors */
         var $input = $(this),
-            inputContent = $input.val().toLowerCase(),
-            $panel = $input.parents('.filterable'),
-            column = $panel.find('.filters th').index($input.parents('th')),
-            $table = $panel.find('.table'),
-            $rows = $table.find('tbody tr');
+                inputContent = $input.val().toLowerCase(),
+                $panel = $input.parents('.filterable'),
+                column = $panel.find('.filters th').index($input.parents('th')),
+                $table = $panel.find('.table'),
+                $rows = $table.find('tbody tr');
         /* Dirtiest filter function ever ;) */
-        var $filteredRows = $rows.filter(function(){
+        var $filteredRows = $rows.filter(function () {
             var value = $(this).find('td').eq(column).text().toLowerCase();
             return value.indexOf(inputContent) === -1;
         });
@@ -36,7 +37,7 @@ $(document).ready(function(){
         $filteredRows.hide();
         /* Prepend no-result row if all rows are filtered */
         if ($filteredRows.length === $rows.length) {
-            $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="'+ $table.find('.filters th').length +'">No result found</td></tr>'));
+            $table.find('tbody').prepend($('<tr class="no-result text-center"><td colspan="' + $table.find('.filters th').length + '">No result found</td></tr>'));
         }
     });
 
@@ -46,16 +47,16 @@ $(document).ready(function(){
     panels.hide();
 
     //Click dropdown
-    panelsButton.click(function() {
+    panelsButton.click(function () {
         //get data-for attribute
         var dataFor = $(this).attr('data-for');
         var idFor = $(dataFor);
 
         //current button
         var currentButton = $(this);
-        idFor.slideToggle(400, function() {
+        idFor.slideToggle(400, function () {
             //Completed slidetoggle
-            if(idFor.is(':visible'))
+            if (idFor.is(':visible'))
             {
                 currentButton.html('Hide Results');
             }
@@ -67,7 +68,7 @@ $(document).ready(function(){
     });
 
     /*Carrinho de solicitações*/
-    $('.linhaCarrinhoSolicitacao').each(function(){
+    $('.linhaCarrinhoSolicitacao').each(function () {
 
         var disponiveis = $(this).find('.disponiveis').text();
 
@@ -78,17 +79,17 @@ $(document).ready(function(){
 
 
     /*Carrinho de compras*/
-    $(".valorUnitario").maskMoney({showSymbol:true, symbol:"R$", decimal:",", thousands:"."});
+    $(".valorUnitario").maskMoney({showSymbol: true, symbol: "R$", decimal: ",", thousands: "."});
 
 
-    $('.valorUnitario, .quantidadeItensCompra').blur(function(){
+    $('.valorUnitario, .quantidadeItensCompra').blur(function () {
         var total = 0;
-        $('.linhaCarrinho').each(function(){
+        $('.linhaCarrinho').each(function () {
 
-           var valorUnitario = $(this).find('.valorUnitario').val();
-           var quantidadeItensCompra = $(this).find('.quantidadeItensCompra').val();
+            var valorUnitario = $(this).find('.valorUnitario').val();
+            var quantidadeItensCompra = $(this).find('.quantidadeItensCompra').val();
 
-            var valorUnitarioComCifrao = valorUnitario.replace(",",".");
+            var valorUnitarioComCifrao = valorUnitario.replace(",", ".");
 
             var multiplica = (parseFloat(quantidadeItensCompra) * parseFloat(valorUnitarioComCifrao));
             total += multiplica;
@@ -98,15 +99,13 @@ $(document).ready(function(){
         total = String(total);
 
         total = parseFloat(total).toFixed(2);
-        total = total.replace(".",",");
+        total = total.replace(".", ",");
 
         $('#total').text("Valor total: " + total);
 
     });
-    
-    $("select").attr('required', 'required');
-    
-    
+
+
 });
 
 

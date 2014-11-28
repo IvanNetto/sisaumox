@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title"><?= $this->perfilusuario[0]['pessoa']; ?></h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                        <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="https://lh5.googleusercontent.com/-b0-k99FZlyE/AAAAAAAAAAI/AAAAAAAAAAA/eu7opA4byxI/photo.jpg?sz=100" class="img-circle"> </div>
+                        <div class=" col-md-9 col-lg-9 "> 
+                            <table class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td>Usuário:</td>
+                                        <td><?= $this->perfilusuario[0]['login']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Perfil</td>
+                                        <td><?= $this->perfilusuario[0]['perfil']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Setor:</td>
+                                        <td><?= $this->perfilusuario[0]['setor']; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Função:</td>
+                                        <td><?= $this->perfilusuario[0]['funcao']; ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <a href="<?= $this->baseUrl() . '/usuario/trocadesenha' ?>" class="btn btn-primary">Trocar senha</a>
+            </div>
+        </div>
+    </div>
+</div>
