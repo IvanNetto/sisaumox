@@ -104,8 +104,18 @@ $(document).ready(function () {
         $('#total').text("Valor total: " + total);
 
     });
-
-
+    
+    $('.imprimir').click(function(){
+     
+         $('.no-print').css("display", "none"); 
+         $('.print').css("display", "block"); 
+         
+    
+    
+    
+    })
+    
+    
 });
 
 

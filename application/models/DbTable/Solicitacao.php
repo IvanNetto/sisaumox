@@ -1,20 +1,37 @@
 <?php
-class DbTable_Solicitacao extends Zend_Db_Table_Abstract
-{
+
+class DbTable_Solicitacao extends Zend_Db_Table_Abstract {
 
     protected $_name = 't_solicitacao';
     protected $_rowClass = 'Solicitacao';
     protected $_primary = 'id';
 
+    public function mostrarUltimaSolicitacaoAgendada() {
 
+        $sql = "select max(id) as id from t_solicitacao where status ='agendada'";
 
-   public function mostrarUltimaSolicitacaoAgendada(){
+        return $this->getAdapter()->fetchAll($sql);
+    }
 
-       $sql = "select max(id) as id from t_solicitacao where status ='agendada'";
+    public function RelatorioDeSolicitacoesPorPeriodo($data1, $data2) {
 
-       return $this->getAdapter()->fetchAll($sql);
+        $data1 = explode('-', $data1);
+        $ano = $data1[0];
+        $mes = $data1[1];
+        $dia = $data1[2];
 
+        $data1 = $data1[2] . '/' . $data1[1] . '/' . $data1[0];
 
-   }
+        $data2 = explode('-', $data2);
+        $ano = $data2[0];
+        $mes = $data2[1];
+        $dia = $data2[2];
+
+        $data2 = $data2[2] . '/' . $data2[1] . '/' . $data2[0];
+
+        $sql = "select * from t_solicitacao s, t_usuario u where data between '$data1' and '$data2' order by data";
+
+        return $this->getAdapter()->fetchAll($sql);
+    }
 
 }

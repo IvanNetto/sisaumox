@@ -1,8 +1,8 @@
 <center>
-    <i class="glyphicon glyphicon-user"></i> Administrador
-    <br><br>
+    <small class="no-print"><i class="glyphicon glyphicon-user"></i> Administrador</small>
+    <br>
 </center>
-<div class="controle">
+<div class="controle no-print">
     <center>
         <div class="btn-group botao">
             <a href="#" class="btn btn-default botao-admin"><i class="glyphicon glyphicon-bell"></i> Notificações</a>
@@ -85,7 +85,7 @@
                 <li><a href="">Relatório </a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header"><i class="glyphicon glyphicon-usd"></i> Solicitação</li>
-                <li><a href="">Relatório </a></li>
+                <li><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'solicitacoesporperiodo')); ?>"> Solicitações por período</a></li>
                 <li><a href="">Relatório </a></li>
                 <li><a href="">Relatório </a></li>
             </ul>
