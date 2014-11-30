@@ -19,6 +19,8 @@ class UsuarioController extends Zend_Controller_Action {
     //lista usuários mostrando login e nome da pessoa
     public function listarAction() {
 
+        $relatorio = $this->getParam('relatorio');
+        
         $tUsuario = new Usuario();
         $listaDeUsuarios = $tUsuario->listarUsuarios();
 
@@ -31,6 +33,7 @@ class UsuarioController extends Zend_Controller_Action {
         $this->view->listaDeUsuarios = $listaDeUsuarios->toArray();
         $this->view->pessoas = $pessoas->toArray();
         $this->view->perfis = $perfis->toArray();
+        $this->view->relatorio = $relatorio;
     }
 
     public function inserirAction() {

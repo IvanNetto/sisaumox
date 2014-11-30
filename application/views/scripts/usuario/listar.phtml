@@ -15,11 +15,14 @@
                     <th>Perfil</th>
                     <th></th>
                     <th></th>
+                    <?php if ($this->relatorio <> null)?>
+                    <th></th>
                 </tr>
             </thead>
             <tr>
                 <?php
                 foreach ($this->listaDeUsuarios as $usuario) {
+                    
                     $tPessoa = new Pessoa();
                     $pessoaNome = $tPessoa->findPessoaById($usuario['pessoaid']);
 
@@ -29,10 +32,11 @@
                     <td><?= $usuario['login']; ?></td>
                     <td><?= $pessoaNome['nome']->nome; ?></td>
                     <td><?= $perfilNome['nome']->nome; ?></td>
-                    <td class="text-center"><a class='btn btn-block btn-warning btn-xs' href="<?php echo $this->url(array('controller' => 'usuario', 'action' => 'editar', 'id' => $usuario['id'])); ?>"><span class="glyphicon glyphicon-edit"></span>Editar</a></td>
-                        <td class="text-center"><a href="<?php echo $this->url(array('controller' => 'usuario', 'action' => 'deletar', 'id' => $usuario['id'])); ?>" class="btn btn-block btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"></span>Excluir</a>
-                    </td>
-               
+                    <td class="text-center"><a class='btn btn-block btn-warning btn-xs' href="<?php echo $this->url(array('controller' => 'usuario', 'action' => 'editar', 'id' => $usuario['id'])); ?>"><span class="glyphicon glyphicon-edit"></span> Editar</a></td>
+                        <td class="text-center"><a href="<?php echo $this->url(array('controller' => 'usuario', 'action' => 'deletar', 'id' => $usuario['id'])); ?>" class="btn btn-block btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"></span> Excluir</a></td>
+                    <?php if ($this->relatorio <> null){?>
+                    <td class="text-center"><a class='btn btn-block btn-warning btn-xs' href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'solicitacoesporusuario', 'usuarioid' => $usuario['id'], 'login' => $usuario['login'])); ?>"><span class="glyphicon glyphicon-edit"></span> Selecionar</a></td>
+                    <?php } ?>
                 </tr>     
       <?php } ?>
         </table>

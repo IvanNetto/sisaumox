@@ -33,5 +33,15 @@ class DbTable_Solicitacao extends Zend_Db_Table_Abstract {
 
         return $this->getAdapter()->fetchAll($sql);
     }
+    
+    public function relatorioDeSolicitacoesPorUsuario ($usuario){
+        
+        $sql = "select * from t_solicitacao where usuarioid = $usuario";
+
+        return $this->getAdapter()->fetchAll($sql);
+        
+        
+        
+    }
 
 }

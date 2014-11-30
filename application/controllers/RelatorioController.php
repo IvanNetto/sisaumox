@@ -35,5 +35,20 @@ class RelatorioController extends Zend_Controller_Action {
             }
         }
     }
+    
+    public function solicitacoesporusuarioAction(){
+        
+        $usuario = $this->getParam('usuarioid');
+        $login = $this->getParam('login');
+        
+        $tSolicitacao = new DbTable_Solicitacao();
+        $solicitacoes = $tSolicitacao->relatorioDeSolicitacoesPorUsuario($usuario);
+        
+        
+        
+        $this->view->solicitacoes = $solicitacoes;
+        $this->view->login = $login;
+        
+    }
 
 }
