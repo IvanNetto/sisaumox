@@ -35,9 +35,9 @@ class FornecedorController extends Zend_Controller_Action {
         if ($this->getRequest()->isPost()) {
 
 
-            $post = array('id'=> $_POST['id'], 'razao_social' => $_POST['razao_social'], 'telefone1' => $_POST['telefone1'], 'telefone2' => $_POST['telefone2'],
+            $post = array('id'=> $_POST['id'], 'razao_social' => $_POST['razao_social'], 'inscricao_estadual'=> $_POST['inscricao_estadual'], 'telefone1' => $_POST['telefone1'], 'telefone2' => $_POST['telefone2'],
                     'rua' => $_POST['rua'], 'bairro' => $_POST['bairro'], 'numero' => $_POST['numero'], 'complemento' => $_POST['complemento'], 
-                    'cidade' => $_POST['cidade'], 'estado' => $_POST['estado'], 'contato' => $_POST['contato'], 'email' => $_POST['email']);
+                    'cidade' => $_POST['cidade'], 'uf' => $_POST['uf'], 'contato' => $_POST['contato'], 'email' => $_POST['email']);
             
             try {
                 $novoFornecedor = $perfil->inserirFornecedor($post);                
@@ -56,21 +56,38 @@ class FornecedorController extends Zend_Controller_Action {
     public function editarAction() {
         
         $id = $this->_getParam("id");
+        
+        if (isset($_POST['cnpj'])){
+            
+        $semPonto = explode('.', $_POST['cnpj']);
+        $var = $semPonto[0] . $semPonto[1];
+
+        $semBarra = explode('/', $semPonto[2]);
+        $var = $var . $semBarra[0];
+
+        $semTraco = explode('-', $semBarra[1]);
+        $var = $var . $semTraco[0] . $semTraco[1];
+        
+        $id = $var;
+            
+        }
+        
         $tFornecedor = new Fornecedor();
         $fornecedor = $tFornecedor->findFornecedorById($id);
 
         $this->view->fornecedor = $fornecedor->current();
+        $this->view->id = $id;
 
         if ($this->getRequest()->isPost()) {
 
             
-            $post = array('id'=> $_POST['id'], 'razao_social' => $_POST['razao_social'], 'telefone1' => $_POST['telefone1'], 'telefone2' => $_POST['telefone2'],
+            $post = array('id'=> $_POST['id'], 'razao_social' => $_POST['razao_social'], 'inscricao_estadual' => $_POST['inscricao_estadual'], 'telefone1' => $_POST['telefone1'], 'telefone2' => $_POST['telefone2'],
                     'rua' => $_POST['rua'], 'bairro' => $_POST['bairro'], 'numero' => $_POST['numero'], 'complemento' => $_POST['complemento'], 
-                    'cidade' => $_POST['cidade'], 'estado' => $_POST['estado'], 'contato' => $_POST['contato'], 'email' => $_POST['email']);
+                    'cidade' => $_POST['cidade'], 'uf' => $_POST['uf'], 'contato' => $_POST['contato'], 'email' => $_POST['email']);
 
             try {
                
-                $perfilEditado = $tFornecedor->editarFornecedor($post, $perfil);
+                $perfilEditado = $tFornecedor->editarFornecedor($post, $fornecedor);
                 $this->flashMessenger->addMessage(array('success' => "O fornecedor foi editado com sucesso!"));
 
             }catch (Exception $e){

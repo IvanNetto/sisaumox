@@ -104,18 +104,35 @@ $(document).ready(function () {
         $('#total').text("Valor total: " + total);
 
     });
-    
-    $('.imprimir').click(function(){
-     
-         $('.no-print').css("display", "none"); 
-         $('.print').css("display", "block"); 
-         
-    
-    
-    
-    })
-    
-    
+
+    $('.imprimir').click(function () {
+
+        $('.no-print').css("display", "none");
+        $('.print').css("display", "block");
+
+
+
+
+    });
+
+    $('input[type=tel]').mask("(00) 0000-00009");
+    $("#cnpj").mask("99.999.999/9999-99");
+
+
+    $('button').click(function () {
+
+        var inputElements = document.querySelectorAll('input, select, textarea');
+
+        for (var i = 0, l = inputElements.length; i < l; i++) {
+            if (inputElements[i].tagName == 'SELECT') {
+                inputElements[i].options[inputElements[i].selectedIndex].value = inputElements[i].options[inputElements[i].selectedIndex].value.toUpperCase();
+            } else {
+                inputElements[i].value = inputElements[i].value.toUpperCase();
+            }
+        }
+
+    });
+
 });
 
 

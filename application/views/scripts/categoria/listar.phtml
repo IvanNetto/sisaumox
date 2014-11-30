@@ -1,11 +1,5 @@
 <legend>Categorias cadastrados</legend>
 <hr>
-<?php if ($this->listaDeCategorias <> null) { ?>
-    <p> Abaixo seguem suas categorias cadastradas </p>
-<?php } else { ?>
-    <p> Você não tem ainda categorias cadastradas</p>
-<?php } ?>
-
 <div class="panel panel-primary"> 
     <div class="panel-heading" id="actions"><span class="glyphicon glyphicon-list"></span> Lista de categorias cadastrados
         <a href="<?php echo $this->url(array('controller' => 'categoria', 'action' => 'inserir')); ?>" class="btn btn-info btn-xs pull-right" style="border:2"><span class="glyphicon glyphicon-plus"></span>Nova categoria</a>

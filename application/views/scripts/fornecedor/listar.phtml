@@ -2,38 +2,42 @@
 <hr>
 <div class="panel panel-primary"> 
 
-   <div class="panel-heading" id="actions"><span class="glyphicon glyphicon-list"></span> Lista de fornecedores cadastrados
-      <a href="<?php echo $this->url(array('controller' => 'fornecedor', 'action' => 'inserir')); ?>" class="btn btn-info btn-xs pull-right" style="border:2"><span class="glyphicon glyphicon-plus"></span> Novo fornecedor</a>
-   </div>
+    <div class="panel-heading" id="actions"><span class="glyphicon glyphicon-list"></span> Lista de fornecedores cadastrados
+        <a href="<?php echo $this->url(array('controller' => 'fornecedor', 'action' => 'inserir')); ?>" class="btn btn-info btn-xs pull-right" style="border:2"><span class="glyphicon glyphicon-plus"></span> Novo fornecedor</a>
+    </div>
     <div class="panel-body">
         <table class="table table-striped table-hover tabela-fornecedor"> 
-            <thead>
-                <tr>
-                    <th>Razão Social</th>
-                    <th>Telefone principal</th>
-                    <th>Outro contato</th>
-                    <th>Bairro</th>
-                    <th>Cidade</th>
-                    <th>Contato</th>
-                    <th>Email</th>
+            <?php if ($this->listaDeFornecedores == null) { ?>
+                <center><strong><h4>sem fornecedor cadastrado</h4></strong></center>
                 </tr>
-            </thead>
-            <tr>
-                <?php
-                foreach ($this->listaDeFornecedores as $fornecedor) { ?>
-                    <td><?= $fornecedor['razao_social'];?></td>
-                     <td><?= $fornecedor['telefone1'];?></td>
-                    <td><?= $fornecedor['telefone2'];?></td>
-                    <td><?= $fornecedor['bairro'];?></td>
-                    <td><?= $fornecedor['cidade'];?></td>
-                    <td><?= $fornecedor['contato'];?></td>
-                    <td><?= $fornecedor['email'];?></td>
-                    <td class="text-center"><a class='btn btn-block btn-warning btn-xs' href="<?php echo $this->url(array('controller' => 'fornecedor', 'action' => 'editar', 'id' => $fornecedor['id'])); ?>"><span class="glyphicon glyphicon-edit"></span> Editar</a></td>
+            <?php } else { ?>
+                <thead>
+                    <tr>
+                        <th>Razão Social</th>
+                        <th>Telefone principal</th>
+                        <th>Outro contato</th>
+                        <th>Bairro</th>
+                        <th>Cidade</th>
+                        <th>Contato</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <?php foreach ($this->listaDeFornecedores as $fornecedor) { ?>
+                    <tr>
+                        <td><?= $fornecedor['razao_social']; ?></td>
+                        <td><?= $fornecedor['telefone1']; ?></td>
+                        <td><?= $fornecedor['telefone2']; ?></td>
+                        <td><?= $fornecedor['bairro']; ?></td>
+                        <td><?= $fornecedor['cidade']; ?></td>
+                        <td><?= $fornecedor['contato']; ?></td>
+                        <td><?= $fornecedor['email']; ?></td>
+                        <td class="text-center"><a class='btn btn-block btn-warning btn-xs' href="<?php echo $this->url(array('controller' => 'fornecedor', 'action' => 'editar', 'id' => $fornecedor['id'])); ?>"><span class="glyphicon glyphicon-edit"></span> Editar</a></td>
                         <td class="text-center"><a href="<?php echo $this->url(array('controller' => 'fornecedor', 'action' => 'deletar', 'id' => $fornecedor['id'])); ?>" class="btn btn-block btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"></span> Excluir</a>
-                    </td>
-               
-                </tr>     
-      <?php } ?>
+                        </td>
+
+                    </tr>     
+                <?php }
+            } ?>
         </table>
     </div>
 </div>

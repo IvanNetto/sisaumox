@@ -10,8 +10,9 @@
 
         <?php
         echo $this->headScript()->appendFile($this->baseUrl() . '/js/javascript.js')
-                ->prependFile($this->baseUrl() . '/js/bootstrap.min.js')
+            ->prependFile($this->baseUrl() . '/js/bootstrap.min.js')
             ->prependFile($this->baseUrl() . '/js/jquery/jquery.maskMoney.min.js')
+            ->prependFile($this->baseUrl() . '/js/jquery/jquery.mask.min.js')
             ->prependFile($this->baseUrl() . '/js/jquery/jquery-2.1.1.js');
 
         ?>
