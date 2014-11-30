@@ -1,24 +1,38 @@
-<legend>Produtos com quantidade mínima atingida</legend>
+<center>
+    <h1 class="print">Prefeitura do Estado do Rio de Janeiro</h1>
+    <h2 class="print">Escola Municipal Mozart Lagos</h2>
+    <h3>Relatório de produtos com quantidade mínima atingida</h3>
+</center>
+<?php if ($this->produtos <> null) { ?>
+    <p> Abaixo segue o resultado de sua busca. </p>
+<?php } else { ?>
+    <p> Não existe produtos com quantidade mínima atingida, porisso seu relatório encontra-se vazio.</p>
+<?php } ?>
 <hr>
-<div class="panel panel-primary"> 
-    <div class="panel-heading" id="actions"><span class="glyphicon glyphicon-list"></span> Relatório de produtos com quantidade mínima atingida
+<div class="panel panel-primary filterable"> 
+    <div class="panel-heading">
+        <div class="pull-right">
+            <button class="btn btn-default btn-xs btn-filter no-print"><span class="glyphicon glyphicon-filter"></span> Buscar na lista</button>
+            <button class="btn btn-default btn-xs btn-primary imprimir no-print"><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+        </div>
+        <span class="glyphicon glyphicon-list"></span> Produtos com quantidade mínima atingida
     </div>
     <div class="panel-body">
-        <table class="table table-striped table-hover"> 
+        <table class="table table-striped table-hover tabela-busca"> 
             <thead>             
-                <tr>
-                    <th>Nome</th>
-                    <th>Descrição</th>
-                    <th>Quantidade</th>
-                    <th>Quantidade mínima</th>
+                <tr class="filters">
+                    <th><input type="text" class="form-control" placeholder="Nome" disabled></th>
+                    <th><input type="text" class="form-control" placeholder="Descrição" disabled></th>
+                    <th><input type="text" class="form-control" placeholder="Quantidade" disabled></th>
+                    <th><input type="text" class="form-control" placeholder="Quantidade mínima" disabled></th>
                 </tr>
             </thead>
             <?php foreach ($this->lisdaDeQuantidadeMinima as $produto) { ?>
                 <tr>
-                    <td><?= $produto['nome']; ?></td>
-                    <td><?= $produto['descricao']; ?></td>
-                    <td><?= $produto['quantidade']; ?></td>
-                    <td><?= $produto['quantidademinima']; ?></td>
+                    <td class="text-left"><?= $produto['nome']; ?></td>
+                    <td class="text-left"><?= $produto['descricao']; ?></td>
+                    <td class="text-left"><?= $produto['quantidade']; ?></td>
+                    <td class="text-left"><?= $produto['quantidademinima']; ?></td>
                 </tr>     
             <?php } ?>      
         </table>

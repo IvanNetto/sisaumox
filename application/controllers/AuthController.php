@@ -55,8 +55,8 @@ class AuthController extends Zend_Controller_Action {
                 return $this->_helper->redirector->goToRoute(array('controller' => 'solicitacao'), null, true);
             } else {
                 //Dados inválidos
-                $this->flashMessenger->addMessage(array( 'danger' => "ops!"));
-                $this->_redirect('/auth/login');
+                $this->flashMessenger->addMessage(array( 'danger' => "Login ou senha inválidos!"));
+                return $this->_helper->redirector('index');
             }
         }
     }

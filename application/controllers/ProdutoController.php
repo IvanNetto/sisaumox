@@ -17,7 +17,7 @@ class ProdutoController extends Zend_Controller_Action {
     }
 
     public function listarAction() {
-
+        
         $tCategoria = new Categoria();
         $categorias = $tCategoria->listarCategorias();
 
@@ -26,6 +26,7 @@ class ProdutoController extends Zend_Controller_Action {
 
         $this->view->listaDeProdutos = $listaDeProdutos->toArray();
         $this->view->categorias = $categorias->toArray();
+        
     }
 
     public function inserirAction() {
@@ -149,7 +150,7 @@ class ProdutoController extends Zend_Controller_Action {
     public function listarprodutosindisponiveisAction(){
         
 
-        $tProduto = new Produto();
+        $tProduto = new DbTable_Produto();
         $produtosIndisponiveis = $tProduto->listarIndisponiveis();
 
         $this->view->lisdaDeIndisponiveis = $produtosIndisponiveis;
@@ -161,9 +162,9 @@ class ProdutoController extends Zend_Controller_Action {
         
 
         $tProduto = new DbTable_Produto();
-        $produtosIndisponiveis = $tProduto->listarIndisponiveis();
+        $produtosQuantidadeMinima = $tProduto->listarQuantidadeMinima();
 
-        $this->view->lisdaDeQuantidadeMinima = $produtosIndisponiveis;
+        $this->view->lisdaDeQuantidadeMinima = $produtosQuantidadeMinima;
         
         
     }

@@ -1,0 +1,50 @@
+<center>
+<h1 class="print">Prefeitura do Estado do Rio de Janeiro</h1>
+<h2 class="print">Escola Municipal Mozart Lagos</h2>
+<h3>Relatório de fornecedores por produto</h3>
+</center>
+<?php if ($this->fornecedores <> null) { ?>
+    <p> Abaixo segue o resultado de sua busca. </p>
+<?php } else { ?>
+    <p> Parece que nenhuma compra foi realizada até o momento, porisso seu relatório encontra-se vazio.</p>
+<?php } ?>
+<hr>
+    <div class="panel panel-primary filterable">
+        <div class="panel-heading">
+             <div class="pull-right">
+                    <button class="btn btn-default btn-xs btn-filter no-print"><span class="glyphicon glyphicon-filter"></span> Buscar na lista</button>
+                    <button class="btn btn-default btn-xs btn-primary imprimir no-print"><span class="glyphicon glyphicon-print"></span> Imprimir</button>
+                </div>
+            <span class="glyphicon glyphicon-list"></span> Fornecedores por produto: <b><?= $this->login; ?></b> 
+        </div>
+        <table class="table table-striped table-hover tabela-busca">
+            <tr>
+                <?php if ($this->fornecedores == null) { ?>
+                <center><strong><h4>sem resultado para consulta</h4></strong></center>
+                </tr>
+            <?php } else { ?>
+                <thead>
+                    <tr class="filters">
+                        <th><input type="text" class="form-control" placeholder="Fornecedor" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Produto fornecido" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Data do pedido" disabled></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <?php foreach ($this->fornecedores as $fornecedor) { ?>
+                            <td class="text-left"><?= $fornecedor['razao_social']; ?></td>
+                            <td class="text-left"><?= $fornecedor['nome']; ?></td>
+                            <td class="text-left"><?= $fornecedor['data_pedido']; ?></td>
+                        </tr> 
+                        <?php
+                    }
+                }
+                ?>
+                </tr>
+            </tbody>
+        </table>
+    </div>     
+
+
+

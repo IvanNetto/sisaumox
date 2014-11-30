@@ -30,25 +30,68 @@ class RelatorioController extends Zend_Controller_Action {
 
                 $tSolicitacao = new DbTable_Solicitacao();
                 $solicitacoes = $tSolicitacao->RelatorioDeSolicitacoesPorPeriodo($data1, $data2);
-                
+
                 $this->view->solicitacoes = $solicitacoes;
             }
         }
     }
-    
-    public function solicitacoesporusuarioAction(){
-        
+
+    public function solicitacoesporusuarioAction() {
+
         $usuario = $this->getParam('usuarioid');
         $login = $this->getParam('login');
-        
+
         $tSolicitacao = new DbTable_Solicitacao();
         $solicitacoes = $tSolicitacao->relatorioDeSolicitacoesPorUsuario($usuario);
-        
-        
-        
+
+
+
         $this->view->solicitacoes = $solicitacoes;
         $this->view->login = $login;
-        
     }
+
+    public function produtosmaissolicitadosAction() {
+
+        if (!($_POST)) {
+
+            $this->view->titulo = 'relatorio';
+        } else {
+
+            $data1 = $_POST['data1'];
+            $data2 = $_POST['data2'];
+
+            $tProduto = new DbTable_Produto();
+            $produtos = $tProduto->produtosMaisSolicitadosPorPeriodo($data1, $data2);
+
+            $this->view->produtos = $produtos;
+        }
+    }
+
+    public function fornecedoresporprodutoAction() {
+
+        $tFornecedor = new DbTable_Fornecedor();
+        $fornecedores = $tFornecedor->listarFornecedoresPorProduto();
+        
+        $this->view->fornecedores = $fornecedores;
+    }
+    
+    public function comprasporperiodoAction() {
+
+        if (!($_POST)) {
+
+            $this->view->titulo = 'relatorio';
+            
+        } else {
+
+            $data1 = $_POST['data1'];
+            $data2 = $_POST['data2'];
+
+            $tCompra = new DbTable_Compra();
+            $compras = $tCompra->comprasPorPeriodo($data1, $data2);
+
+            $this->view->compras = $compras;
+        }
+    }
+    
 
 }
