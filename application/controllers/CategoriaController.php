@@ -59,17 +59,16 @@ class CategoriaController extends Zend_Controller_Action {
 
             $nome = $_POST['nome'];
             $descricao = $_POST['descricao'];
-            $trigrama = $_POST['trigrama'];
 
-            $post = array('nome' => $nome, 'descricao' => $descricao, 'trigrama' => trigrama);
+            $post = array('nome' => $nome, 'descricao' => $descricao);
 
             try {
 
                 $categoriaEditado = $tCategoria->editarCategoria($post, $categoria);
-                $this->flashMessenger->addMessage(array('success' => "tudo ok"));
+                $this->flashMessenger->addMessage(array('success' => "A categoria foi atualizada com sucesso"));
             } catch (Exception $e) {
 
-                $this->flashMessenger->addMessage(array('danger' => "ops!"));
+                $this->flashMessenger->addMessage(array('danger' => "Bem, isto é constrangedor! Mas a categoria não foi editada. Tente novamente!"));
             };
 
             $this->forward('index', 'categoria', null, $post);

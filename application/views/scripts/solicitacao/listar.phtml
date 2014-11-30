@@ -27,8 +27,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <?php foreach ($this->listaDeSolicitacoes as $solicitacao) { ?>
+
+                    <?php foreach ($this->listaDeSolicitacoes as $solicitacao) { ?>
+                        <tr>
                             <td><?= $solicitacao['id']; ?></td>
                             <td><?= $solicitacao['data']; ?></td>
                             <td><?= $solicitacao['status']; ?></td>
