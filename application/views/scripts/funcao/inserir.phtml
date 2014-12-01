@@ -4,8 +4,8 @@
         <div class="form-group">
             <label for="select" class="col-lg-2 control-label">Setor</label>
             <div class="col-lg-10">
-                <select class="form-control" id="select" name="setorid">
-                    <option></option>
+                <select required="true" class="form-control" id="select" name="setorid">
+                    <option value="">--selecione</option>
                     <?php foreach ($this->setores as $nomeSetor): ?> 
                         <option value="<?php echo $nomeSetor['id']; ?>"><?php echo $nomeSetor['nome']; ?></option> 
                         <?php

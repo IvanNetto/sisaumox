@@ -6,8 +6,8 @@
         <div class="form-group">
             <label for="select" class="col-lg-4 control-label">Funcionário</label>
             <div class="col-lg-6">
-                <select class="form-control" id="select" name="pessoaid">
-                    <option>--selecione--</option>
+                <select required="true" class="form-control" id="select" name="pessoaid">
+                    <option value="">--selecione--</option>
                     <?php foreach ($this->pessoas as $nomePessoa): ?> 
                          <option value="<?php echo $nomePessoa['id']; ?>"><?php echo $nomePessoa['nome']; ?></option>
                         <?php
@@ -21,8 +21,8 @@
         <div class="form-group">
             <label for="select" class="col-lg-4 control-label">Perfil</label>
             <div class="col-lg-6">
-                <select class="form-control" id="select" name="perfilid">
-                    <option>--selecione--</option>
+                <select required="true" class="form-control" id="select" name="perfilid">
+                    <option value="">--selecione--</option>
                     <?php foreach ($this->perfis as $nomePerfil): ?> 
                         <option value="<?php echo $nomePerfil['id']; ?>"><?php echo $nomePerfil['nome']; ?></option> 
                         <?php

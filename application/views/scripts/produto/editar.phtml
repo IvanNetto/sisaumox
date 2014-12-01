@@ -1,20 +1,14 @@
-<form class="form-horizontal" action="<?= $this->baseUrl() . '/produto/editar'?>" method="POST">
+<form class="form-horizontal" action="<?= $this->baseUrl() . '/produto/editar' ?>" method="POST">
+    <input type="hidden" name="id" value="<?php echo $this->produto->id?>">
     <fieldset>
-        <legend>Criando novo perfil</legend>
-        <input type="hidden" name="id" value="<?php echo $this->produto->id?>">
+        <legend>Editar produto</legend>
         <div class="form-group">
-            <label for="inputCodigo" class="col-lg-2 control-label">Código</label>
-            <div class="col-lg-10">
-                <input class="form-control" id="inputCodigo" placeholder="" type="text" name="codigo" value="<?php echo $this->produto->codigo?>">
-            </div>
-        </div>
-       <div class="form-group">
-            <label for="select" class="col-lg-2 control-label">Categoria</label>
-            <div class="col-lg-10">
-                <select class="form-control" id="select" name="categoriaid">
-                    <option></option>
+            <label for="select" class="col-lg-4 control-label">Categoria</label>
+            <div class="col-lg-2">
+                <select required = "true" class="form-control" id="select" name="categoriaid" required="true">
+                    <option value="">--selecione--</option>
                     <?php foreach ($this->categorias as $nomeCategoria): ?> 
-                        <option value="<?php echo $nomeCategoria['id']; ?>"><?php echo $nomeCategoria['nome']; ?></option> 
+                        <option value="<?php echo $nomeCategoria['id']; ?>"><?php echo $nomeCategoria['nome']; ?></option>
                     <?php
                     endforeach;
                     ?> 
@@ -23,42 +17,43 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="inputNome" class="col-lg-2 control-label">Nome</label>
-            <div class="col-lg-10">
-                <input class="form-control" id="inputNome" placeholder="" type="text" name="nome" value="<?php echo $this->produto->nome?>">
+            <label for="inputNome" class="col-lg-4 control-label">Nome</label>
+            <div class="col-lg-6">
+                <input class="form-control" id="inputNome" placeholder="" type="text" name="nome" required="true" value="<?php echo $this->produto->nome?>"> 
             </div>
         </div>
         <div class="form-group">
-            <label for="Descrição" class="col-lg-2 control-label">Descrição</label>
-            <div class="col-lg-10">
+            <label for="Descrição" class="col-lg-4 control-label">Descrição</label>
+            <div class="col-lg-6">
                 <textarea class="form-control" rows="3" id="descricao" name="descricao"><?php echo $this->produto->descricao?></textarea>
                 <span class="help-block">Faça uma breve descrição sobre o perfil a ser criado</span>
             </div>
         </div>
         <div class="form-group">
-            <label for="inputQuantidade" class="col-lg-2 control-label">Quantidade</label>
-            <div class="col-lg-10">
-                <input class="form-control" id="inputQuantidade" placeholder="" type="text" name="quantidade" value="<?php echo $this->produto->quantidade?>">
+            <label for="inputQuantidade" class="col-lg-4 control-label" >Quantidade</label>
+            <div class="col-lg-2">
+                <input class="form-control" required="true" id="quantidade" placeholder="" type="number" min="1" name="quantidade" value="<?php echo $this->produto->quantidade?>">
             </div>
         </div>
         <div class="form-group">
-            <label for="inputQuantidademinima" class="col-lg-2 control-label">Quantidade mínima</label>
-            <div class="col-lg-10">
-                <input class="form-control" id="inputQuantidademinima" placeholder="" type="text" name="quantidademinima" value="<?php echo $this->produto->quantidademinima?>">
+            <label for="inputQuantidademinima" class="col-lg-4 control-label" >Quantidade mínima</label>
+            <div class="col-lg-2">
+                <input class="form-control" required="true" id="quantidademinima" placeholder="" type="number" min="1" name="quantidademinima" value="<?php echo $this->produto->quantidademinima?>">
+                <span class="help-block">Quantidade para reposição</span>
             </div>
         </div>
         <div class="form-group">
-            <label for="inputValidade" class="col-lg-2 control-label">Validade</label>
-            <div class="col-lg-10">
-                <input class="form-control" id="inputValidade" placeholder="" type="text" name="validade" value="<?php echo $this->produto->validade?>">
+            <label for="inputValidade" class="col-lg-4 control-label">Validade</label>
+            <div class="col-lg-2">
+                <input class="form-control" id="inputValidade" placeholder="" type="date" name="validade" value="<?php echo $this->produto->validade?>">
+                <span class="help-block">Preencha se for necessário</span>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-lg-10 col-lg-offset-2">
-                <!--        <button class="btn btn-default">Cancelar</button>-->
-                <a href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'listar')); ?>">Voltar</a>
-                <button type="submit" class="btn btn-primary">Editar</button>
-            </div>
-        </div>
+      <div class="col-lg-6 col-lg-offset-6">
+        <a class="btn btn-primary" href="<?php echo $this->url(array('controller' => 'categoria', 'action' => 'selecionarcategoria')); ?>">Voltar</a>
+        <button type="submit" class="btn btn-success">Editar</button>
+      </div>
+    </div>
     </fieldset>
 </form>

@@ -37,7 +37,7 @@ class ProdutoController extends Zend_Controller_Action {
         $this->view->categorias = $categorias;
 
         if ($this->getRequest()->isPost()) {
-            $codigo = $_POST['codigo'];
+            
             $categoriaid = $_POST['categoriaid'];
             $nome = $_POST['nome'];
             $descricao = $_POST['descricao'];
@@ -45,7 +45,7 @@ class ProdutoController extends Zend_Controller_Action {
             $quantidademinima = $_POST['quantidademinima'];
             $validade = $_POST['validade'];
 
-            $post = array('codigo' => $codigo, 'categoriaid' => $categoriaid, 'nome' => $nome, 'descricao' => $descricao,
+            $post = array('categoriaid' => $categoriaid, 'nome' => $nome, 'descricao' => $descricao,
                 'quantidade' => $quantidade, 'quantidademinima' => $quantidademinima, 'validade' => $validade);
 
             try {
@@ -57,7 +57,7 @@ class ProdutoController extends Zend_Controller_Action {
                 $this->flashMessenger->addMessage(array('danger' => "Bem, isso é constangedor! Por algum motivo seu produto não foi cadastrado. Tente novamente!"));
             };
 
-            $this->_helper->redirector('listar');
+            $this->_helper->redirector('buscarprodutoporcategoria');
         }
     }
 
@@ -76,7 +76,7 @@ class ProdutoController extends Zend_Controller_Action {
         if ($this->getRequest()->isPost()) {
 
             $id = $_POST['id'];
-            $codigo = $_POST['codigo'];
+            
             $categoriaid = $_POST['categoriaid'];
             $nome = $_POST['nome'];
             $descricao = $_POST['descricao'];
@@ -84,17 +84,18 @@ class ProdutoController extends Zend_Controller_Action {
             $quantidademinima = $_POST['quantidademinima'];
             $validade = $_POST['validade'];
 
-            $post = array('id' => $id, 'codigo' => $codigo, 'categoriaid' => $categoriaid, 'nome' => $nome, 'descricao' => $descricao,
+            $post = array('id' => $id, 'categoriaid' => $categoriaid, 'nome' => $nome, 'descricao' => $descricao,
                 'quantidade' => $quantidade, 'quantidademinima' => $quantidademinima, 'validade' => $validade);
-
+            
 
             try {
 
                 $produtoEditado = $tProduto->editarProduto($post, $produto);
-                $this->flashMessenger->addMessage(array('success' => "tudo ok"));
+                $this->flashMessenger->addMessage(array('success' => "Produto editado com sucesso!"));
             } catch (Exception $e) {
 
-                $this->flashMessenger->addMessage(array('danger' => "ops!"));
+                $this->flashMessenger->addMessage(array('danger' => "Bem, isto é constrangedor! O produto não foi editado. Tente novamente!"));
+                
             };
 
             $this->forward('index', 'produto', $post);
@@ -113,11 +114,12 @@ class ProdutoController extends Zend_Controller_Action {
 
         try {
             $Produto->current()->delete();
+            $this->flashMessenger->addMessage(array('success' => "Produto deletado com sucesso!"));
         } catch (Exception $e) {
-            echo $e->getMessage();
+            $this->flashMessenger->addMessage(array('danger' => "Bem, isto é constrangedor! O produto não foi deletado. Tente novamente!"));
         }
 
-        return $this->_helper->redirector('listar');
+        return $this->_helper->redirector('buscarprodutoporcategoria');
     }
     
     

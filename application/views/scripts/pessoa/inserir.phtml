@@ -4,21 +4,21 @@
     <div class="form-group">
       <label for="inputMatricula" class="col-lg-4 control-label">Matricula</label>
       <div class="col-lg-2">
-        <input class="form-control" id="inputMatricula" placeholder="Ex: 6207669" type="text" name="matricula" required="required" pattern="[0-9]+$">
+        <input class="form-control" id="inputMatricula" placeholder="Ex: 6207669" type="text" name="matricula" required="true" pattern="[0-9]+$">
         <span class="help-block">Apenas números.</span>
           </div>
     </div>
     <div class="form-group">
       <label for="inputNome" class="col-lg-4 control-label">Nome</label>
       <div class="col-lg-6">
-          <input class="form-control" id="inputNome" placeholder="Nome completo" type="text" name="nome" required="true" pattern="[a-z\s]+$">
+          <input class="form-control" id="inputNome" placeholder="Nome completo" type="text" name="nome" required="true" pattern="[A-Z\s]+$">
       </div>
     </div>
            <div class="form-group">
             <label for="select" class="col-lg-4 control-label">Função</label>
             <div class="col-lg-6">
-                <select class="form-control" id="select" name="funcaoid">
-                    <option>--selecione--</option>
+                <select required="true" class="form-control" id="select" name="funcaoid">
+                    <option value="">--selecione--</option>
                     <?php foreach ($this->funcoes as $nomeFuncao): ?> 
                         <option value="<?php echo $nomeFuncao['id']; ?>"><?php echo $nomeFuncao['nome']; ?></option> 
                     <?php
@@ -31,13 +31,13 @@
     <div class="form-group">
       <label for="inputTelefone1" class="col-lg-4 control-label">Telefone Principal</label>
       <div class="col-lg-4">
-          <input class="form-control" type="tel" required="required" maxlength="15" name="telefone1" pattern="[0-9]+$" placeholder="ex: 98556452"/>
+          <input class="form-control" type="tel" required="required" maxlength="15" name="telefone1" placeholder="ex: 98556452"/>
       </div>
     </div>
     <div class="form-group">
       <label for="inputTelefone2" class="col-lg-4 control-label">Outro telefone</label>
       <div class="col-lg-4">
-        <input class="form-control" type="tel" required="required" maxlength="15" name="telefone2" pattern="[0-9]+$" placeholder="ex: 2124647256"/>
+        <input class="form-control" type="tel" required="required" maxlength="15" name="telefone2" placeholder="ex: 2124647256"/>
       </div>
     </div>
     <div class="form-group">
