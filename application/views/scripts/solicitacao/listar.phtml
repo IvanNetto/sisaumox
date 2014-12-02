@@ -1,8 +1,7 @@
 <h3>Lista de solicitações ativas</h3>
 <hr>
 <?php if ($this->listaDeSolicitacoes->current() <> null) { ?>
-    <p> Abaixo seguem suas solicitações ativas, para criar seu carrinho de solicitações, selecione <b>abaixo</b> o botão <a class='btn btn-default btn-xs disabled'><span class="glyphicon glyphicon-edit"></span> Iniciar</a> para solicitar produtos, <a class='btn btn-danger btn-xs disabled'><span class="glyphicon glyphicon-remove-circle"></span> Cancelar</a> para cancelar sua solicitação ativa, ou
-        <a class='btn btn-default btn-xs disabled'><span class="glyphicon glyphicon-eye-open"></span> Visualizar</a>, para visualizar os itens escolhidos.</p>
+    <p> Abaixo seguem suas solicitações ativas, para criar seu carrinho de solicitações, selecione <b>abaixo</b> o botão <a class='btn btn-success btn-xs disabled'><span class="glyphicon glyphicon-shopping-cart"></span> Iniciar</a></p>
 <?php } else { ?>
     <p> Você não tem ainda solicitações, mas você pode criar a sua agora mesmo, <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserir')); ?>">Clique aqui</a> </p>
 <?php } ?>

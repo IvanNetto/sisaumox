@@ -22,7 +22,6 @@
                     <td><?php
                         $tFornecedor = new DbTable_Fornecedor;
                         $fornecedor = $tFornecedor->find($compra->fornecedorid);
-
                         echo $fornecedor->current()->razao_social;
                         ?>
                     </td>
@@ -47,7 +46,7 @@
                     <tr class="linha-pedido">
                         <td style="width: 300px;"><?php echo $produto[0]->nome; ?></td>
                         <td><?= $pedido->quantidade; ?>
-                            <?php if ($compra->status == 'aguardando fornecedor') { ?>
+                            <?php if ($compra->status == 'AGUARDANDO FORNECEDOR') { ?>
                                 <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'entregaparcial', 'compraid' => $compra->id, 'produtoid' => $pedido->produtoid)); ?>" class="btn btn-info btn-xs botaoinfo"><span class="glyphicon glyphicon-tag"></span> Reposição parcial</a>
                             <?php } ?>
                         </td>
@@ -57,7 +56,9 @@
                             ?>
                             <td><h4 class="label label-warning alerta-pedido"><?php echo $quantidade; ?> itens repostos</h4></td>
                         <?php } ?>
-                        <td>R$ <?= $pedido->valor_unitario; ?></td>
+                        
+                            <td>R$ <?= $pedido->valor_unitario; ?></td>
+                            
                     </tr>
                 <?php } ?>
         </table>

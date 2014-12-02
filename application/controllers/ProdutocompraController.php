@@ -233,7 +233,7 @@ class ProdutocompraController extends Zend_Controller_Action {
                 $this->flashMessenger->addMessage(array('danger' => "Entrega parcial não pode ultrapassar a quantidade solicitada ao fornecedor!"));
             }
 
-            return $this->_helper->redirector->gotoSimple('listargerente', 'solicitacao');
+            return $this->_helper->redirector->gotoSimple('listar', 'compra');
         }
 
     }

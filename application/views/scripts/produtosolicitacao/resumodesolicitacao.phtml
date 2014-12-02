@@ -49,7 +49,7 @@ if ($solicitacao->current()->status == 'recebida') {
                     <?php } ?>
                 </tr>
                 <?php if (!empty($solicitacao->current()->observacao)) { ?>
-                    <tr>
+                    <tr class="resumo-solicitacao-head">
                         <th>Observação</th>
                     </tr>
                     <tr>
@@ -105,7 +105,7 @@ if ($solicitacao->current()->status == 'recebida') {
                             $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtosolicitacao['produtoid']->produtoid);
                             $quantidadeDevolvida = $devolucao[0]['quantidade'];
                             if ($quantidadeDevolvida) { ?>
-                            <td><h4 class="label label-warning alerta-resumo"><?php echo $quantidadeDevolvida; ?> itens devolvidos</h4></td>
+                            <td><h4 class="label label-warning alerta-resumo"><?php $quantidadeDevolvida; ?> itens devolvidos</h4></td>
                             <?php } ?>
                             <?php
                             $tProdutoSolicitacao = new DbTable_Produtosolicitacao;
@@ -113,7 +113,7 @@ if ($solicitacao->current()->status == 'recebida') {
                             $quantidadeEntregueParcial = $entregaParcial[0]['aprovacao_parcial'];
                             if (($quantidadeEntregueParcial > 0) && ($solicitacao->current()->status <> 'entregue') && ($solicitacao->current()->status <> 'recebida')) {
                                 ?>
-                                <td><h4 class="label label-warning alerta-resumo"><?php echo $quantidadeEntregueParcial; ?> já aprovados</h4></td> 
+                                <td><h4 class="label label-warning alerta-resumo"><?php echo $produtosolicitacao->current()->quantidade - $quantidadeEntregueParcial; ?> já aprovados</h4></td> 
                             <?php }
                             ?>    
 

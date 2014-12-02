@@ -1,8 +1,7 @@
 <h3>Lista de compras ativas</h3>
 <hr>
 <?php if ($this->listaDeCompras->current() <> null) { ?>
-    <p> Abaixo seguem suas compras ativas, para criar seu carrinho de compras, selecione <b>abaixo</b> o botão <a class='btn btn-info btn-xs disabled'><span class="glyphicon glyphicon-edit"></span>Iniciar</a> para comprar, <a class='btn btn-danger btn-xs disabled'><span class="glyphicon glyphicon-remove-circle"></span>Cancelar</a> para cancelar sua solicitação ativa, ou
-        <a class='btn btn-default btn-xs disabled'><span class="glyphicon glyphicon-eye-open"></span>Visualizar</a>, para visualizar os itens escolhidos.</p>
+    <p> Abaixo seguem suas compras ativas, para criar seu carrinho de compras, selecione <b>abaixo</b> o botão <a class='btn btn-success btn-xs disabled'><span class="glyphicon glyphicon-usd"></span> Iniciar</a> para selecionar seu fornecedor</p>
 <?php } else { ?>
     <p> Você não tem ainda compras ativas, mas você pode criar a sua agora mesmo, <a href="<?php echo $this->url(array('controller' => 'compra', 'action' => 'inserir')); ?>">Clique aqui</a> </p>
 <?php } ?>
@@ -16,31 +15,37 @@
             <tr>
                 <?php if ($this->listaDeCompras->current() == null) { ?>
                 <center><strong><h4>sem compras criadas</h4></strong></center>
-            </tr>
+                </tr>
             <?php } else { ?>
                 <thead>
-                <tr class="filters text-center">
-                    <th class="text-center">Código</th>
-                    <th class="text-center">Status</th>
-                    <th class="text-center">Ação</th>
-                </tr>
+                    <tr class="filters text-center">
+                        <th class="text-center">Código</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Data do pedido</th>
+                        <th class="text-center">Ação</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <?php foreach ($this->listaDeCompras as $compra) {?>
+                    <tr>
+                        <?php foreach ($this->listaDeCompras as $compra) { ?>
 
-                    <td><?= $compra['id']; ?></td>
-                    <td><?= $compra['status']; ?></td>
-                    <td class="text-center acao">
-                        <?php if ($compra['status'] == 'nova'){?>
-                            <a class='btn btn-success btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'listarfornecedores', 'compraid' => $compra['id'])); ?>"><span class="glyphicon glyphicon-usd"></span> Iniciar</a>
-                            <a href="<?php echo $this->url(array('controller' => 'compra', 'action' => 'deletar', 'id' => $compra['id'])); ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Deletar</a>
-                        <?php } elseif($compra['status'] == 'aguardando fornecedor'){ ?>
-                            <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'resumodepedido', 'compraid' => $compra['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span> Visualizar</a>
-                        <?php }?>
-                    </td>
-                </tr>
-                <?php }?>
+                            <td><?= $compra['id']; ?></td>
+                            <td><?= $compra['status']; ?></td>
+                            <?php if ($compra['data_pedido'] == null) { ?>
+                                <td><?= 'não iniciada' ?> </td>
+                            <?php } else { ?>
+                                <td><?= $compra['data_pedido']; ?></td>
+                            <?php } ?>
+                            <td class="text-center acao">
+                                <?php if ($compra['status'] == 'nova') { ?>
+                                    <a class='btn btn-success btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'listarfornecedores', 'compraid' => $compra['id'])); ?>"><span class="glyphicon glyphicon-usd"></span> Iniciar</a>
+                                    <a href="<?php echo $this->url(array('controller' => 'compra', 'action' => 'deletar', 'id' => $compra['id'])); ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Deletar</a>
+                                <?php } elseif ($compra['status'] == 'AGUARDANDO FORNECEDOR') { ?>
+                                    <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'resumodepedido', 'compraid' => $compra['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span> Visualizar</a>
+                                <?php } ?>
+                            </td>
+                        </tr>
+                    <?php } ?>
                 </tbody>
             <?php } ?>
     </div>

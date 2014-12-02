@@ -24,28 +24,27 @@
         <div class="form-group">
             <label for="Descrição" class="col-lg-4 control-label">Descrição</label>
             <div class="col-lg-6">
-                <textarea class="form-control" rows="3" id="descricao" name="descricao" required="true"></textarea>
-                <span class="help-block">Faça uma breve descrição sobre o perfil a ser criado</span>
+                <textarea class="form-control" rows="3" id="descricao" name="descricao" required="true" placeholder="Preencha informações que diferencie o produto de outros desta mesma categoria"></textarea>
             </div>
         </div>
         <div class="form-group">
             <label for="inputQuantidade" class="col-lg-4 control-label" >Quantidade</label>
             <div class="col-lg-2">
-                <input class="form-control" required="true" id="quantidade" placeholder="" type="number" min="1" name="quantidade">
+                <input class="form-control" required="true" id="quantidade" pattern="[0-9]+$" placeholder="Somente números" type="number" min="1" name="quantidade">
+                <span class="help-block"></span>
             </div>
         </div>
         <div class="form-group">
             <label for="inputQuantidademinima" class="col-lg-4 control-label" >Quantidade mínima</label>
             <div class="col-lg-2">
-                <input class="form-control" required="true" id="quantidademinima" placeholder="" type="number" min="1" name="quantidademinima">
-                <span class="help-block">Quantidade para reposição</span>
+                <input class="form-control" required="true" id="quantidademinima"  pattern="[0-9]+$" placeholder="Somente números" type="number" min="1" name="quantidademinima">
+                <span class="help-block">Controle para reposição</span>
             </div>
         </div>
         <div class="form-group">
             <label for="inputValidade" class="col-lg-4 control-label">Validade</label>
             <div class="col-lg-2">
                 <input class="form-control" id="inputValidade" placeholder="" type="date" name="validade">
-                <span class="help-block">Preencha se for necessário</span>
             </div>
         </div>
         <div class="form-group">

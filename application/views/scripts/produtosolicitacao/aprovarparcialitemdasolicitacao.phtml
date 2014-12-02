@@ -1,37 +1,28 @@
-<h3>Aprovação parcial de item</h3>
+<h3>Atualização parcial de produto</h3>
 <hr>
 <div class="instrucao">
-    <p>Insira a quantidade que deseja aprovar e informe uma observação se achar necessário</p>
+    <p>Insira a quantidade que deseja devolver pro estoque e informe uma observação se achar necessário</p>
     <form class="form-horizontal" action="" method="POST">
         <input type="hidden" name="produtoid" value="<?php echo $this->produtoid ?>">
         <input type="hidden" name="solicitacaoid" value="<?php echo $this->solicitacaoid ?>">
         <br><br>
-            <div class="form-group">
-                <div class="col-lg-5 col-lg-offset-5">
-                    <legend>Aprovando um item</legend>
-                    <input type="text" name="quantidade" placeholder="Quantidade a aprovar">    
-                </div>
-            </div>    
-            <div class="form-group">
-                <div class="col-lg-5 col-lg-offset-5">
-                    <input type="textarea" name="observacao" placeholder="Informe se achar necessário">
-                </div>
-            </div>    
-            <div class="form-group">
-                <div class="col-lg-5 col-lg-offset-5">
-                    <!--        <button class="btn btn-default">Cancelar</button>-->
-                    <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listargerente')); ?>">Voltar</a>
-                    <button type="submit" class="btn btn-primary">Aprovar</button>
-                </div>
+        <div class="form-group">
+            <label for="quantidade" class="col-lg-4 control-label">Quantidade</label>
+            <div class="col-lg-3">
+                <input class="form-control" type="number" required="true" name="quantidade" placeholder="Devolver pro estoque">    
             </div>
+        </div>    
+       <div class="form-group">
+            <label for="Descrição" class="col-lg-4 control-label">Observação</label>
+            <div class="col-lg-4">
+                <textarea class="form-control" rows="3" id="descricao" name="observacao" required="true" placeholder=""></textarea>
+            </div>
+        </div>  
+        <div class="form-group">
+            <div class="col-lg-4 col-lg-offset-4">
+                <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-folder-close"></span> Atualizar estoque</button>
+            </div>
+        </div>
     </form>
-
 </div>
-
-
-
-
-
-
-
 

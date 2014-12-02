@@ -98,7 +98,7 @@ class ProdutoController extends Zend_Controller_Action {
                 
             };
 
-            $this->forward('index', 'produto', $post);
+            $this->_helper->redirector('buscarprodutoporcategoria');
         }
     }
 
