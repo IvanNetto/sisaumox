@@ -1,89 +1,103 @@
-<center>
-    <small class="no-print"><i class="glyphicon glyphicon-user"></i> Administrador</small>
-    <br>
-</center>
-<div class="controle no-print">
-    <center>
-        <div class="btn-group botao">
-            <a href="#" class="btn btn-default botao-admin"><i class="glyphicon glyphicon-bell"></i> Notificações</a>
-            <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle teste" data-toggle="dropdown"><span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li class="dropdown-header">Avaliar notificações</li>
-                <li><a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listargerente')); ?>"><i class="glyphicon glyphicon-list"></i> Solicitações</a></li>
-                <li class="divider"></li>
-                <li><a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'listardevolucao')); ?>"><i class="glyphicon glyphicon-share-alt"></i> Devoluções</a></li>
-                <li class="divider"></li>
-                <li><a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listaragendadas')); ?>"><i class="glyphicon glyphicon-calendar"></i> Agendamentos</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Histórico</li>
-                <li><a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarreprovadas')); ?>"><i class="glyphicon glyphicon-thumbs-down"></i> Solicitações reprovadas</a></li>
-                <li class="divider"></li>
-                <li><a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarcanceladas')); ?>"><i class="glyphicon glyphicon-remove-circle"></i> Solicitações canceladas</a></li>
-            </ul>
-        </div>
-        <div class="btn-group botao">
-            <a href="#" class="btn btn-default botao-admin"><i class="glyphicon glyphicon-usd"></i>  Compra</a>
-            <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle teste" data-toggle="dropdown"><span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li class="dropdown-header">Compra de produto</li>
-                <li><a href="<?php echo $this->url(array('controller' => 'compra', 'action' => 'inserir')); ?>"><i class="glyphicon glyphicon-plus"></i> Nova compra</a></li>
-                <li class="divider"></li>
-                <li><a href="<?php echo $this->url(array('controller' => 'compra', 'action' => 'listar')); ?>"><i class="glyphicon glyphicon-dashboard"></i> Em andamento</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Histórico</li>
-                <li><a href="<?php echo $this->url(array('controller' => 'compra', 'action' => 'listarhistorico')); ?>"><i class="glyphicon glyphicon-list-alt"></i> Compras antigas</a></li>
-            </ul>
-        </div>
-        <div class="btn-group botao">
-            <a href="#" class="btn btn-default botao-admin"><i class="glyphicon glyphicon-folder-close"></i>  Estoque</a>
-            <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle teste" data-toggle="dropdown"><span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li class="dropdown-header">Produtos cadastrados</li>
-                <li><a href="<?php echo $this->url(array('controller' => 'categoria', 'action' => 'selecionarcategoria')); ?>"><i class="glyphicon glyphicon-th-large"></i> Produtos</a></li>
-
-
-            </ul>
-        </div>
-        <div class="btn-group botao">
-            <a href="#" class="btn btn-default botao-admin"><i class="glyphicon glyphicon-pencil"></i>  Cadastro</a>
-            <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle teste" data-toggle="dropdown"><span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li class="dropdown-header">Cadastro para usuário</li>
-                <li><a href="<?php echo $this->url(array('controller' => 'pessoa', 'action' => 'listar')); ?>"><i class="glyphicon glyphicon-hand-up"></i> Funcionário</a></li>
-                <li class="divider"></li>
-                <li><a href="<?php echo $this->url(array('controller' => 'usuario', 'action' => 'listar')); ?>"><i class="glyphicon glyphicon-user"></i> Usuário</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header">Cadastro para estoque</li>
-                <li><a href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'inserir')); ?>"><i class="glyphicon glyphicon-th-large"></i> Produtos</a></li>
-                <li><a href="<?php echo $this->url(array('controller' => 'categoria', 'action' => 'listar')); ?>"><i class="glyphicon glyphicon-tags"></i> Categoria</a></li>
-                <li class="dropdown-header">Cadastro para compra</li>
-                <li><a href="<?php echo $this->url(array('controller' => 'fornecedor', 'action' => 'listar')); ?>"><i class="glyphicon glyphicon-road"></i> Fornecedor</a></li>
-            </ul>
-        </div>
-        <div class="btn-group botao">
-            <a href="#" class="btn btn-default botao-admin"><i class="glyphicon glyphicon-list-alt"></i>  Relatórios</a>
-            <a aria-expanded="false" href="#" class="btn btn-default dropdown-toggle teste" data-toggle="dropdown"><span class="caret"></span></a>
-            <ul class="dropdown-menu">
-                <li class="dropdown-header"><i class="glyphicon glyphicon-user"></i> Usuário</li>
-                <li><a href="">Relatório </a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header"><i class="glyphicon glyphicon-folder-close"></i> Estoque</li>
-                <li><a href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'listarprodutosindisponiveis')); ?>"> Produtos indisponíveis</a></li>
-                <li><a href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'listarprodutosquantidademinima')); ?>"> Produtos com baixa quantidade</a></li>
-                <li><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'produtosmaissolicitados')); ?>"> Produtos mais solicitados</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header"><i class="glyphicon glyphicon-road"></i> Fornecedor</a></li>
-                <li><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'fornecedoresporproduto')); ?>"> Fornecedores por produto</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header"><i class="glyphicon glyphicon-usd"></i> Compra</li>
-                <li><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'comprasporperiodo')); ?>"> Compras por período</a></li>
-                <li class="divider"></li>
-                <li class="dropdown-header"><i class="glyphicon glyphicon-usd"></i> Solicitação</li>
-                <li><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'solicitacoesporperiodo')); ?>"> Solicitações por período</a></li>
-                <li><a href="<?php echo $this->url(array('controller' => 'usuario', 'action' => 'listar', 'relatorio' => 'relatorio')); ?>"> Solicitações por usuário</a></li>
-            </ul>
-        </div>
-    </center>
+<div class="row">
+    <div class="controle no-print">
+        <div class="col-md-1 logo-admin"><small  class="no-print"><i class="glyphicon glyphicon-user icon-admin"></i> Administrador</small></div>
+            <div class="col-md-2">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="glyphicon glyphicon-bell"></i> Notificações</a>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">Avaliar notificações</li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listargerente')); ?>"><i class="glyphicon glyphicon-list"></i> Solicitações</a></li>
+                        <li class="divider"></li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'listardevolucao')); ?>"><i class="glyphicon glyphicon-share-alt"></i> Devoluções</a></li>
+                        <li class="divider"></li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listaragendadas')); ?>"><i class="glyphicon glyphicon-calendar"></i> Agendamentos</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Histórico</li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarreprovadas')); ?>"><i class="glyphicon glyphicon-thumbs-down"></i> Solicitações reprovadas</a></li>
+                        <li class="divider"></li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarcanceladas')); ?>"><i class="glyphicon glyphicon-remove-circle"></i> Solicitações canceladas</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="glyphicon glyphicon-usd"></i>  Compra</a>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">Compra de produto</li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'compra', 'action' => 'inserir')); ?>"><i class="glyphicon glyphicon-plus"></i> Nova compra</a></li>
+                        <li class="divider"></li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'compra', 'action' => 'listar')); ?>"><i class="glyphicon glyphicon-dashboard"></i> Em andamento</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Histórico</li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'compra', 'action' => 'listarhistorico')); ?>"><i class="glyphicon glyphicon-list-alt"></i> Compras antigas</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="glyphicon glyphicon-folder-close"></i>  Estoque</a>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">Produtos cadastrados</li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'categoria', 'action' => 'selecionarcategoria')); ?>"><i class="glyphicon glyphicon-th-large"></i> Produtos</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="glyphicon glyphicon-pencil"></i>  Cadastro</a>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">Cadastro para usuário</li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'pessoa', 'action' => 'listar')); ?>"><i class="glyphicon glyphicon-hand-up"></i> Funcionário</a></li>
+                        <li class="divider"></li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'usuario', 'action' => 'listar')); ?>"><i class="glyphicon glyphicon-user"></i> Usuário</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Cadastro para estoque</li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'inserir')); ?>"><i class="glyphicon glyphicon-th-large"></i> Produtos</a></li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'categoria', 'action' => 'listar')); ?>"><i class="glyphicon glyphicon-tags"></i> Categoria</a></li>
+                        <li class="dropdown-header">Cadastro para compra</li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'fornecedor', 'action' => 'listar')); ?>"><i class="glyphicon glyphicon-road"></i> Fornecedor</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="btn-group" role="group" aria-label="...">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <i class="glyphicon glyphicon-list-alt"></i>  Relatórios</a>
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header"><i class="glyphicon glyphicon-user"></i> Usuário</li>
+                        <li><a href="">Relatório </a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header"><i class="glyphicon glyphicon-folder-close"></i> Estoque</li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'listarprodutosindisponiveis')); ?>"> Produtos indisponíveis</a></li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'listarprodutosquantidademinima')); ?>"> Produtos com baixa quantidade</a></li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'produtosmaissolicitados')); ?>"> Produtos mais solicitados</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header"><i class="glyphicon glyphicon-road"></i> Fornecedor</a></li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'fornecedoresporproduto')); ?>"> Fornecedores por produto</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header"><i class="glyphicon glyphicon-usd"></i> Compra</li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'comprasporperiodo')); ?>"> Compras por período</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header"><i class="glyphicon glyphicon-usd"></i> Solicitação</li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'relatorio', 'action' => 'solicitacoesporperiodo')); ?>"> Solicitações por período</a></li>
+                        <li><a href="<?php echo $this->url(array('controller' => 'usuario', 'action' => 'listar', 'relatorio' => 'relatorio')); ?>"> Solicitações por usuário</a></li>
+                    </ul>
+                </div>
+            </div>
+    </div>
+    <hr class="linha-controle">
 </div>
-<hr class="linha-controle">
-

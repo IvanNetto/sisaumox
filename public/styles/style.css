@@ -186,6 +186,19 @@
 
 }
 
+.controle button{margin-top: 12px;}
+.icon-admin{
+    
+    margin-left: 28px;
+}
+
+.logo-admin{
+    
+    margin: 17px 20px -6px 27px;
+}
+
+
+/*
 .botao{
 
     padding: 15px 8px 0 57px;
@@ -208,6 +221,7 @@
     margin-left: 18px;
 
 }
+*/
 
 .tabela-busca td {
 

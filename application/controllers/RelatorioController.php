@@ -71,16 +71,15 @@ class RelatorioController extends Zend_Controller_Action {
 
         $tFornecedor = new DbTable_Fornecedor();
         $fornecedores = $tFornecedor->listarFornecedoresPorProduto();
-        
+
         $this->view->fornecedores = $fornecedores;
     }
-    
+
     public function comprasporperiodoAction() {
 
         if (!($_POST)) {
 
             $this->view->titulo = 'relatorio';
-            
         } else {
 
             $data1 = $_POST['data1'];
@@ -92,6 +91,21 @@ class RelatorioController extends Zend_Controller_Action {
             $this->view->compras = $compras;
         }
     }
-    
+
+    public function usuariosporperfilAction() {
+
+        if (!($_POST)) {
+
+            $this->view->titulo = 'relatorio';
+        } else {
+
+            $perfil = $_POST['perfil'];
+
+            $tPerfil = new DbTable_Usuario();
+            $usuarios = $tPerfil->usuariosPorPerfil($perfil);
+
+            $this->view->usuarios = $usuarios;
+        }
+    }
 
 }

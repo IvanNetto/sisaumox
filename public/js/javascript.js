@@ -133,25 +133,6 @@ $(document).ready(function () {
 
     });
 
-    $('input[type=text]').onFocus(function () {
-
-        var campo = $('input[type=text]').val();
-        var regex = '[^a-zA-Z0-9]+';
-        if (campo.match(regex)) {
-            //encontrou então não passa na validação
-            return false;
-        }
-        else {
-            //não encontrou caracteres especiais
-            return true;
-        }
-
-
-    });
-
-
-
-
 });
 
 

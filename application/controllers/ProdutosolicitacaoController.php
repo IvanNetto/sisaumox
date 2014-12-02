@@ -107,9 +107,9 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
         $solicitacaoid = $this->_getParam('solicitacaoid');
         $produtosolicitacaoId = $this->_getParam('produtosolicitacaoid');
-        
+
         if ($status == 'reprovada') {
-        
+
             $tProdutoSolicitacao = new DbTable_Produtosolicitacao;
             $produtoSolicitacao = $tProdutoSolicitacao->find($produtosolicitacaoId)->current();
 
@@ -306,14 +306,13 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
             //verifica se já existe quantidade aprovada parcial
             $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
             $quantidadeJahAprovada = $tProdutoSolicitacao->quantidadeJahAprovadaParcialPorProdutoESolicitacao($produtoid, $solicitacaoid);
-            
+
             if ($quantidadeJahAprovada) {
 
                 $quantidadeAntigaAprovada = $quantidadeJahAprovada[0]['aprovacao_parcial'];
-                
+
 
                 $quantidadetotal = $quantidadeescolhida + $quantidadeAntigaAprovada;
-                
             }
 
             if ($quantidadetotal <= $quantidadesolicitada) {
@@ -336,8 +335,6 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
                 $this->flashMessenger->addMessage(array('danger' => "Quantidades devolvidas não podem ultrapassar a quantidade solicitada para o produto!"));
                 return $this->_helper->redirector->gotoSimple('listargerente', 'solicitacao');
             }
-
-            
         }
     }
 
@@ -377,20 +374,20 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
         $status = 'recebida';
 
-
         $tSolicitacao = new Solicitacao;
         $solicitacao = $tSolicitacao->findSolicitacoesAtivasByUsuario($usuarioId, $status);
 
-        $tProdutosolicitacao = new Produtosolicitacao;
-        $produtoSolicitacao = $tProdutosolicitacao->findBySolicitacao($solicitacao->current()->id);
+        if ($solicitacao->current() <> null) {
 
+            $tProdutosolicitacao = new Produtosolicitacao;
+            $produtoSolicitacao = $tProdutosolicitacao->findBySolicitacao($solicitacao->current()->id);
 
+            $tDevolucao = new DbTable_Devolucao();
+            $devolucoesAntigas = $tDevolucao->listarDevolucoesAntigas($produtoSolicitacao->current()->id);
 
-        $tDevolucao = new DbTable_Devolucao();
-        $devolucoesAntigas = $tDevolucao->listarDevolucoesAntigas($produtoSolicitacao->current()->id);
-
-        $this->view->devolucoesantigas = $devolucoesAntigas;
-        $this->view->usuarioid = $usuarioId;
+            $this->view->devolucoesantigas = $devolucoesAntigas;
+            $this->view->usuarioid = $usuarioId;
+        }
     }
 
 }

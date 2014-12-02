@@ -20,5 +20,11 @@ class DbTable_Usuario extends Zend_Db_Table_Abstract {
     }
 
     
-
+    public function usuariosPorPerfil($perfil){
+        
+        $sql = "select * from t_usuario where perfil = '$perfil' order by login";
+        
+        return $this->getAdapter()->fetchAll($sql);
+        
+    }
 }
