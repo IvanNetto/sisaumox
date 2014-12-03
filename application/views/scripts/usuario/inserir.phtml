@@ -2,8 +2,8 @@
     <fieldset>
         <legend>Criando novo usuário</legend>        
         <div class="form-group">
-            <label for="select" class="col-lg-4 control-label">Funcionário</label>
-            <div class="col-lg-6">
+            <label for="select" class="col-md-4 control-label">Funcionário</label>
+            <div class="col-md-6">
                 <select required="true" class="form-control" id="select" name="pessoaid">
                     <option value="">--selecione--</option>
                     <?php foreach ($this->pessoas as $nomePessoa): ?> 
@@ -17,8 +17,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="select" class="col-lg-4 control-label">Perfil</label>
-            <div class="col-lg-6">
+            <label for="select" class="col-md-4 control-label">Perfil</label>
+            <div class="col-md-6">
                 <select required="true" class="form-control" id="select" name="perfilid">
                     <option value="">--selecione--</option>
                     <?php foreach ($this->perfis as $nomePerfil): ?> 
@@ -32,19 +32,19 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="inputLogin" class="col-lg-6 control-label">Login</label>
-            <div class="col-lg-2">
+            <label for="inputLogin" class="col-md-6 control-label">Login</label>
+            <div class="col-md-2">
                 <input class="form-control" id="inputLogin" placeholder="" type="text" name="login">
             </div>
         </div>
         <div class="form-group">
-            <label for="inputSenha" class="col-lg-6 control-label">Senha</label>
-            <div class="col-lg-2">
+            <label for="inputSenha" class="col-md-6 control-label">Senha</label>
+            <div class="col-md-2">
                 <input class="form-control" id="inputSenha" placeholder="" type="password" name="senha">
             </div>
         </div>
         <div class="form-group">
-            <div class="col-lg-6 col-lg-offset-6">
+            <div class="col-md-6 col-md-offset-6">
                 <!-- <button class="btn btn-default">Cancelar</button>-->
                 <a class="btn btn-primary" href="<?php echo $this->url(array('controller' => 'usuario', 'action' => 'listar')); ?>">Voltar</a>
                 <button type="submit" class="btn btn-success">Inserir</button>

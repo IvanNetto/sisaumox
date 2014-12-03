@@ -4,87 +4,87 @@
         <legend>Editar fornecedor</legend>
         <div class="lado-esquerdo">
             <div class="form-group">
-                <label for="id" class="col-lg-2 control-label">CNPJ</label>
-                <div class="col-lg-3">
-                    <input class="form-control" id="cnpj" placeholder="Ex: 397528735000" type="text" name="id" required="true" value="<?= $this->fornecedor->id ?>">
+                <label for="id" class="col-md-2 control-label">CNPJ</label>
+                <div class="col-md-3">
+                    <input class="form-control" id="cnpj" readonly="true" placeholder="Ex: 397528735000" type="text" name="id" required="true" value="<?= $this->fornecedor->id ?>">
                     <span class="help-block">Somente números</span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="id" class="col-lg-2 control-label">Inscrição estadual</label>
-                <div class="col-lg-3">
+                <label for="id" class="col-md-2 control-label">Inscrição estadual</label>
+                <div class="col-md-3">
                     <input class="form-control" placeholder="Ex: 83245884" maxlength="8" type="text" name="inscricao_estadual" required="true" pattern="[0-9]+$" value="<?= $this->fornecedor->inscricao_estadual ?>">
                     <span class="help-block">Somente números</span>
                 </div>
             </div>
             <div class="form-group">
-                <label for="razao_social" class="col-lg-2 control-label">Razão social</label>
-                <div class="col-lg-3">
+                <label for="razao_social" class="col-md-2 control-label">Razão social</label>
+                <div class="col-md-3">
                     <input class="form-control" id="inputId" placeholder="Ex: Aramarinho LTDA" type="text" name="razao_social" required="true" value="<?= $this->fornecedor->razao_social ?>"/>
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputTelefone1" class="col-lg-2 control-label">Telefone Principal</label>
-                <div class="col-lg-3">
+                <label for="inputTelefone1" class="col-md-2 control-label">Telefone Principal</label>
+                <div class="col-md-3">
                     <input class="form-control" type="tel" class="telefone" required="required" maxlength="15" name="telefone1"  placeholder="ex: (21)98556452" value="<?= $this->fornecedor->telefone1 ?>"/>
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputTelefone2" class="col-lg-2 control-label">Outro telefone</label>
-                <div class="col-lg-3">
+                <label for="inputTelefone2" class="col-md-2 control-label">Outro telefone</label>
+                <div class="col-md-3">
                     <input class="form-control" type="tel" maxlength="15" name="telefone2"  placeholder="ex: (21)24647256" value="<?= $this->fornecedor->telefone2 ?>"/>
                 </div>
             </div>
             <div class="form-group">
-                <label for="email" class="col-lg-2 control-label">Email</label>
-                <div class="col-lg-3">
+                <label for="email" class="col-md-2 control-label">Email</label>
+                <div class="col-md-3">
                     <input class="form-control" type="email" required="required" name="email" pattern="[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$" placeholder="ex: fornecedor@gmail.com" value="<?= $this->fornecedor->email ?>" />
                 </div>
             </div>
         </div>
         <div class="lado-direito">
             <div class="form-group">
-                <label for="rua" class="col-lg-2 control-label">Rua</label>
-                <div class="col-lg-3">
+                <label for="rua" class="col-md-2 control-label">Rua</label>
+                <div class="col-md-3">
                     <input type="text" class="form-control" name="rua" required="required" value="<?= $this->fornecedor->rua ?>">
                 </div>
             </div>
             <div class="form-group ">
-                <label for="numero" class="col-lg-2 control-label">Nº</label>
-                <div class="col-lg-2">
+                <label for="numero" class="col-md-2 control-label">Nº</label>
+                <div class="col-md-2">
                     <input class="form-control" type="text" name="numero" required="true" value="<?= $this->fornecedor->numero ?>">
                 </div>
             </div>
             <div class="form-group ">
-                <label for="numero" class="col-lg-2 control-label">Complemento</label>
-                <div class="col-lg-2">
+                <label for="numero" class="col-md-2 control-label">Complemento</label>
+                <div class="col-md-2">
                     <input class="form-control" type="text" name="complemento" placeholder="" value="<?= $this->fornecedor->complemento ?>"/>
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="inputBairro" class="col-lg-2 control-label">Bairro</label>
-                <div class="col-lg-3">
+                <label for="inputBairro" class="col-md-2 control-label">Bairro</label>
+                <div class="col-md-3">
                     <input class="form-control" type="text" required="required" name="bairro" value="<?= $this->fornecedor->bairro ?>" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputMunicipio" class="col-lg-2 control-label">Município</label>
-                <div class="col-lg-3">
+                <label for="inputMunicipio" class="col-md-2 control-label">Município</label>
+                <div class="col-md-3">
                     <input class="form-control" type="text" name="cidade" value="<?= $this->fornecedor->cidade ?>"/>
 
                 </div>
             </div>
             <div class="form-group">
-                <label for="inputMunicipio" class="col-lg-2 control-label">Uf</label>
-                <div class="col-lg-2">
+                <label for="inputMunicipio" class="col-md-2 control-label">Uf</label>
+                <div class="col-md-2">
                     <input class="form-control" type="text" maxlength="2" name="uf" placeholder="" required="true" pattern="[A-Z]+$" value="<?= $this->fornecedor->uf ?>">
                 </div>
             </div>
 
             <div class="form-group">
-                <label for="Contato" class="col-lg-2 control-label">Contato</label>
-                <div class="col-lg-4">
+                <label for="Contato" class="col-md-2 control-label">Contato</label>
+                <div class="col-md-4">
                     <textarea class="form-control" rows="3" id="contato" name="contato" placeholder=" Ex: João Ribeiro do almoxarifado, Ramal 5378."><?= $this->fornecedor->contato ?></textarea>
                     <span class="help-block">Quais funionários você se relaciona?</span>
                 </div>
@@ -94,7 +94,7 @@
         </div>
         <br><br><br>
         <div class="form-group">
-            <div class="col-lg-5 col-lg-offset-5">
+            <div class="col-md-5 col-md-offset-5">
                 <a class="btn btn-primary" href="<?php echo $this->url(array('controller' => 'fornecedor', 'action' => 'listar')); ?>">Voltar</a>
                 <button type="submit" class="btn btn-success">Editar</button>
             </div>

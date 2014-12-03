@@ -2,8 +2,8 @@
     <fieldset>
         <legend>Criar produto</legend>
         <div class="form-group">
-            <label for="select" class="col-lg-4 control-label">Categoria</label>
-            <div class="col-lg-2">
+            <label for="select" class="col-md-4 control-label">Categoria</label>
+            <div class="col-md-2">
                 <select required = "true" class="form-control" id="select" name="categoriaid" required="true">
                     <option value="">--selecione--</option>
                     <?php foreach ($this->categorias as $nomeCategoria): ?> 
@@ -16,39 +16,39 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="inputNome" class="col-lg-4 control-label">Nome</label>
-            <div class="col-lg-6">
+            <label for="inputNome" class="col-md-4 control-label">Nome</label>
+            <div class="col-md-6">
                 <input class="form-control" id="inputNome" placeholder="" type="text" name="nome" required="true">
             </div>
         </div>
         <div class="form-group">
-            <label for="Descrição" class="col-lg-4 control-label">Descrição</label>
-            <div class="col-lg-6">
+            <label for="Descrição" class="col-md-4 control-label">Descrição</label>
+            <div class="col-md-6">
                 <textarea class="form-control" rows="3" id="descricao" name="descricao" required="true" placeholder="Preencha informações que diferencie o produto de outros desta mesma categoria"></textarea>
             </div>
         </div>
         <div class="form-group">
-            <label for="inputQuantidade" class="col-lg-4 control-label" >Quantidade</label>
-            <div class="col-lg-2">
+            <label for="inputQuantidade" class="col-md-4 control-label" >Quantidade</label>
+            <div class="col-md-2">
                 <input class="form-control" required="true" id="quantidade" pattern="[0-9]+$" placeholder="Somente números" type="number" min="1" name="quantidade">
                 <span class="help-block"></span>
             </div>
         </div>
         <div class="form-group">
-            <label for="inputQuantidademinima" class="col-lg-4 control-label" >Quantidade mínima</label>
-            <div class="col-lg-2">
+            <label for="inputQuantidademinima" class="col-md-4 control-label" >Quantidade mínima</label>
+            <div class="col-md-2">
                 <input class="form-control" required="true" id="quantidademinima"  pattern="[0-9]+$" placeholder="Somente números" type="number" min="1" name="quantidademinima">
                 <span class="help-block">Controle para reposição</span>
             </div>
         </div>
         <div class="form-group">
-            <label for="inputValidade" class="col-lg-4 control-label">Validade</label>
-            <div class="col-lg-2">
+            <label for="inputValidade" class="col-md-4 control-label">Validade</label>
+            <div class="col-md-3">
                 <input class="form-control" id="inputValidade" placeholder="" type="date" name="validade">
             </div>
         </div>
         <div class="form-group">
-      <div class="col-lg-6 col-lg-offset-6">
+      <div class="col-md-6 col-md-offset-6">
         <a class="btn btn-primary" href="<?php echo $this->url(array('controller' => 'categoria', 'action' => 'selecionarcategoria')); ?>">Voltar</a>
         <button type="submit" class="btn btn-success">Criar</button>
       </div>

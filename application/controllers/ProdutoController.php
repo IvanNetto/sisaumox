@@ -80,12 +80,10 @@ class ProdutoController extends Zend_Controller_Action {
             $categoriaid = $_POST['categoriaid'];
             $nome = $_POST['nome'];
             $descricao = $_POST['descricao'];
-            $quantidade = $_POST['quantidade'];
-            $quantidademinima = $_POST['quantidademinima'];
             $validade = $_POST['validade'];
 
             $post = array('id' => $id, 'categoriaid' => $categoriaid, 'nome' => $nome, 'descricao' => $descricao,
-                'quantidade' => $quantidade, 'quantidademinima' => $quantidademinima, 'validade' => $validade);
+                 'validade' => $validade);
             
 
             try {

@@ -3,20 +3,20 @@
     <fieldset>
         <legend>Cadastrar categoria</legend>
         <div class="form-group">
-            <label for="inputNome" class="col-lg-4 control-label" required="true">Nome</label>
-            <div class="col-lg-6">
+            <label for="inputNome" class="col-md-4 control-label" required="true">Nome</label>
+            <div class="col-md-6">
                 <input class="form-control" id="inputNome" placeholder="" type="text" name="nome" required="true" value="<?php echo $this->categoria->nome ?>">
             </div>
         </div>    
         <div class="form-group">
-            <label for="Descrição" class="col-lg-4 control-label">Descrição</label>
-            <div class="col-lg-6">
+            <label for="Descrição" class="col-md-4 control-label">Descrição</label>
+            <div class="col-md-6">
                 <textarea class="form-control" rows="3" id="descricao" name="descricao" required="true"><?php echo $this->categoria->descricao ?></textarea>
                 <span class="help-block">Faça uma breve descrição sobre categoria a ser cadastrada</span>
             </div>
         </div>    
         <div class="form-group">
-            <div class="col-lg-6 col-lg-offset-6">
+            <div class="col-md-6 col-md-offset-6">
                 <a class="btn btn-primary" href="<?php echo $this->url(array('controller' => 'categoria', 'action' => 'listar')); ?>">Voltar</a>
                 <button type="submit" class="btn btn-success">Editar</button>
             </div>
