@@ -13,7 +13,9 @@ class DbTable_Solicitacao extends Zend_Db_Table_Abstract {
         return $this->getAdapter()->fetchAll($sql);
     }
 
-    public function RelatorioDeSolicitacoesPorPeriodo($data1, $data2) {
+    public function RelatorioDeSolicitacoesPorPeriodo($data1, $data2, $status) {
+        
+        $status = strtolower($status);
 
         $data1 = explode('-', $data1);
         $ano = $data1[0];
@@ -28,9 +30,14 @@ class DbTable_Solicitacao extends Zend_Db_Table_Abstract {
         $dia = $data2[2];
 
         $data2 = $data2[2] . '/' . $data2[1] . '/' . $data2[0];
-
-        $sql = "select * from t_solicitacao s, t_usuario u where data between '$data1' and '$data2' order by data";
-
+        
+        if ($status){
+        $sql = "select distinct * from t_solicitacao s, t_usuario u where u.id=s.usuarioid and status = '$status' and data between '$data1' and '$data2' order by data";
+        }else{
+        $sql = "select distinct * from t_solicitacao s, t_usuario u where u.id=s.usuarioid and data between '$data1' and '$data2' order by data";    
+            
+        }
+    
         return $this->getAdapter()->fetchAll($sql);
     }
     

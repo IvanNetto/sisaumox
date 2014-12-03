@@ -15,7 +15,21 @@
             <input type="date" name="data1" class="data" placeholder="Data inicial">
     <!--        <span class="help-block"></span>-->
             <input type="date" name="data2" class="data" placeholder="Data fim">
+            <br>
+            <br>
+                <select  name="status">
+                    <option value="">--selecione--</option>
+                    <option value="nova">Nova</option>
+                    <option value="em analise">Em análise</option>
+                    <option value="aprovada">Aprovada</option>
+                    <option value="reprovada">Reprovada</option>
+                    <option value="cancelada">Cancelada</option>
+                    <option value="entregue">Entregue</option>
+                    <option value="recebida">Recebida</option>
+
+                </select>
             <button class="btn btn-primary btn-sm "><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+            <small><span class="help-block">* Se nenhum status for selecionado, a consulta irá retornar todos os status</span></small>
         </form>
     </div>
 </center>
@@ -51,11 +65,12 @@
                         <?php foreach ($this->solicitacoes as $solicitacao) { ?>
                             <td class="text-left"><?= $solicitacao['id']; ?></td>
                             <td class="text-left"><?= $solicitacao['data']; ?></td>
-                            <?php if ($solicitacao['data_recebimento'] == null) { ?> <td class="text-left"><?= 'não concluída';
-                } else {
+                            <?php if ($solicitacao['data_recebimento'] == null) { ?> <td class="text-left"><?=
+                                'não concluída';
+                            } else {
                                 ?></td>
                                 <td class="text-left"><?= $solicitacao['data_recebimento']; ?></td>
-        <?php } ?>
+                            <?php } ?>
                             <td class="text-left"><?= $solicitacao['status']; ?></td>
                             <td class="text-left"><?= $solicitacao['login']; ?></td>
                         </tr> 
