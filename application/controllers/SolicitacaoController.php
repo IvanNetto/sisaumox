@@ -94,13 +94,13 @@ class SolicitacaoController extends Zend_Controller_Action {
     }
 
     public function listaragendadasAction() {
-
+        
         $tSolicitacao = new Solicitacao();
         $agendadas = $tSolicitacao->listarAgendadas();
-
+        
         $this->view->agendadas = $agendadas;
     }
-
+    
     public function listarreprovadasAction() {
 
         $tSolicitacao = new Solicitacao();

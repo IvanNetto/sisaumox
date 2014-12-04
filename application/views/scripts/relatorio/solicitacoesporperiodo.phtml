@@ -1,8 +1,14 @@
+<?php 
+$usuario = Zend_Auth::getInstance()->getIdentity()->login;
+?>
+
+
 <center>
     <h1 class="print">Prefeitura do Estado do Rio de Janeiro</h1>
     <h2 class="print">Escola Municipal Mozart Lagos</h2>
     <h3>Relatório de solicitações por período</h3>
 </center>
+<div class="pull-right">Impresso em: <?php echo $data = date("d/m/Y - H:i:s ") . 'por ' . '<b>'.$usuario.'</b>'; ?></div>
 <hr>
 <?php if ($this->solicitacoes <> null) { ?>
     <p> Abaixo segue o resultado de sua busca. </p>
@@ -12,9 +18,9 @@
 <center>
     <div class="no-print">
         <form class="form-horizontal" action="<?= $this->baseUrl() . '/relatorio/solicitacoesporperiodo' ?>" method="POST">
-            <input type="date" name="data1" class="data" placeholder="Data inicial">
+            <input type="date" required="true" name="data1" class="data" placeholder="Data inicial">
     <!--        <span class="help-block"></span>-->
-            <input type="date" name="data2" class="data" placeholder="Data fim">
+            <input type="date" required="true" name="data2" class="data" placeholder="Data fim">
             <br>
             <br>
                 <select  name="status">
@@ -26,6 +32,9 @@
                     <option value="cancelada">Cancelada</option>
                     <option value="entregue">Entregue</option>
                     <option value="recebida">Recebida</option>
+                    <option value="agendada">Agendada</option>
+                    <option value="pendente">Pendente</option>
+                    <option value="liberada">Liberada</option>
 
                 </select>
             <button class="btn btn-primary btn-sm "><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
@@ -66,7 +75,7 @@
                             <td class="text-left"><?= $solicitacao['id']; ?></td>
                             <td class="text-left"><?= $solicitacao['data']; ?></td>
                             <?php if ($solicitacao['data_recebimento'] == null) { ?> <td class="text-left"><?=
-                                'não concluída';
+                                'não possui';
                             } else {
                                 ?></td>
                                 <td class="text-left"><?= $solicitacao['data_recebimento']; ?></td>

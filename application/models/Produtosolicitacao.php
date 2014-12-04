@@ -80,7 +80,7 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
 
         $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
         $query = $tProdutoSolicitacao->select()
-                ->where('solicitacaoid = (?)', $solicitacaoid);
+                ->where('solicitacaoid = (?)', $solicitacaoid); 
 
         return $tProdutoSolicitacao->fetchAll($query);
     }

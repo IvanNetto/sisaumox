@@ -43,6 +43,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
     public function inserirAction() {
 
         $produtosescolhidos = ($_POST['checkbox']);
+        
         $solicitacaoid = ($_POST['solicitacaoid']);
         $categoriaid = ($_POST['categoriaid']);
 
@@ -104,10 +105,10 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
     public function atualizarprodutosesolicitacaoAction() {
 
         $status = $this->_getParam('status');
-
+        
         $solicitacaoid = $this->_getParam('solicitacaoid');
         $produtosolicitacaoId = $this->_getParam('produtosolicitacaoid');
-
+        
         if ($status == 'reprovada') {
 
             $tProdutoSolicitacao = new DbTable_Produtosolicitacao;
@@ -151,10 +152,17 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
             $statusatual = 'entregue';
         } elseif ($status == 'recebida') {
             $statusatual = 'recebida';
+        } elseif ($status == 'liberada'){
+            $statusatual = 'liberada';
+        } elseif ($status == 'pendente'){
+            $statusatual = 'pendente'; 
         } else {
+            
             $statusatual = $tsolicitacao->mostrarStatusAtual($solicitacaoid)->current()->status;
         }
+        
         $tsolicitacao->atualizarStatus($solicitacaoid, $statusatual, $gerente_responsavel);
+        
         if ($data_recebimento) {
             $tsolicitacao->atualizaDataDeRecebimento($solicitacaoid, $data_recebimento);
         }
@@ -176,7 +184,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
         $ProdutoSolicitacao = new Produtosolicitacao();
         $resumoDeSolicitacao = $ProdutoSolicitacao->resumoDeSolicitacao($solicitacaoid);
-
+        
         $this->view->resumoDeSolicitacao = $resumoDeSolicitacao;
         $this->view->solicitacaoid = $solicitacaoid;
     }

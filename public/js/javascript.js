@@ -109,10 +109,9 @@ $(document).ready(function () {
 
         $('.no-print').css("display", "none");
         $('.print').css("display", "block");
-
-
-
-
+        window.print();
+        window.close();
+        
     });
 
     $('input[type=tel]').mask("(00) 0000-00009");

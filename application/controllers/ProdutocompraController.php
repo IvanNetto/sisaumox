@@ -155,11 +155,10 @@ class ProdutocompraController extends Zend_Controller_Action {
     
     public function resumodepedidoAction(){
         
+        $compraId = $this->getParam('compraid');
         
         $tProdutoCompra = new DbTable_Produtocompra;
-        $resumoDePedido = $tProdutoCompra->fetchAll();
-        
-        $compraId = $this->getParam('compraid');
+        $resumoDePedido = $tProdutoCompra->find($compraId);
         
         $this->view->resumoDePedido = $resumoDePedido;
         $this->view->compraId = $compraId;
