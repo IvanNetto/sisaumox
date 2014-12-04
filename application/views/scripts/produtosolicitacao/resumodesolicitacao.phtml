@@ -113,7 +113,7 @@ if ($solicitacao->current()->status == 'recebida') {
                             $quantidadeEntregueParcial = $entregaParcial[0]['aprovacao_parcial'];
                             if (($quantidadeEntregueParcial > 0) && ($solicitacao->current()->status <> 'entregue') && ($solicitacao->current()->status <> 'recebida')) {
                                 ?>
-                                <td><h4 class="label label-warning alerta-resumo"><?php echo $produtosolicitacao->current()->quantidade - $quantidadeEntregueParcial; ?> já aprovados</h4></td> 
+                                <td><h4 class="label label-warning alerta-resumo"><?php echo $produtosolicitacao->current()->quantidade - $quantidadeEntregueParcial; ?> aprovados</h4></td> 
                             <?php }
                             ?>    
 
