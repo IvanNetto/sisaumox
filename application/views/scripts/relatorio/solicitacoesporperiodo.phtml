@@ -5,7 +5,7 @@ $usuario = Zend_Auth::getInstance()->getIdentity()->login;
 
 <center>
     <h1 class="print">Prefeitura do Estado do Rio de Janeiro</h1>
-    <h2 class="print">Escola Municipal Mozart Lagos</h2>
+    <h2 class="print">Centro Integrado de Educação Pública (CIEP) Almir Bonfim de Andrade </h2>
     <h3>Relatório de solicitações por período</h3>
 </center>
 <div class="pull-right">Impresso em: <?php echo $data = date("d/m/Y - H:i:s ") . 'por ' . '<b>'.$usuario.'</b>'; ?></div>
@@ -71,7 +71,8 @@ $usuario = Zend_Auth::getInstance()->getIdentity()->login;
                 </thead>
                 <tbody>
                     <tr>
-                        <?php foreach ($this->solicitacoes as $solicitacao) { ?>
+                        <?php foreach ($this->solicitacoes as $solicitacao) {                                var_dump($solicitacao);die;?>
+                        
                             <td class="text-left"><?= $solicitacao['id']; ?></td>
                             <td class="text-left"><?= $solicitacao['data']; ?></td>
                             <?php if ($solicitacao['data_recebimento'] == null) { ?> <td class="text-left"><?=

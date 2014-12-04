@@ -148,7 +148,7 @@ class SolicitacaoController extends Zend_Controller_Action {
         $produtoId = $this->_getParam("produtoid");
 
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
-        $data = date("d/m/y");
+        $data = date("d/m/Y");
         $status = "agendada";
 
         $post = array(
