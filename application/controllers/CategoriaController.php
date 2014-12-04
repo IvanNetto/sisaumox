@@ -99,6 +99,7 @@ class CategoriaController extends Zend_Controller_Action {
     {
 
         $idSolicitacao = $this->_getParam("id");
+        $permissao = $this->_getParam("listaDeProdutos");
         
 
         $tCategoria = new DbTable_Categoria();
@@ -106,6 +107,7 @@ class CategoriaController extends Zend_Controller_Action {
 
         $this->view->listadecategorias = $listadecategorias;
         $this->view->idsolicitacao = $idSolicitacao;
+        $this->view->listaDeProdutos = $permissao;
 
 
     }

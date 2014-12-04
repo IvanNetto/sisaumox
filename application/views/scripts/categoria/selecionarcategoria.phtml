@@ -4,6 +4,9 @@
     <p>Escolha uma das categorias cadastradas abaixo para listar seus produtos:</p>
     <div class="combobox">
         <form class="form-horizontal" action="<?= $this->baseUrl() . '/produto/buscarprodutoporcategoria' ?>" method="POST">
+            <?php if ($this->listaDeProdutos == 1) { ?>
+                <input type="hidden" name="listaDeProdutos" value="permissao">
+            <?php } ?>
             <select required = "true" name="categoriaid">
                 <option value="">--selecione--</option>
                 <?php foreach ($this->listadecategorias as $nomeCategoria): ?>
@@ -12,8 +15,8 @@
                 endforeach;
                 ?>
             </select>
-             <button class="btn btn-primary btn-filter btn-sm"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
+            <button class="btn btn-primary btn-filter btn-sm"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
         </form>
     </div>
-        
+
 </div>

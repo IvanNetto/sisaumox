@@ -17,7 +17,7 @@ class ProdutoController extends Zend_Controller_Action {
     }
 
     public function listarAction() {
-        
+
         $tCategoria = new Categoria();
         $categorias = $tCategoria->listarCategorias();
 
@@ -26,7 +26,6 @@ class ProdutoController extends Zend_Controller_Action {
 
         $this->view->listaDeProdutos = $listaDeProdutos->toArray();
         $this->view->categorias = $categorias->toArray();
-        
     }
 
     public function inserirAction() {
@@ -37,7 +36,7 @@ class ProdutoController extends Zend_Controller_Action {
         $this->view->categorias = $categorias;
 
         if ($this->getRequest()->isPost()) {
-            
+
             $categoriaid = $_POST['categoriaid'];
             $nome = $_POST['nome'];
             $descricao = $_POST['descricao'];
@@ -76,15 +75,15 @@ class ProdutoController extends Zend_Controller_Action {
         if ($this->getRequest()->isPost()) {
 
             $id = $_POST['id'];
-            
+
             $categoriaid = $_POST['categoriaid'];
             $nome = $_POST['nome'];
             $descricao = $_POST['descricao'];
             $validade = $_POST['validade'];
 
             $post = array('id' => $id, 'categoriaid' => $categoriaid, 'nome' => $nome, 'descricao' => $descricao,
-                 'validade' => $validade);
-            
+                'validade' => $validade);
+
 
             try {
 
@@ -93,7 +92,6 @@ class ProdutoController extends Zend_Controller_Action {
             } catch (Exception $e) {
 
                 $this->flashMessenger->addMessage(array('danger' => "Bem, isto é constrangedor! O produto não foi editado. Tente novamente!"));
-                
             };
 
             $this->_helper->redirector('buscarprodutoporcategoria');
@@ -119,10 +117,9 @@ class ProdutoController extends Zend_Controller_Action {
 
         return $this->_helper->redirector('buscarprodutoporcategoria');
     }
-    
-    
-    public function buscarprodutoporcategoriaAction(){
-        
+
+    public function buscarprodutoporcategoriaAction() {
+
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
         $categoriaid = $this->_getParam("categoriaid");
 
@@ -133,40 +130,38 @@ class ProdutoController extends Zend_Controller_Action {
 
         if ($categoriaid) {
             
-            $tProdutosolicitacao = new DbTable_Produtosolicitacao();
-            $listaItensProibidos = $tProdutosolicitacao->verificarSeJahExisteItemEmSolicitacaoAtivaDoUsuario($usuarioId);
-            
-            
-            
-            
+            $listaItensProibidos = array();
+
+            if (isset($_POST['listaDeProdutos']) <> 'PERMISSAO') {
+
+                $tProdutosolicitacao = new DbTable_Produtosolicitacao();
+                $listaItensProibidos = $tProdutosolicitacao->verificarSeJahExisteItemEmSolicitacaoAtivaDoUsuario($usuarioId);
+            }
+
+
             $tProdutoSolicitacao = new Produtosolicitacao;
             $listaDeItensPermitidos = $tProdutoSolicitacao->listarProdutosPermitidos($categoriaid, $listaItensProibidos);
 
             $this->view->listaDeProdutos = $listaDeItensPermitidos->toArray();
         }
-       
     }
-    
-    public function listarprodutosindisponiveisAction(){
-        
+
+    public function listarprodutosindisponiveisAction() {
+
 
         $tProduto = new DbTable_Produto();
         $produtosIndisponiveis = $tProduto->listarIndisponiveis();
 
         $this->view->lisdaDeIndisponiveis = $produtosIndisponiveis;
-        
-        
     }
-    
-    public function listarprodutosquantidademinimaAction(){
-        
+
+    public function listarprodutosquantidademinimaAction() {
+
 
         $tProduto = new DbTable_Produto();
         $produtosQuantidadeMinima = $tProduto->listarQuantidadeMinima();
 
         $this->view->lisdaDeQuantidadeMinima = $produtosQuantidadeMinima;
-        
-        
     }
-    
+
 }
