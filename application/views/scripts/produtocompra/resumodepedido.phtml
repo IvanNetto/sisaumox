@@ -23,9 +23,29 @@
                         $tFornecedor = new DbTable_Fornecedor;
                         $fornecedor = $tFornecedor->find($compra->fornecedorid);
                         echo $fornecedor->current()->razao_social;
+                        
+                        $tProdutoCompra = new Produtocompra();
+                        $produtoCompra = $tProdutoCompra->findByCompra($compra->id)->current();
+                        
                         ?>
                     </td>
                 </tr>
+                  <?php if (!empty($produtoCompra->observacao)) { ?>
+                    <tr class="resumo-solicitacao-head">
+                        <th>Observação</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <?php
+                            $login = Zend_Auth::getInstance()->getIdentity()->login;
+                            if ($compra->status == 'AGUARDANDO FORNECEDOR') {
+                                ?>
+                                <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'inserirobservacao', 'compraid' => $compra->id)); ?>" <span class="glyphicon glyphicon-plus"></span>Atualizar</a>
+                            <?php } ?>
+                            <?= $produtoCompra->observacao; ?>
+                        </td>
+                    </tr>
+                <?php } ?>
             </tbody>
         </table>
         <table class="table lista-pedidos">
@@ -33,7 +53,6 @@
                 <tr class="resumo-solicitacao-head">
                     <th class="text-center">Produto</th>
                     <th class="text-center">Quantidade Solicitada</th>
-                    <th></th>
                     <th class="text-center">Valor unitário</th>
                 </tr>
             </thead>
@@ -42,6 +61,7 @@
                 foreach ($this->resumoDePedido as $pedido) {
                     $tProduto = new DbTable_Produto;
                     $produto = $tProduto->find($pedido->produtoid);
+                    $quantidade = $pedido->entrega_parcial;
                     ?>
                     <tr class="linha-pedido">
                         <td style="width: 300px;"><?php echo $produto[0]->nome; ?></td>
@@ -49,26 +69,19 @@
                             <?php if ($compra->status == 'AGUARDANDO FORNECEDOR') { ?>
                                 <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'entregaparcial', 'compraid' => $compra->id, 'produtoid' => $pedido->produtoid)); ?>" class="btn btn-info btn-xs botaoinfo"><span class="glyphicon glyphicon-tag"></span> Reposição parcial</a>
                             <?php } ?>
+                            <?php if ($quantidade) { ?>
+                                <h4 class="label label-warning alerta-pedido"><?php echo $quantidade; ?> itens repostos</h4>
+                            <?php } ?>
                         </td>
-                        <?php
-                        $quantidade = $pedido->entrega_parcial;
-                        if ($quantidade) {
-                            ?>
-                            <td><h4 class="label label-warning alerta-pedido"><?php echo $quantidade; ?> itens repostos</h4></td>
-                        <?php } ?>
-                        
-                            <td>R$ <?= $pedido->valor_unitario; ?></td>
-                            
-                    </tr>
-                <?php } ?>
+                    <?php } ?>
+                    <td>R$ <?= $pedido->valor_unitario; ?></td>
+                </tr>
         </table>
         <h4 class="text-right valor-total">Valor total da compra: R$ <?= $compra->valor_total; ?></h4>
-
         </tbody>
-
 </div>
-<?php if ($compra->status <> 'concluida'){?>
-<center>
-    <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'reporitensnoestoque', 'id' => $compra->id)); ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-thumbs-up"></span> Repor todos</a>
-</center>
+<?php if ($compra->status <> 'concluida') { ?>
+    <center>
+        <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'reporitensnoestoque', 'id' => $compra->id)); ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-thumbs-up"></span> Repor todos</a>
+    </center>
 <?php } ?>

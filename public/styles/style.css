@@ -188,12 +188,12 @@
 
 .controle button{margin-top: 12px;}
 .icon-admin{
-    
+
     margin-left: 28px;
 }
 
 .logo-admin{
-    
+
     margin: 17px 20px -6px 27px;
 }
 
@@ -283,11 +283,14 @@
 
 .alerta-pedido{
 
-    float: left;
-    margin-left: -158px;
+    float: right;
+    margin-left: -92px;
     margin-top: 5px;
 
 }
+
+
+
 
 /*listas de solicitações*/
 .acao a{
@@ -388,9 +391,9 @@ table th{
 }
 
 .print{
-    
+
     display: none;
-        
+
 }
 
 /*RELATÓRIOS*/
@@ -456,7 +459,7 @@ table th{
     h3 {
         font-size: 14pt;
     }
-    
+
     p {
         font-size: 12pt;
         widows: 3;
@@ -486,7 +489,7 @@ table th{
     .page-break { 
         page-break-before: always; 
     }
-    
+
     /*Estilos da Demo*/
     .header.print h1{
         width: 100%;

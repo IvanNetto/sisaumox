@@ -97,6 +97,8 @@ class CompraController extends Zend_Controller_Action {
             }
 
             $valorTotal = $valorTotal + $valor;
+            $valorTotal = str_replace('.', ',', $valorTotal);
+            
         }
 
         //atualiza t_compra

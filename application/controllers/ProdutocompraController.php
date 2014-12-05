@@ -60,10 +60,10 @@ class ProdutocompraController extends Zend_Controller_Action {
             $produtoCompra = new Produtocompra();
             $produtoCompra->inserirProdutoCompra($compraid, $produtosEscolhidos);
 
-            $deucerto = true;
+            
         } catch (Exception $e) {
 
-            $deucerto = false;
+            
         };
 
         $params = array('categoriaId' => $categoriaId, 'compraid' => $compraid, 'fornecedorid' => $fornecedorId);
@@ -71,11 +71,6 @@ class ProdutocompraController extends Zend_Controller_Action {
     }
 
     public function carrinhodecomprasAction() {
-
-
-        if ($this->_getParam('deucerto')) {
-            $this->flashMessenger->addMessage(array('success' => "Item removido do carrinho com sucesso"));
-        }
 
         $compraid = $this->_getParam('compraid');
         $fornecedorId = $this->_getParam('fornecedorid');
@@ -157,8 +152,8 @@ class ProdutocompraController extends Zend_Controller_Action {
         
         $compraId = $this->getParam('compraid');
         
-        $tProdutoCompra = new DbTable_Produtocompra;
-        $resumoDePedido = $tProdutoCompra->find($compraId);
+        $tProdutoCompra = new Produtocompra();
+        $resumoDePedido = $tProdutoCompra->findByCompra($compraId);
         
         $this->view->resumoDePedido = $resumoDePedido;
         $this->view->compraId = $compraId;

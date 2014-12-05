@@ -93,12 +93,14 @@ $(document).ready(function () {
 
             var multiplica = (parseFloat(quantidadeItensCompra) * parseFloat(valorUnitarioComCifrao));
             total += multiplica;
+            
 
         })
 
-        total = String(total);
+        
 
         total = parseFloat(total).toFixed(2);
+        
         total = total.replace(".", ",");
 
         $('#total').text("Valor total: " + total);
