@@ -94,13 +94,13 @@ class SolicitacaoController extends Zend_Controller_Action {
     }
 
     public function listaragendadasAction() {
-        
+
         $tSolicitacao = new Solicitacao();
         $agendadas = $tSolicitacao->listarAgendadas();
-        
+
         $this->view->agendadas = $agendadas;
     }
-    
+
     public function listarreprovadasAction() {
 
         $tSolicitacao = new Solicitacao();
@@ -166,7 +166,7 @@ class SolicitacaoController extends Zend_Controller_Action {
         return $this->forward('inserirprodutoemsolicitacaoagendada', 'produtosolicitacao', null, $param);
     }
 
-    public function deletaragendadaAction(){
+    public function deletaragendadaAction() {
 
         $this->_helper->layout->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
@@ -178,7 +178,6 @@ class SolicitacaoController extends Zend_Controller_Action {
         $tSolicitacao->deletarUltimaAgendada($maxSolicitacaoId[0]['id']);
 
         return $this->_helper->redirector('listar');
-
     }
 
     public function deletarAction() {
@@ -207,18 +206,18 @@ class SolicitacaoController extends Zend_Controller_Action {
 
         $tProdutosolicitacao = new Produtosolicitacao();
         $produtosolicitacao = $tProdutosolicitacao->findBySolicitacao($solicitacaoid);
-        
+
         //atualiza o estoque antes de deletar
         $produto = new Produto();
         $produto->atualizarEstoqueComProdutosCancelados($produtosolicitacao, $solicitacaoid);
-        
+
         //deleta linhas da t_produto_solicitacao
         $tProdutosolicitacao->limparCarrinhoDeSolicitacao($solicitacaoid);
 
         $status = 'cancelada';
         $tSolicitacao = new Solicitacao();
         $tSolicitacao->atualizarStatus($solicitacaoid, $status, $gerente_responsavel);
-        
+
         //atualizar o estoque retirando os valores que foram solicitados !!!!!
 
         $this->flashMessenger->addMessage(array('success' => "Solicitação cancelada com sucesso!"));
@@ -227,6 +226,7 @@ class SolicitacaoController extends Zend_Controller_Action {
     }
 
     public function inserirobservacaoAction() {
+        
         $idDevolucao = $this->_getParam("id_devolucao");
         $solicitacaoid = $this->_getParam("solicitacaoid");
         $produtosolicitacaoid = $this->_getParam("produtosolicitacaoid");
@@ -236,7 +236,8 @@ class SolicitacaoController extends Zend_Controller_Action {
         $param = ['solicitacaoid' => $solicitacaoid, 'produtosolicitacaoid' => $produtosolicitacaoid];
         
         $this->view->produtosolicitacaoid = $produtosolicitacaoid;
-        $this->view->solicitacaoid = $solicitacaoid;        
+        $this->view->solicitacaoid = $solicitacaoid;    
+        
         if ($_POST) {
             $observacao = $_POST['observacao'];
             $data_atualizacao_status = $this->_getParam("data_atualizacao_status");
@@ -256,6 +257,7 @@ class SolicitacaoController extends Zend_Controller_Action {
                 $post = (['observacao' => $observacao, 'status' => $status, 'data_atualizacao_status' => $data_atualizacao_status, 'gerente_responsavel' => $gerente_responsavel]);
                 $solicitacao->current()->setFromArray($post);
                 $solicitacao->current()->save();
+                
                 $this->forward('atualizarprodutosesolicitacao', 'produtosolicitacao', null, $param);
             }
         }

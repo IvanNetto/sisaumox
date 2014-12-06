@@ -103,7 +103,7 @@ $(document).ready(function () {
         
         total = total.replace(".", ",");
 
-        $('#total').text("Valor total: " + total);
+        $('#total').text("Valor total: R$ " + total);
 
     });
 

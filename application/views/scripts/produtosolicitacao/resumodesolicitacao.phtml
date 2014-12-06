@@ -37,6 +37,8 @@ if ($solicitacao->current()->status == 'recebida') {
                     <?php
                     $tSolicitacao = new DbTable_Solicitacao();
                     $solicitacao = $tSolicitacao->find($this->solicitacaoid);
+                    
+                    
                     ?>
                     <td><?= $solicitacao->current()->id; ?></td>
                     <td><?= $solicitacao->current()->data; ?></td>
@@ -49,22 +51,21 @@ if ($solicitacao->current()->status == 'recebida') {
                         <td><?= $solicitacao->current()->data_recebimento; ?></td>
                     <?php } ?>
                 </tr>
-                <?php if (!empty($solicitacao->current()->observacao)) { ?>
+            </tbody>
+        </table>
+        <table class="table tabela-resumo">
+            <thead>
                     <tr class="resumo-solicitacao-head">
                         <th>Observação</th>
                     </tr>
+            </thead>
+            <tbody>
                     <tr>
                         <td>
-                            <?php
-                            $login = Zend_Auth::getInstance()->getIdentity()->login;
-                            if ($solicitacao->current()->status == 'agendada' || $solicitacao->current()->status == 'pendente') {
-                                ?>
-                                <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'status' => 'pendente', 'data_atualizacao_status' => $data_atualizacao_status = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" <span class="glyphicon glyphicon-plus"></span>Atualizar</a>
-                            <?php } ?>
-                            <?= $solicitacao->current()->observacao; ?>
+                           <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $solicitacao->current('id')->id)); ?>" <span class="glyphicon glyphicon-plus"></span></a>
+                           <?php if($solicitacao->current()->observacao <> ''){ echo $solicitacao->current()->observacao; }else{ echo 'adicionar';}?>
                         </td>
                     </tr>
-                <?php } ?>
             </tbody>
         </table>
         <center>
@@ -72,8 +73,8 @@ if ($solicitacao->current()->status == 'recebida') {
             <table class="table tabela-resumo">
                 <thead>
                     <tr class= "resumo-solicitacao-head">
-                        <th>Produto</th>
-                        <th>Quantidade Solicitada</th>
+                        <th class="text-center">Produto</th>
+                        <th class="text-center">Quantidade Solicitada</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -100,14 +101,17 @@ if ($solicitacao->current()->status == 'recebida') {
                                     }
                                 }
                                 ?>
-                            </td>
+                            
                             <?php
                             $tDevolucao = new DbTable_Devolucao();
                             $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtosolicitacao['produtoid']->produtoid);
+                            
                             $quantidadeDevolvida = $devolucao[0]['quantidade'];
+                            
                             if ($quantidadeDevolvida) {
                                 ?>
-                                <td><h4 class="label label-warning alerta-resumo"><?php $quantidadeDevolvida; ?> itens devolvidos</h4></td>
+                                <h4 class="label label-warning alerta-resumo"><?php echo $quantidadeDevolvida; ?> itens devolvidos</h4>
+                                </td>
                             <?php } ?>
                             <?php
                             $tProdutoSolicitacao = new DbTable_Produtosolicitacao;
@@ -115,7 +119,7 @@ if ($solicitacao->current()->status == 'recebida') {
                             $quantidadeEntregueParcial = $entregaParcial[0]['aprovacao_parcial'];
                             if (($quantidadeEntregueParcial > 0) && ($solicitacao->current()->status <> 'entregue') && ($solicitacao->current()->status <> 'recebida')) {
                                 ?>
-                                <td><h4 class="label label-warning alerta-resumo"><?php echo $produtosolicitacao->current()->quantidade - $quantidadeEntregueParcial; ?> aprovados</h4></td> 
+                                <h4 class="label label-warning alerta-resumo"><?php echo $produtosolicitacao->current()->quantidade - $quantidadeEntregueParcial; ?> aprovados</h4></td> 
                             <?php }
                             ?>    
 

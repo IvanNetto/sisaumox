@@ -149,6 +149,9 @@
 .col-xs-8 button, h4{padding-bottom: 2px;}
 .carrinho{with:600px; text-align: center; margin-top: 100px;}
 .botaopedido {margin-left: 3px;}
+.valorTotal {margin-right: 35px;}
+.botaoinfo{margin-left: 18px;}
+
 
 
 /*LIST COM FILTER*/
@@ -175,7 +178,6 @@
 .filterable .filters input[disabled]:-ms-input-placeholder {
     color: #333;
 }
-
 /*NAV BAR PAINEL DE CONTROLE*/
 .controle{
 
@@ -198,30 +200,8 @@
 }
 
 
-/*
-.botao{
 
-    padding: 15px 8px 0 57px;
 
-}
-
-.botao-admin{
-
-    background-color: #899d9f;
-    font-style: inherit;
-}
-
-.teste{
-    height: 43px;
-    background-color: #899d9f;
-}
-
-.botaoinfo{
-
-    margin-left: 18px;
-
-}
-*/
 
 .tabela-busca td {
 
@@ -253,6 +233,7 @@
 .resumo-solicitacao-head{
 
     background-color: #cfdbdb;
+   
 
 }
 .tabela-resumo tbody{
@@ -262,8 +243,8 @@
 }
 .alerta-resumo{
 
-    float: left;
-    margin-left: 2px;
+     float: right;
+    margin-left: -92px;
     margin-top: 5px;
 }
 

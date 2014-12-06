@@ -1,13 +1,11 @@
 <h3>Inserir observação</h3>
 <hr>
 <div class="instrucao">
-    <form class="form-horizontal" action="" method="POST">
-        <input type ="hidden" name="solicitacaoid" value ="<?= $this->solicitacaoid; ?>">
-        <input type ="hidden" name="produtosolicitacaoid" value ="<?= $this->produtosolicitacaoid; ?>">
-        <input type ="hidden" name="solicitacaoid" value ="<?= $this->solicitacaoid; ?>">
+    <form class="form-horizontal" action="<?= $this->baseUrl() . '/compra/inserirobservacao' ?>" method="POST">
+        <input type="hidden" name="compraid" value="<?php echo $this->compraid ?>">
         <br><br>
         <div class="form-group">
-            <div class="col-lg-3  col-lg-offset-4">
+             <div class="col-lg-3  col-lg-offset-4">
                 <textarea class="form-control" rows="3" id="observacao" required="true" name="observacao"></textarea>
                 <span class="help-block">Insira um comentário sobre esta ação</span>
             </div>

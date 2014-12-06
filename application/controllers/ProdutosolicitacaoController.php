@@ -105,10 +105,9 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
     public function atualizarprodutosesolicitacaoAction() {
 
         $status = $this->_getParam('status');
-        
         $solicitacaoid = $this->_getParam('solicitacaoid');
         $produtosolicitacaoId = $this->_getParam('produtosolicitacaoid');
-        
+      
         if ($status == 'reprovada') {
 
             $tProdutoSolicitacao = new DbTable_Produtosolicitacao;
@@ -122,7 +121,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
             return $this->_helper->redirector->gotoSimple('listargerente', 'solicitacao');
         }
-
+  
         $produtos = $_POST['produto'];
         $operacao = '-';
         $quantidade = $_POST['quantidade'];
@@ -223,7 +222,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         }
     }
 
-    public function devolveritemdasolicitacaoAction() {
+        public function devolveritemdasolicitacaoAction() {
 
 
         if (!($_POST)) {
@@ -243,7 +242,6 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
             $produtosolicitacaoid = $_POST['produtosolicitacaoid'];
             $solicitacaoid = $_POST['solicitacaoid'];
             $quantidadeescolhida = $_POST['quantidade'];
-            $observacao = $_POST['observacao'];
             $data = $_POST['data'];
             $status = $_POST['status'];
 
@@ -266,7 +264,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
             if ($quantidadetotal <= $quantidadesolicitada) {
 
-                $post = array('produtosolicitacaoid' => $produtosolicitacaoid, 'data_devolucao' => $data, 'quantidade_devolvida' => $quantidadeescolhida, 'observacao' => $observacao, 'status_devolucao' => $status);
+                $post = array('produtosolicitacaoid' => $produtosolicitacaoid, 'data_devolucao' => $data, 'quantidade_devolvida' => $quantidadeescolhida, 'status_devolucao' => $status);
 
                 $tDevolucao = new Devolucao();
                 $tDevolucao->inserirDevolucao($post);
@@ -303,7 +301,6 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
             $solicitacaoid = $_POST['solicitacaoid'];
             $quantidadeescolhida = $_POST['quantidade'];
-            $observacao = $_POST['observacao'];
 
             $tProdutoSolicitacao = new Produtosolicitacao();
             $produtosolicitacao = $tProdutoSolicitacao->findByProdutoESolicitacao($solicitacaoid, $produtoid);
@@ -326,7 +323,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
             if ($quantidadetotal <= $quantidadesolicitada) {
 
 
-                $post = array('aprovacao_parcial' => $quantidadetotal, 'observacao' => $observacao);
+                $post = array('aprovacao_parcial' => $quantidadetotal);
 
                 $tProdutoSolicitacao = new ProdutoSolicitacao();
                 $tProdutoSolicitacao->inserirAprovacaoParcial($post, $produtosolicitacao);

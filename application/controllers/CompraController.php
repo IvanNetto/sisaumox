@@ -94,10 +94,14 @@ class CompraController extends Zend_Controller_Action {
                 $quant = number_format($quantidade, 2, '.', ' ');
 
                 $valor = $valunit * $quant;
+                //$valor = number_format($valor, 2, ',', ' ');
+                
             }
 
             $valorTotal = $valorTotal + $valor;
-            $valorTotal = str_replace('.', ',', $valorTotal);
+            
+            $valorTotal = number_format($valorTotal, 2, ',', ' ');
+            //$valorTotal = number_format($valorTotal, 2, ',', ' ');
             
         }
 
@@ -109,14 +113,37 @@ class CompraController extends Zend_Controller_Action {
 
         $compra = new Compra;
         $compra->atualizarCompra($objTcompra, $post);
-                
+
         //atualiza t_produto_compra
         $tProdutoCompra = new Produtocompra;
         $objTProdutocompra = $tProdutoCompra->findByCompra($compraId);
         $tProdutoCompra->atualizarProdutoCompra($objTProdutocompra, $arrayQuantidade, $arrayValorunitario);
-        
+
         return $this->_helper->redirector('listar');
+    }
+
+    public function inserirobservacaoAction() {
+
+        $compraid = $this->_getParam("compraid");
         
+        $this->view->compraid = $compraid;
+        
+        if (!(empty($_POST))) {
+            
+            $observacao = $_POST['observacao'];
+            $compraid = $_POST['compraid'];
+            $param = ['compraid' => $compraid];
+            
+            $tCompra = new DbTable_Compra();
+
+            $compra = $tCompra->find($compraid);
+
+            $post = (['observacao' => $observacao]);
+            $compra->current()->setFromArray($post);
+            $compra->current()->save();
+            
+            $this->forward('resumodepedido', 'produtocompra', null, $param);
+        }
     }
 
 }

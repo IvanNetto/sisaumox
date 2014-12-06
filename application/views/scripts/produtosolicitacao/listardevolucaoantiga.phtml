@@ -1,7 +1,7 @@
 <h3>Lista de devoluções concretizadas</h3>
 <hr>
 <?php if ($this->devolucoesantigas <> null) { ?>
-<p> Abaixo seguem suas devoluções finalizadas. </p>
+    <p> Abaixo seguem suas devoluções finalizadas. </p>
 <?php } else { ?>
     <p> Você não tem ainda devoluções concretizadas, porisso seu histórico encontra-se vazio.</a> </p>
 <?php } ?>
@@ -19,33 +19,37 @@
             <?php } else { ?>
                 <thead>
                     <tr class="filters">
-                    <th><input type="text" class="form-control" placeholder="Solicitação" disabled></th>
-                    <th><input type="text" class="form-control" placeholder="Solicitante" disabled></th>
-                    <th><input type="text" class="form-control" placeholder="Data de devolução" disabled></th>  
-                    <th><input type="text" class="form-control" placeholder="Produto" disabled></th>  
-                    <th><input type="text" class="form-control" placeholder="Quantidade devolvida" disabled></th>  
-                </tr>
+                        <th class="text-center">Solicitacao</th>
+                        <th class="text-center">Solicitante</th>
+                        <th class="text-center">Data da devolução</th>  
+                        <th class="text-center">Produto</th>  
+                        <th class="text-center">Quantidade devolvida</th>  
+                    </tr>
                 </thead>
                 <tbody>
                     <tr>
-                    
-                    <?php foreach ($this->devolucoesantigas as $devolucao) { 
-                        $tUsuario = new Usuario();
-                        $login = $tUsuario->findUsuarioById($this->usuarioid)->current()->login;
-                    ?>
-                        <td><?= $devolucao['solicitacaoid']; ?></td>
-                        <td><?= $login; ?></td>
-                        <td><?= $devolucao['data_devolucao']; ?></td>
-                        <?php $tProduto = new Produto;
-                              $produto = $tProduto->findProdutoById($devolucao['produtoid']);
-                              $nomeProduto = $produto->current()->nome;?>
-                        <td><?= $nomeProduto; ?></td>
-                        <td><?= $devolucao['quantidade_devolvida']; ?></td>
+
+                        <?php
+                        foreach ($this->devolucoesantigas as $devolucao) {
+                            $tUsuario = new Usuario();
+                            $login = $tUsuario->findUsuarioById($this->usuarioid)->current()->login;
+                            ?>
+                            <td><?= $devolucao['solicitacaoid']; ?></td>
+                            <td><?= $login; ?></td>
+                            <td><?= $devolucao['data_devolucao']; ?></td>
+                            <?php
+                            $tProduto = new Produto;
+                            $produto = $tProduto->findProdutoById($devolucao['produtoid']);
+                            $nomeProduto = $produto->current()->nome;
+                            ?>
+                            <td><?= $nomeProduto; ?></td>
+                            <td><?= $devolucao['quantidade_devolvida']; ?></td>
                         <?php $login = Zend_Auth::getInstance()->getIdentity()->login; ?>
-                    </tr>
-                    <?php }
-                }
-                ?>
+                        </tr>
+    <?php
+    }
+}
+?>
                 </tr>
             </tbody>
         </table>

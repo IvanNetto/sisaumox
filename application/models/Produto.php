@@ -59,18 +59,21 @@ class Produto extends Zend_Db_Table_Row_Abstract {
     }
     
     public function atualizarEstoqueComProdutosRejeitados($produtos, $produtoSolicitacao){
+       
+        $solicitacaoid = $produtoSolicitacao->solicitacaoid;
         
         foreach ($produtos as $produto){
-    
+            
             $quantidadeRejeitada = $produto->quantidade;
             
             $tProdutoSolicitacao = new Produtosolicitacao;
-            $produtoSolicitacao = $tProdutoSolicitacao->findByProdutoESolicitacao($produtoSolicitacao->solicitacaoid, $produto->produtoid);
+            $produtoSolicitacao = $tProdutoSolicitacao->findByProdutoESolicitacao($solicitacaoid, $produto->produtoid);
             
-            $quantidadeParcial = $produtoSolicitacao->current()->aprovacao_parcial;
+            $quantidadeParcial = $produtoSolicitacao[0]['aprovacao_parcial'];
             
             $tProduto = new DbTable_Produto();
             $produtoCorrente = $tProduto->find($produto->produtoid)->current();
+            
             $quantidadeExistente = $produtoCorrente->quantidade;
             
             $quantidade = $quantidadeRejeitada + $quantidadeExistente - $quantidadeParcial;
@@ -78,6 +81,8 @@ class Produto extends Zend_Db_Table_Row_Abstract {
             $produtoCorrente->setFromArray(['quantidade' => $quantidade]);
             $produtoCorrente->save();
             
+            $produtoSolicitacao->current()->setFromArray(['aprovacao_parcial' => 0]);
+            $produtoSolicitacao->current()->save();
             
         }
         

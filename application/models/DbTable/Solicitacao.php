@@ -34,7 +34,7 @@ class DbTable_Solicitacao extends Zend_Db_Table_Abstract {
         if ($status){
         $sql = "select distinct * from t_solicitacao s, t_usuario u where u.id=s.usuarioid and status = '$status' and data between '$data1' and '$data2' order by data";
         }else{
-        $sql = "select distinct * from t_solicitacao s, t_usuario u where u.id=s.usuarioid and data between '$data1' and '$data2' order by data";    
+        $sql = "select distinct * from t_solicitacao s, t_usuario u where u.id=s.usuarioid and data between '$data1' and '$data2' order by data";       
             
         }
     
