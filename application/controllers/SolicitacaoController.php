@@ -24,7 +24,7 @@ class SolicitacaoController extends Zend_Controller_Action {
         } elseif ($perfil == 3) {
 
 
-            return $this->_helper->redirector('listaradmin');
+            return $this->_helper->redirector('listargerente');
         }
     }
 
