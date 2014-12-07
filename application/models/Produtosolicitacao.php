@@ -2,7 +2,7 @@
 
 class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
 
-    public function findByProdutoESolicitacao($solicitacaoid, $produtoid) {
+    public function findByProdutoESolicitacao($produtoid, $solicitacaoid) {
 
         $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
         $query = $tProdutoSolicitacao->select()
@@ -42,7 +42,7 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
 
         for ($i = 0; $i < count($produtosescolhidos); $i++) {
 
-            $jahExisteOItemNoCarrinho = $this->findByProdutoESolicitacao($solicitacaoid, $produtosescolhidos[$i])->current();
+            $jahExisteOItemNoCarrinho = $this->findByProdutoESolicitacao($produtosescolhidos[$i], $solicitacaoid)->current();
 
             if ($jahExisteOItemNoCarrinho <> null) {
 
@@ -94,14 +94,14 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
     }
 
     public function registrarQuantidadeDoProdutoNaSolicitacao($produtos, $arrayQuantidade, $solicitacaoid) {
-
+        
         $i = 0;
         foreach ($produtos as $produto) {
 
-            $itemSelecionado = $this->findByProdutoESolicitacao($solicitacaoid, $produto)->current();
-
+            $itemSelecionado = $this->findByProdutoESolicitacao($produto, $solicitacaoid)->current();
+            
             $quantidade = $arrayQuantidade[$i];
-
+            
             $post = ['quantidade' => $quantidade];
 
             $itemSelecionado->setFromArray($post);
@@ -113,7 +113,7 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
     public function inserirProdutoNaSolicitacaoAgendada($solicitacaoid, $produtoId, $quantidade, $data_agendamento) {
 
         $post = array('solicitacaoid' => $solicitacaoid, 'produtoid' => $produtoId, 'quantidade' => $quantidade);
-
+        
         $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
         $novaProdutoSolicitacao = $tProdutoSolicitacao->createRow();
         $novaProdutoSolicitacao->setFromArray($post);
@@ -125,7 +125,7 @@ class Produtosolicitacao extends Zend_Db_Table_Row_Abstract {
         $solicitacao = $tSolicitacao->find($solicitacaoid);
 
         $post = ['data_agendamento' => $data_agendamento, 'status' => 'agendada'];
-
+        
         $solicitacao->current()->setFromArray($post);
         $solicitacao->current()->save();
     }

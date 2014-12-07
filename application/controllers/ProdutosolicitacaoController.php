@@ -43,7 +43,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
     public function inserirAction() {
 
         $produtosescolhidos = ($_POST['checkbox']);
-        
+
         $solicitacaoid = ($_POST['solicitacaoid']);
         $categoriaid = ($_POST['categoriaid']);
 
@@ -67,7 +67,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         $produtoid = $this->_getParam('produtoid');
 
         $tProdutosolicitacao = new Produtosolicitacao();
-        $produtosolicitacao = $tProdutosolicitacao->findByProdutoESolicitacao($solicitacaoid, $produtoid);
+        $produtosolicitacao = $tProdutosolicitacao->findByProdutoESolicitacao($produtoid, $solicitacaoid);
 
         try {
 
@@ -107,7 +107,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         $status = $this->_getParam('status');
         $solicitacaoid = $this->_getParam('solicitacaoid');
         $produtosolicitacaoId = $this->_getParam('produtosolicitacaoid');
-      
+
         if ($status == 'reprovada') {
 
             $tProdutoSolicitacao = new DbTable_Produtosolicitacao;
@@ -121,7 +121,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
             return $this->_helper->redirector->gotoSimple('listargerente', 'solicitacao');
         }
-  
+
         $produtos = $_POST['produto'];
         $operacao = '-';
         $quantidade = $_POST['quantidade'];
@@ -134,34 +134,41 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         } else {
             $solicitacaoid = $this->_getParam('solicitacaoid');
         }
-        if ($produtos) {
 
-            try {
-                $tProduto = new Produto();
-                $tProduto->atualizarEstoque($produtos, $operacao, $quantidade, $_POST['solicitacaoid']);
-                $tProdutosolicitacao = new Produtosolicitacao();
-                $tProdutosolicitacao->registrarQuantidadeDoProdutoNaSolicitacao($produtos, $quantidade, $solicitacaoid);
-            } catch (Exception $e) {
-                
-            }
-        }
+
 
         $tsolicitacao = new Solicitacao();
         if ($status == 'entregue') {
             $statusatual = 'entregue';
         } elseif ($status == 'recebida') {
             $statusatual = 'recebida';
-        } elseif ($status == 'liberada'){
+        } elseif ($status == 'liberada') {
             $statusatual = 'liberada';
-        } elseif ($status == 'pendente'){
-            $statusatual = 'pendente'; 
+        } elseif ($status == 'pendente') {
+            $statusatual = 'pendente';
         } else {
-            
+
             $statusatual = $tsolicitacao->mostrarStatusAtual($solicitacaoid)->current()->status;
         }
-        
+
+        //aqui ele tira do estoque SOMENTE quando a solicitação é realizada (status nova)
+        if ($statusatual == 'nova') {
+            if ($produtos[0]) {
+
+                try {
+                    $tProduto = new Produto();
+                    $tProduto->atualizarEstoque($produtos, $operacao, $quantidade, $_POST['solicitacaoid']);
+
+                    $tProdutosolicitacao = new Produtosolicitacao();
+                    $tProdutosolicitacao->registrarQuantidadeDoProdutoNaSolicitacao($produtos, $quantidade, $solicitacaoid);
+                } catch (Exception $e) {
+                    
+                }
+            }
+        }
+
         $tsolicitacao->atualizarStatus($solicitacaoid, $statusatual, $gerente_responsavel);
-        
+
         if ($data_recebimento) {
             $tsolicitacao->atualizaDataDeRecebimento($solicitacaoid, $data_recebimento);
         }
@@ -214,73 +221,11 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
             $tSolicitacao = new Solicitacao();
             $solicitacaoid = $tSolicitacao->selecionarUltimaSolicitacaoCadastrada()->current()->maxID;
-
+            
             $tProdutoSolicitacao = new Produtosolicitacao();
             $tProdutoSolicitacao->inserirProdutoNaSolicitacaoAgendada($solicitacaoid, $produtoId, $quantidade, $data_agendamento);
 
             return $this->_helper->redirector->gotoSimple('listar', 'solicitacao');
-        }
-    }
-
-        public function devolveritemdasolicitacaoAction() {
-
-
-        if (!($_POST)) {
-
-            $produtoid = $this->_getParam("produtoid");
-            $solicitacaoid = $this->_getParam("solicitacaoid");
-            $produtosolicitacaoid = $this->_getParam("produtosolicitacaoid");
-            $status = $this->_getParam("status");
-
-            $this->view->produtoid = $produtoid;
-            $this->view->solicitacaoid = $solicitacaoid;
-            $this->view->produtosolicitacaoid = $produtosolicitacaoid;
-            $this->view->status = $status;
-        } else {
-
-            $produtoid = $_POST['produtoid'];
-            $produtosolicitacaoid = $_POST['produtosolicitacaoid'];
-            $solicitacaoid = $_POST['solicitacaoid'];
-            $quantidadeescolhida = $_POST['quantidade'];
-            $data = $_POST['data'];
-            $status = $_POST['status'];
-
-            $tProdutoSolicitacao = new Produtosolicitacao();
-            $produtocolicitacao = $tProdutoSolicitacao->findByProdutoESolicitacao($solicitacaoid, $produtoid);
-
-            //retorna quantidade solicitada em produtosolicitacao
-            $quantidadesolicitada = $produtocolicitacao->current()->quantidade;
-
-            //verifica se já existe quantidade devolvida
-            $tDevolucao = new DbTable_Devolucao();
-            $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtoid);
-
-            if ($devolucao) {
-
-                $quantidadeAntigaDevolvida = $devolucao[0]['quantidade'];
-
-                $quantidadetotal = $quantidadeescolhida + $quantidadeAntigaDevolvida;
-            }
-
-            if ($quantidadetotal <= $quantidadesolicitada) {
-
-                $post = array('produtosolicitacaoid' => $produtosolicitacaoid, 'data_devolucao' => $data, 'quantidade_devolvida' => $quantidadeescolhida, 'status_devolucao' => $status);
-
-                $tDevolucao = new Devolucao();
-                $tDevolucao->inserirDevolucao($post);
-
-                $quantidadeFinal = $quantidadetotal - $quantidadeAntigaDevolvida;
-
-                $tProduto = new Produto();
-                $tProduto->atualizarEstoqueComProdutoDevolvido($produtoid, $quantidadeFinal);
-
-                $this->flashMessenger->addMessage(array('success' => "Este item de sua solicitação foi devolvido com sucesso!"));
-            } else {
-
-                $this->flashMessenger->addMessage(array('danger' => "Quantidades devolvidas não podem ultrapassar a quantidade solicitada para o produto!"));
-            }
-
-            return $this->_helper->redirector->gotoSimple('listarhistorico', 'solicitacao');
         }
     }
 
@@ -298,12 +243,12 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         } else {
 
             $produtoid = $_POST['produtoid'];
-
             $solicitacaoid = $_POST['solicitacaoid'];
+
             $quantidadeescolhida = $_POST['quantidade'];
 
             $tProdutoSolicitacao = new Produtosolicitacao();
-            $produtosolicitacao = $tProdutoSolicitacao->findByProdutoESolicitacao($solicitacaoid, $produtoid);
+            $produtosolicitacao = $tProdutoSolicitacao->findByProdutoESolicitacao($produtoid, $solicitacaoid);
 
             //retorna quantidade solicitada em produtosolicitacao
             $quantidadesolicitada = $produtosolicitacao->current()->quantidade;
@@ -312,26 +257,28 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
             $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
             $quantidadeJahAprovada = $tProdutoSolicitacao->quantidadeJahAprovadaParcialPorProdutoESolicitacao($produtoid, $solicitacaoid);
 
-            if ($quantidadeJahAprovada) {
+            $quantidadetotal = $quantidadeescolhida;
+
+            if ($quantidadeJahAprovada[0]['aprovacao_parcial'] > 0) {
 
                 $quantidadeAntigaAprovada = $quantidadeJahAprovada[0]['aprovacao_parcial'];
-
-
-                $quantidadetotal = $quantidadeescolhida + $quantidadeAntigaAprovada;
+                $quantidadetotal = $quantidadetotal + $quantidadeAntigaAprovada;
             }
 
             if ($quantidadetotal <= $quantidadesolicitada) {
 
-
+                $quantidadetotal = $quantidadeescolhida + $quantidadeAntigaAprovada;
+                
                 $post = array('aprovacao_parcial' => $quantidadetotal);
 
                 $tProdutoSolicitacao = new ProdutoSolicitacao();
                 $tProdutoSolicitacao->inserirAprovacaoParcial($post, $produtosolicitacao);
 
-                $quantidadeFinal = $quantidadetotal - $quantidadeAntigaAprovada;
-
+                $quantidadeFinal = $quantidadesolicitada + $quantidadetotal - $quantidadeAntigaAprovada;
+                
                 $tProduto = new Produto();
-                $tProduto->atualizarEstoqueComProdutoDevolvido($produtoid, $quantidadeFinal);
+
+                $tProduto->atualizarEstoqueComProdutoDevolvido($produtoid, $quantidadeFinal, $fail = null);
 
                 $this->flashMessenger->addMessage(array('success' => "A quantidade deste item foi atualizado com sucesso!"));
                 return $this->_helper->redirector->gotoSimple('listargerente', 'solicitacao');
@@ -340,58 +287,6 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
                 $this->flashMessenger->addMessage(array('danger' => "Quantidades devolvidas não podem ultrapassar a quantidade solicitada para o produto!"));
                 return $this->_helper->redirector->gotoSimple('listargerente', 'solicitacao');
             }
-        }
-    }
-
-    public function listardevolucaoAction() {
-
-        $tDevolucao = new DbTable_Devolucao();
-        $listaDeDevolucoes = $tDevolucao->listarNovasDevolucoes();
-
-        $this->view->listaDeDevolucoes = $listaDeDevolucoes;
-    }
-
-    public function atualizardevolucaoAction() {
-        $id = $this->_getParam("id_devolucao");
-        $status = $this->_getParam("status");
-        $gerenteAprovador = $this->_getParam("gerente_responsavel");
-
-        $post = ['status_devolucao' => $status, 'gerente_responsavel' => $gerenteAprovador];
-
-        $tDevolucao = new Devolucao();
-        $tDevolucao->atualizarStatusDevolucao($id, $post);
-
-
-        $tDevolucao = new DbTable_Devolucao;
-        $produtoDevolvido = $tDevolucao->findProdutoByDevolucao($id);
-
-        if ($status == 'entregue') {
-
-            $tProduto = new Produto();
-            $tProduto->devolverItemProEstoque($produtoDevolvido[0]['id'], $id);
-        }
-
-        return $this->_helper->redirector->gotoSimple('listardevolucao', 'produtosolicitacao');
-    }
-
-    public function listardevolucaoantigaAction() {
-
-        $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
-        $status = 'recebida';
-
-        $tSolicitacao = new Solicitacao;
-        $solicitacao = $tSolicitacao->findSolicitacoesAtivasByUsuario($usuarioId, $status);
-
-        if ($solicitacao->current() <> null) {
-
-            $tProdutosolicitacao = new Produtosolicitacao;
-            $produtoSolicitacao = $tProdutosolicitacao->findBySolicitacao($solicitacao->current()->id);
-
-            $tDevolucao = new DbTable_Devolucao();
-            $devolucoesAntigas = $tDevolucao->listarDevolucoesAntigas($produtoSolicitacao->current()->id);
-
-            $this->view->devolucoesantigas = $devolucoesAntigas;
-            $this->view->usuarioid = $usuarioId;
         }
     }
 

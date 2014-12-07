@@ -6,15 +6,25 @@
         <input type="hidden" name="produtoid" value="<?php echo $this->produtoid ?>">
         <input type="hidden" name="solicitacaoid" value="<?php echo $this->solicitacaoid ?>">
         <br><br>
-        <div class="form-group">
-            <label for="quantidade" class="col-md-4 control-label">Quantidade</label>
-            <div class="col-md-3">
-                <input class="form-control" type="number" required="true" name="quantidade" placeholder="Devolver pro estoque">    
-            </div>
-        </div>    
-        <div class="form-group">
-            <div class="col-md-4 col-md-offset-4">
-                <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-folder-close"></span> Atualizar estoque</button>
+        <div class="row linhaCarrinhoSolicitacao">
+            <div class="form-group">
+                <label for="quantidade" class="col-md-4 control-label">Quantidade</label>
+                <div class="col-md-3">
+                    <?php
+                    $tProdutoSolicitacao = new Produtosolicitacao();
+                    $produtoSolicitacao = $tProdutoSolicitacao->findByProdutoESolicitacao($this->produtoid, $this->solicitacaoid);
+                    $quantidadeSolicitada = $produtoSolicitacao->current()->quantidade;
+                    $quantidadeAprovadaParcial = $produtoSolicitacao->current()->aprovacao_parcial;
+                    $quantidade = $quantidadeSolicitada - $quantidadeAprovadaParcial;
+                    ?>
+                    <input type="number" max ="" min="1" placeholder="Devolver pro estoque" class="form-control input-sm quantidadeSolicitada" name = "quantidade">
+                    <span class="help-block">Você só devolver pro estoque até <b class="disponiveis"><?= $quantidade; ?></b> itens</h4></span>
+                </div>
+            </div>    
+            <div class="form-group">
+                <div class="col-md-4 col-md-offset-4">
+                    <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-folder-close"></span> Atualizar estoque</button>
+                </div>
             </div>
         </div>
     </form>

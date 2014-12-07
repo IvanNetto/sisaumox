@@ -1,0 +1,45 @@
+<h3>Devolver item da solicitação</h3>
+<hr>
+<div class="instrucao">
+    <p>Insira a quantidade que deseja devolver</p>
+    <form class="form-horizontal" action="" method="POST">
+        <input type="hidden" name="produtoid" value="<?php echo $this->produtoid ?>">
+        <input type="hidden" name="solicitacaoid" value="<?php echo $this->solicitacaoid ?>">
+        <input type="hidden" name="produtosolicitacaoid" value="<?php echo $this->produtosolicitacaoid ?>">
+        <input type="hidden" name="data" value="<?php echo date('d/m/Y'); ?>">
+        <input type="hidden" name="status" value="<?php echo $this->status ?>">
+        <br><br>
+        <div class="row linhaCarrinhoSolicitacao">
+            <div class="form-group">
+                <label for="quantidade" class="col-md-4 control-label">Quantidade</label>
+                <div class="col-md-3">
+                    <input type="number" name = "quantidade" max ="" min="1" placeholder="1" class="form-control input-sm quantidadeSolicitada"> 
+                    <?php
+                    $produtoSolicitacao = new DbTable_Produtosolicitacao;
+                    $objProdutoSolicitacao = $produtoSolicitacao->find($this->produtosolicitacaoid)->current();
+
+                    if ($objProdutoSolicitacao->aprovacao_parcial > 0) { ?>
+
+                        <span class="help-block">Você só poderá devolver <b class="disponiveis"><?= $objProdutoSolicitacao->aprovacao_parcial; ?></b> itens</h4></span>
+                        <?php
+                    }
+                    ?>    
+                </div>
+            </div>    
+            <div class="form-group">
+                <div class="col-md-4 col-md-offset-4">
+                    <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-folder-close"></span> Enviar pra análise</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+
+
+
+
+
+
+

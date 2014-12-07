@@ -12,8 +12,7 @@ class Devolucao extends Zend_Db_Table_Row_Abstract {
         
     }
     
-    public function atualizarStatusDevolucao($id, $post){
-        
+    public function atualizarDevolucao($id, $post){
                
         $tDevolucao = new DbTable_Devolucao;
         $devolucao = $tDevolucao->find($id);
@@ -23,8 +22,6 @@ class Devolucao extends Zend_Db_Table_Row_Abstract {
         
         
     }
-    
-    
     
     
 }

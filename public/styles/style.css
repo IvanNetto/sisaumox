@@ -243,9 +243,7 @@
 }
 .alerta-resumo{
 
-     float: right;
-    margin-left: -92px;
-    margin-top: 5px;
+    display: none
 }
 
 /*resumo de pedido*/
