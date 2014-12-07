@@ -19,8 +19,6 @@ class UsuarioController extends Zend_Controller_Action {
     //lista usuários mostrando login e nome da pessoa
     public function listarAction() {
 
-        $relatorio = $this->getParam('relatorio');
-        
         $tUsuario = new Usuario();
         $listaDeUsuarios = $tUsuario->listarUsuarios();
 
@@ -33,7 +31,7 @@ class UsuarioController extends Zend_Controller_Action {
         $this->view->listaDeUsuarios = $listaDeUsuarios->toArray();
         $this->view->pessoas = $pessoas->toArray();
         $this->view->perfis = $perfis->toArray();
-        $this->view->relatorio = $relatorio;
+        
     }
 
     public function inserirAction() {
@@ -55,7 +53,7 @@ class UsuarioController extends Zend_Controller_Action {
             $senha = $_POST['senha'];
 
             $post = array('pessoaid' => $pessoaid, 'perfilid' => $perfilid, 'login' => $login, 'senha' => $senha);
-
+           
             try {
 
                 $tUsuario = new Usuario();
@@ -94,7 +92,7 @@ class UsuarioController extends Zend_Controller_Action {
             $login = $_POST['login'];
             $senha = $_POST['senha'];
 
-            $post = array('pessoaid' => $pessoaid, 'perfilid' => $perfilid, 'login' => $login, 'senha' => $senha);
+            $post = array('login' => $login, 'senha' => $senha);
 
             try {
 
@@ -105,7 +103,7 @@ class UsuarioController extends Zend_Controller_Action {
                 $this->flashMessenger->addMessage(array('danger' => "Bem, isto é constrangedor. Por algum motivo seu usuári não foi editado com sucesso. Tente novamente!"));
             };
 
-            $this->forward('index', 'usuario', $post);
+           $this->_helper->redirector('listar');
         }
     }
 

@@ -78,7 +78,7 @@ class PessoaController extends Zend_Controller_Action {
             $telefone1 = $_POST['telefone1'];
             $telefone2 = $_POST['telefone2'];
 
-            $post = array('matricula' => $matricula, 'nome' => $nome, 'funcaoid' => $funcaoid, 'telefone1' => $telefone1, 'telefone2' => $telefone2);
+            $post = array('matricula' => $matricula, 'nome' => $nome, 'telefone1' => $telefone1, 'telefone2' => $telefone2);
 
             try {
                 

@@ -24,14 +24,15 @@
                 foreach ($this->listaDeUsuarios as $usuario) {
                     
                     $tPessoa = new Pessoa();
-                    $pessoaNome = $tPessoa->findPessoaById($usuario['pessoaid']);
+                    $pessoaNome = $tPessoa->findPessoaById($usuario['pessoaid'])->current();
+                    
 
                     $tPerfil = new Perfil();
-                    $perfilNome = $tPerfil->findPerfilById($usuario['perfilid']);
+                    $perfilNome = $tPerfil->findPerfilById($usuario['perfilid'])->current();
                     ?>
                     <td><?= $usuario['login']; ?></td>
-                    <td><?= $pessoaNome['nome']->nome; ?></td>
-                    <td><?= $perfilNome['nome']->nome; ?></td>
+                    <td><?= $pessoaNome->nome; ?></td>
+                    <td><?= $perfilNome->nome; ?></td>
                     <td class="text-center"><a class='btn btn-block btn-warning btn-xs' href="<?php echo $this->url(array('controller' => 'usuario', 'action' => 'editar', 'id' => $usuario['id'])); ?>"><span class="glyphicon glyphicon-edit"></span> Editar</a></td>
                         <td class="text-center"><a href="<?php echo $this->url(array('controller' => 'usuario', 'action' => 'deletar', 'id' => $usuario['id'])); ?>" class="btn btn-block btn-danger btn-xs"><span class="glyphicon glyphicon-remove-circle"></span> Excluir</a></td>
                     <?php if ($this->relatorio <> null){?>

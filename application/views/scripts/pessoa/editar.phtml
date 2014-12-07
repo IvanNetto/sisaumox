@@ -16,20 +16,6 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="select" class="col-lg-2 control-label">Função</label>
-            <div class="col-lg-2">
-                <select required="true" class="form-control" id="select" name="funcaoid" required="true">
-                    <option value="">--selecione--</option>
-                    <?php foreach ($this->funcoes as $nomeFuncao):?> 
-                        <option value="<?php echo $nomeFuncao['id']; ?>"><?php echo $nomeFuncao['nome']; ?></option> 
-                        <?php
-                    endforeach;
-                    ?> 
-                </select>     
-                <br>
-            </div>
-        </div>
-        <div class="form-group">
             <label for="inputTelefone1" class="col-lg-2 control-label">Telefone Principal</label>
             <div class="col-lg-2">
                 <input class="form-control" type="tel" required="required" maxlength="15" name="telefone1" placeholder="ex: 98556452" value="<?php echo $this->pessoa->telefone1?>"/>
