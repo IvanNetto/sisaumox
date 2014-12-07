@@ -46,8 +46,6 @@ class RelatorioController extends Zend_Controller_Action {
         $tSolicitacao = new DbTable_Solicitacao();
         $solicitacoes = $tSolicitacao->relatorioDeSolicitacoesPorUsuario($usuario);
 
-
-
         $this->view->solicitacoes = $solicitacoes;
         $this->view->login = $login;
     }
