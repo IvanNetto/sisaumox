@@ -69,9 +69,10 @@ $usuario = Zend_Auth::getInstance()->getIdentity()->login;
                 </thead>
                 <tbody>
                     <tr>
-                        <?php foreach ($this->solicitacoes as $solicitacao) { ?>
+                        <?php foreach ($this->solicitacoes as $solicitacao){ ?>
 
-                            <td class="text-left"><?= $solicitacao['id']; ?></td>
+
+                            <td class="text-left"><?= $solicitacao['solicitacaoid']; ?></td>
                             <td class="text-left"><?= $solicitacao['data']; ?></td>
                             <?php if ($solicitacao['data_recebimento'] == null) { ?> <td class="text-left"><?=
                                 'não possui';

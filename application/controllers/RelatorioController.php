@@ -31,6 +31,7 @@ class RelatorioController extends Zend_Controller_Action {
 
                 $tSolicitacao = new DbTable_Solicitacao();
                 $solicitacoes = $tSolicitacao->RelatorioDeSolicitacoesPorPeriodo($data1, $data2, $status);
+                
 
                 $this->view->solicitacoes = $solicitacoes;
             }

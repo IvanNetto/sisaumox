@@ -105,6 +105,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
     public function atualizarprodutosesolicitacaoAction() {
 
         $status = $this->_getParam('status');
+        
         $solicitacaoid = $this->_getParam('solicitacaoid');
         $produtosolicitacaoId = $this->_getParam('produtosolicitacaoid');
         

@@ -36,10 +36,10 @@ class SolicitacaoController extends Zend_Controller_Action {
 
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
 
-        //Armazena os status de solicitações que podem aparecer na list principal do usuário solicitante         
+//Armazena os status de solicitações que podem aparecer na list principal do usuário solicitante         
         $solicitacoesAtivas = ['nova', 'rejeitada', 'aprovada', 'em analise', 'entregue', 'agendada'];
 
-        //Retorna as solicitações do usuário logado que estejam ativas
+//Retorna as solicitações do usuário logado que estejam ativas
         $tSolicitacao = new Solicitacao();
         $listaDeSolicitacoes = $tSolicitacao->findSolicitacoesAtivasByUsuario($usuarioId, $solicitacoesAtivas);
 
@@ -156,7 +156,7 @@ class SolicitacaoController extends Zend_Controller_Action {
             'data' => $data,
             'status' => $status
         );
-        
+
         $tSolicitacao = new Solicitacao();
         $tSolicitacao->inserirSolicitacao($post);
 
@@ -207,18 +207,18 @@ class SolicitacaoController extends Zend_Controller_Action {
         $tProdutosolicitacao = new Produtosolicitacao();
         $produtosolicitacao = $tProdutosolicitacao->findBySolicitacao($solicitacaoid);
 
-        //atualiza o estoque antes de deletar
+//atualiza o estoque antes de deletar
         $produto = new Produto();
         $produto->atualizarEstoqueComProdutosCancelados($produtosolicitacao, $solicitacaoid);
 
-        //deleta linhas da t_produto_solicitacao
+//deleta linhas da t_produto_solicitacao
         $tProdutosolicitacao->limparCarrinhoDeSolicitacao($solicitacaoid);
 
         $status = 'cancelada';
         $tSolicitacao = new Solicitacao();
         $tSolicitacao->atualizarStatus($solicitacaoid, $status, $gerente_responsavel);
 
-        //atualizar o estoque retirando os valores que foram solicitados !!!!!
+//atualizar o estoque retirando os valores que foram solicitados !!!!!
 
         $this->flashMessenger->addMessage(array('success' => "Solicitação cancelada com sucesso!"));
 
@@ -226,6 +226,7 @@ class SolicitacaoController extends Zend_Controller_Action {
     }
 
     public function inserirobservacaoAction() {
+
 
         $idDevolucao = $this->_getParam("id_devolucao");
         $solicitacaoid = $this->_getParam("solicitacaoid");
@@ -239,6 +240,8 @@ class SolicitacaoController extends Zend_Controller_Action {
         $this->view->solicitacaoid = $solicitacaoid;
 
         if ($_POST) {
+
+
             $observacao = $_POST['observacao'];
             $data_atualizacao_status = $this->_getParam("data_atualizacao_status");
             if ($idDevolucao) {
@@ -247,10 +250,13 @@ class SolicitacaoController extends Zend_Controller_Action {
                 $post = (['observacao' => $observacao, 'status_devolucao' => 'reprovada', 'data_atualizacao_status' => $data_atualizacao_status, 'gerente_responsavel' => $gerente_responsavel, 'status' => $status]);
                 $devolucao->current()->setFromArray($post);
                 $devolucao->current()->save();
-                
+
+
+
                 $this->forward('atualizardevolucao', 'produtosolicitacao', null, $param);
-                
             } else {
+
+
 
                 $tSolicitacao = new DbTable_Solicitacao();
 
@@ -259,9 +265,16 @@ class SolicitacaoController extends Zend_Controller_Action {
                 $post = (['observacao' => $observacao, 'status' => $status, 'data_atualizacao_status' => $data_atualizacao_status, 'gerente_responsavel' => $gerente_responsavel]);
                 $solicitacao->current()->setFromArray($post);
                 $solicitacao->current()->save();
-                    
-                $this->forward('atualizarprodutosesolicitacao', 'produtosolicitacao', null, $param);
+
+                $pula = $_POST['pula'];
+                if ($pula == 'PULA') {
+                    $parametro = ['solicitacaoid' => $solicitacaoid];
+                    $this->forward('resumodesolicitacao', 'produtosolicitacao', null, $parametro);
+                } else {
+                    $this->forward('atualizarprodutosesolicitacao', 'produtosolicitacao', null, $param);
+                }
             }
         }
     }
+
 }
