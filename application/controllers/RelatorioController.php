@@ -63,7 +63,7 @@ class RelatorioController extends Zend_Controller_Action {
 
             $tProduto = new DbTable_Produto();
             $produtos = $tProduto->produtosMaisSolicitadosPorPeriodo($data1, $data2);
-
+            
             $this->view->produtos = $produtos;
         }
     }

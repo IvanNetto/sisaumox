@@ -3,12 +3,16 @@
 <h2 class="print">Centro Integrado de Educação Pública (CIEP) Almir Bonfim de Andrade </h2>
 <h3>Relatório de produtos mais solicitados</h3>
 </center>
+<?php if ($this->produtos <> null) { ?>
+    <p> Abaixo segue o resultado de sua busca. </p>
+<?php } else { ?>
+    <p> Não existe produtos solicitados até o momento, porisso seu relatório encontra-se vazio.</p>
+<?php } ?>
 <hr>
 <center>
 <div class="no-print">
     <form class="form-horizontal" action="<?= $this->baseUrl() . '/relatorio/produtosmaissolicitados' ?>" method="POST">
         <input type="date" name="data1" class="data" placeholder="Data inicial">
-<!--        <span class="help-block"></span>-->
         <input type="date" name="data2" class="data" placeholder="Data fim">
         <button class="btn btn-primary btn-sm "><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
     </form>
@@ -25,7 +29,7 @@
         </div>
         <table class="table table-striped table-hover ">
             <tr>
-                <?php if ($this->solicitacoes == null) { ?>
+                <?php if ($this->produtos == null) { ?>
                 <center><strong><h4>sem resultado para consulta</h4></strong></center>
                 </tr>
             <?php } else { ?>

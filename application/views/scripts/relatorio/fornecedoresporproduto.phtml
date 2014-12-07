@@ -3,6 +3,7 @@
 <h2 class="print">Centro Integrado de Educação Pública (CIEP) Almir Bonfim de Andrade </h2>
 <h3>Relatório de fornecedores por produto</h3>
 </center>
+<div class="pull-right">Impresso em: <?php echo $data = date("d/m/Y - H:i:s ") . 'por ' . '<b>' . $usuario . '</b>'; ?></div>
 <?php if ($this->fornecedores <> null) { ?>
     <p> Abaixo segue o resultado de sua busca. </p>
 <?php } else { ?>
@@ -28,6 +29,7 @@
                         <th><input type="text" class="form-control" placeholder="Fornecedor" disabled></th>
                         <th><input type="text" class="form-control" placeholder="Produto fornecido" disabled></th>
                         <th><input type="text" class="form-control" placeholder="Data do pedido" disabled></th>
+                        <th><input type="text" class="form-control" placeholder="Código da compra" disabled></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -36,6 +38,7 @@
                             <td class="text-left"><?= $fornecedor['razao_social']; ?></td>
                             <td class="text-left"><?= $fornecedor['nome']; ?></td>
                             <td class="text-left"><?= $fornecedor['data_pedido']; ?></td>
+                            <td class="text-left"><?= $fornecedor['id']; ?></td>
                         </tr> 
                         <?php
                     }

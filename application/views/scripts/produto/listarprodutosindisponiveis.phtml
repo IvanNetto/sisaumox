@@ -3,7 +3,8 @@
     <h2 class="print">Centro Integrado de Educação Pública (CIEP) Almir Bonfim de Andrade </h2>
     <h3>Relatório de produtos indisponíveis</h3>
 </center>
-<?php if ($this->produtos <> null) { ?>
+<div class="pull-right">Impresso em: <?php echo $data = date("d/m/Y - H:i:s ") . 'por ' . '<b>' . $usuario . '</b>'; ?></div>
+<?php if ($this->lisdaDeIndisponiveis <> null) { ?>
     <p> Abaixo segue o resultado de sua busca. </p>
 <?php } else { ?>
     <p> Não existe produtos indisponíveis em estoque, porisso seu relatório encontra-se vazio.</p>

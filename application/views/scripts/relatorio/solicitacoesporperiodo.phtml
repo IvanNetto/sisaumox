@@ -1,4 +1,4 @@
-<?php 
+<?php
 $usuario = Zend_Auth::getInstance()->getIdentity()->login;
 ?>
 
@@ -8,13 +8,13 @@ $usuario = Zend_Auth::getInstance()->getIdentity()->login;
     <h2 class="print">Centro Integrado de Educação Pública (CIEP) Almir Bonfim de Andrade </h2>
     <h3>Relatório de solicitações por período</h3>
 </center>
-<div class="pull-right">Impresso em: <?php echo $data = date("d/m/Y - H:i:s ") . 'por ' . '<b>'.$usuario.'</b>'; ?></div>
-<hr>
+<div class="pull-right">Impresso em: <?php echo $data = date("d/m/Y - H:i:s ") . 'por ' . '<b>' . $usuario . '</b>'; ?></div>
 <?php if ($this->solicitacoes <> null) { ?>
     <p> Abaixo segue o resultado de sua busca. </p>
 <?php } else { ?>
     <p> Não existe solicitações no período escolhido, porisso seu relatório encontra-se vazio.</p>
 <?php } ?>
+<hr>
 <center>
     <div class="no-print">
         <form class="form-horizontal" action="<?= $this->baseUrl() . '/relatorio/solicitacoesporperiodo' ?>" method="POST">
@@ -23,20 +23,20 @@ $usuario = Zend_Auth::getInstance()->getIdentity()->login;
             <input type="date" required="true" name="data2" class="data" placeholder="Data fim">
             <br>
             <br>
-                <select  name="status">
-                    <option value="">--selecione--</option>
-                    <option value="nova">Nova</option>
-                    <option value="em analise">Em análise</option>
-                    <option value="aprovada">Aprovada</option>
-                    <option value="reprovada">Reprovada</option>
-                    <option value="cancelada">Cancelada</option>
-                    <option value="entregue">Entregue</option>
-                    <option value="recebida">Recebida</option>
-                    <option value="agendada">Agendada</option>
-                    <option value="pendente">Pendente</option>
-                    <option value="liberada">Liberada</option>
+            <select  name="status">
+                <option value="">--selecione--</option>
+                <option value="nova">Nova</option>
+                <option value="em analise">Em análise</option>
+                <option value="aprovada">Aprovada</option>
+                <option value="reprovada">Reprovada</option>
+                <option value="cancelada">Cancelada</option>
+                <option value="entregue">Entregue</option>
+                <option value="recebida">Recebida</option>
+                <option value="agendada">Agendada</option>
+                <option value="pendente">Pendente</option>
+                <option value="liberada">Liberada</option>
 
-                </select>
+            </select>
             <button class="btn btn-primary btn-sm "><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
             <small><span class="help-block">* Se nenhum status for selecionado, a consulta irá retornar todos os status</span></small>
         </form>
@@ -71,8 +71,8 @@ $usuario = Zend_Auth::getInstance()->getIdentity()->login;
                 </thead>
                 <tbody>
                     <tr>
-                        <?php foreach ($this->solicitacoes as $solicitacao) {?>
-                        
+                        <?php foreach ($this->solicitacoes as $solicitacao) { ?>
+
                             <td class="text-left"><?= $solicitacao['id']; ?></td>
                             <td class="text-left"><?= $solicitacao['data']; ?></td>
                             <?php if ($solicitacao['data_recebimento'] == null) { ?> <td class="text-left"><?=
