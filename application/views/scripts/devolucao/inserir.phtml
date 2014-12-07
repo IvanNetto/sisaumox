@@ -19,6 +19,9 @@
                     $objProdutoSolicitacao = $produtoSolicitacao->find($this->produtosolicitacaoid)->current();
                     $quantidadeParcial = $objProdutoSolicitacao->aprovacao_parcial;
                     $quantidadeSolicitada = $objProdutoSolicitacao->quantidade;
+                    
+                    
+                    
                     var_dump($objProdutoSolicitacao->aprovacao_parcial > '0');die;
                     if ($objProdutoSolicitacao->aprovacao_parcial > 0) {
                         
