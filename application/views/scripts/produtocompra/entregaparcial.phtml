@@ -6,15 +6,26 @@
         <input type="hidden" name="produtoid" value="<?php echo $this->produtoid ?>">
         <input type="hidden" name="compraid" value="<?php echo $this->compraid ?>">
         <br><br>
+        <div class="row linhaCarrinhoSolicitacao">
             <div class="form-group">
-            <label for="quantidade" class="col-md-4 control-label">Quantidade</label>
-            <div class="col-md-3">
-                <input class="form-control" type="number" required="true" name="quantidade" placeholder="Repor no estoque">    
-            </div>
-        </div>    
-        <div class="form-group">
-            <div class="col-md-4 col-md-offset-4">
-                <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-folder-close"></span> Atualizar estoque</button>
+                <label for="quantidade" class="col-md-4 control-label">Quantidade</label>
+                <div class="col-md-3">
+                     <?php
+                    $tProdutoCompra = new Produtocompra();
+                    $produtoCompra = $tProdutoCompra->findByProdutoECompra($this->compraid, $this->produtoid);
+                    $quantidadeComprada = $produtoCompra->current()->quantidade;
+                    $quantidadeParcial = $produtoCompra->current()->entrega_parcial;
+                    $quantidade = $quantidadeComprada - $quantidadeParcial;
+                    
+                    ?>
+                    <input type="number" max ="" min="1" placeholder="Repor no estoque" class="form-control input-sm quantidadeSolicitada" name = "quantidade"> 
+                    <span class="help-block">Você só pode repor até <b class="disponiveis"><?= $quantidade; ?></b> itens</h4></span>
+                </div>
+            </div>    
+            <div class="form-group">
+                <div class="col-md-4 col-md-offset-4">
+                    <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-folder-close"></span> Atualizar estoque</button>
+                </div>
             </div>
         </div>
     </form>

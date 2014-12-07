@@ -160,7 +160,7 @@ class ProdutocompraController extends Zend_Controller_Action {
 
         $produtoCompra = new Produtocompra;
         $produtosComprados = $produtoCompra->findByCompra($compraId);
-
+        
         $produtoCompra->reporItensNoEstoque($produtosComprados, $compraId);
 
         return $this->_helper->redirector->gotoSimple('listargerente', 'solicitacao');
@@ -195,15 +195,14 @@ class ProdutocompraController extends Zend_Controller_Action {
             $quantidadeParcialAntiga = $entregaParcial[0]['entrega_parcial'];
 
             $totalParcial = $quantidadeescolhida + $quantidadeParcialAntiga;
-
-
+            
             if ($totalParcial <= $quantidadeDoPedido) {
 
                 $tProduto = new Produto;
                 $quantidadeProduto = $tProduto->findProdutoById($produtoid)->current()->quantidade;
 
                 $quantidadeFinal = $totalParcial - $quantidadeParcialAntiga + $quantidadeProduto;
-
+                
                 $post = array('entrega_parcial' => $totalParcial);
 
                 $tProdutoCompra = new Produtocompra();

@@ -106,12 +106,11 @@ class Produtocompra extends Zend_Db_Table_Row_Abstract {
     }
 
     public function reporItensNoEstoque($produtosComprados, $compraId) {
-        
-        
 
         foreach ($produtosComprados as $produtoComprado) {
             
             $entregaParcial = $produtoComprado->entrega_parcial;
+            
             $quantidadeComprada = $produtoComprado->quantidade;
 
             $tProduto = new DbTable_Produto();
@@ -119,20 +118,16 @@ class Produtocompra extends Zend_Db_Table_Row_Abstract {
 
             $quantidadeCorrenteNoEstoque = $produtoDoEstoque->current()->quantidade;
 
-            if ($entregaParcial == 0) {
             
-                $quantidadeAtualizada = $quantidadeComprada + $quantidadeCorrenteNoEstoque;
-                
-            }//faço normal tudo }
-
-            if (($entregaParcial <> 0) && ($entregaParcial < $quantidadeComprada)) {
+           
+            if ($entregaParcial <= $quantidadeComprada) {
                 
                 $quantidadeAtualizada = $quantidadeComprada - $entregaParcial + $quantidadeCorrenteNoEstoque;
                 
             }//diminuo a quantidade que vai ser atualizada com a quantidade parcial. pra não dar merda}
 
             $post = ['quantidade' => $quantidadeAtualizada];
-
+            
             $produtoDoEstoque->current()->setFromArray($post);
             $produtoDoEstoque->current()->save();
 

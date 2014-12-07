@@ -38,9 +38,10 @@
                             <?php } ?>
                             <td class="text-center acao">
                                 <?php if ($compra['status'] == 'nova') { ?>
-                                    <a class='btn btn-success btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'listarfornecedores', 'compraid' => $compra['id'])); ?>"><span class="glyphicon glyphicon-usd"></span> Iniciar</a>
-                                    <a href="<?php echo $this->url(array('controller' => 'compra', 'action' => 'deletar', 'id' => $compra['id'])); ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Deletar</a>
+                                    <a class='btn btn-success btn-xs' href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'listarfornecedores', 'compraid' => $compra['id'])); ?>"><span class="glyphicon glyphicon-usd"></span> Iniciar</a>                                    
+                                    <a href="<?php echo $this->url(array('controller' => 'compra', 'action' => 'deletar', 'id' => $compra['id'])); ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Excluir</a>
                                 <?php } elseif ($compra['status'] == 'AGUARDANDO FORNECEDOR') { ?>
+                                    <a href="<?php echo $this->url(array('controller' => 'compra', 'action' => 'deletar', 'id' => $compra['id'])); ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-remove"></span> Cancelar</a>
                                     <a href="<?php echo $this->url(array('controller' => 'produtocompra', 'action' => 'resumodepedido', 'compraid' => $compra['id'])); ?>" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open"></span> Visualizar</a>
                                 <?php } ?>
                             </td>
