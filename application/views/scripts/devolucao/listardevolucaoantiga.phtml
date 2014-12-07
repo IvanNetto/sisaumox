@@ -1,9 +1,9 @@
-<h3>Lista de devoluções concretizadas</h3>
+<h3>Lista de devoluções</h3>
 <hr>
 <?php if ($this->devolucoesantigas <> null) { ?>
-    <p> Abaixo seguem suas devoluções finalizadas. </p>
+    <p> Abaixo seguem suas devoluções. </p>
 <?php } else { ?>
-    <p> Você não tem ainda devoluções concretizadas, porisso seu histórico encontra-se vazio.</a> </p>
+    <p> Você não tem ainda devoluções realizadas, porisso seu histórico encontra-se vazio.</a> </p>
 <?php } ?>
 
 <div class="row">
@@ -14,7 +14,7 @@
         <table class="table table-striped table-hover ">
             <tr>
                 <?php if ($this->devolucoesantigas == null) { ?>
-                <center><strong><h4>sem devoluções concretizadas</h4></strong></center>
+                <center><strong><h4>sem devoluções</h4></strong></center>
                 </tr>
             <?php } else { ?>
                 <thead>

@@ -64,21 +64,21 @@ class Produto extends Zend_Db_Table_Row_Abstract {
         $solicitacaoid = $produtoSolicitacao->solicitacaoid;
 
         foreach ($produtos as $produto) {
-
+            
             $quantidadeRejeitada = $produto->quantidade;
-
+            
             $tProdutoSolicitacao = new Produtosolicitacao;
             $produtoSolicitacao = $tProdutoSolicitacao->findByProdutoESolicitacao($produto->produtoid, $solicitacaoid);
 
             $quantidadeParcial = $produtoSolicitacao[0]['aprovacao_parcial'];
-
+            
             $tProduto = new DbTable_Produto();
             $produtoCorrente = $tProduto->find($produto->produtoid)->current();
 
             $quantidadeExistente = $produtoCorrente->quantidade;
-
+            
             $quantidade = $quantidadeRejeitada + $quantidadeExistente - $quantidadeParcial;
-
+            var_dump($quantidade);
             $produtoCorrente->setFromArray(['quantidade' => $quantidade]);
             $produtoCorrente->save();
 

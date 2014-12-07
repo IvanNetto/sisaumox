@@ -1,9 +1,9 @@
-<h3>Lista de solicitações concretizadas</h3>
+<h3>Lista de solicitações</h3>
 <hr>
 <?php if ($this->historico->current() <> null) { ?>
-    <p> Abaixo seguem suas solicitações finalizadas. </p>
+    <p> Abaixo seguem suas solicitações. </p>
 <?php } else { ?>
-    <p> Você não tem ainda solicitações concretizadas, porisso seu histórico encontra-se vazio.</a> </p>
+    <p> Você não tem ainda solicitações, porisso seu histórico encontra-se vazio.</a> </p>
 <?php } ?>
 
 <div class="row">
@@ -14,7 +14,7 @@
         <table class="table table-striped table-hover ">
             <tr>
                 <?php if ($this->historico->current() == null) { ?>
-                <center><strong><h4>sem solicitações concretizadas</h4></strong></center>
+                <center><strong><h4>sem solicitações</h4></strong></center>
                 </tr>
             <?php } else { ?>
                 <thead>

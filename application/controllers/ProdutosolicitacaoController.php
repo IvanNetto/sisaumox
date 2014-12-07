@@ -107,7 +107,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         $status = $this->_getParam('status');
         $solicitacaoid = $this->_getParam('solicitacaoid');
         $produtosolicitacaoId = $this->_getParam('produtosolicitacaoid');
-
+        
         if ($status == 'reprovada') {
 
             $tProdutoSolicitacao = new DbTable_Produtosolicitacao;
@@ -115,7 +115,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
 
             $tProdutoSolicitacao = new Produtosolicitacao;
             $produtos = $tProdutoSolicitacao->findBySolicitacao($solicitacaoid);
-
+            
             $tProduto = new Produto;
             $tProduto->atualizarEstoqueComProdutosRejeitados($produtos, $produtoSolicitacao);
 
@@ -246,19 +246,24 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
             $solicitacaoid = $_POST['solicitacaoid'];
 
             $quantidadeescolhida = $_POST['quantidade'];
-
+            
             $tProdutoSolicitacao = new Produtosolicitacao();
             $produtosolicitacao = $tProdutoSolicitacao->findByProdutoESolicitacao($produtoid, $solicitacaoid);
+            
+            $tProduto = new DbTable_Produto();
+            $produto = $tProduto->find($produtoid)->current();
+            $quantidadeCorrente = $produto->quantidade;
 
             //retorna quantidade solicitada em produtosolicitacao
             $quantidadesolicitada = $produtosolicitacao->current()->quantidade;
-
+            
             //verifica se já existe quantidade aprovada parcial
             $tProdutoSolicitacao = new DbTable_Produtosolicitacao();
             $quantidadeJahAprovada = $tProdutoSolicitacao->quantidadeJahAprovadaParcialPorProdutoESolicitacao($produtoid, $solicitacaoid);
-
+            
             $quantidadetotal = $quantidadeescolhida;
-
+            
+            
             if ($quantidadeJahAprovada[0]['aprovacao_parcial'] > 0) {
 
                 $quantidadeAntigaAprovada = $quantidadeJahAprovada[0]['aprovacao_parcial'];
@@ -270,14 +275,14 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
                 $quantidadetotal = $quantidadeescolhida + $quantidadeAntigaAprovada;
                 
                 $post = array('aprovacao_parcial' => $quantidadetotal);
-
+                
                 $tProdutoSolicitacao = new ProdutoSolicitacao();
                 $tProdutoSolicitacao->inserirAprovacaoParcial($post, $produtosolicitacao);
 
-                $quantidadeFinal = $quantidadesolicitada + $quantidadetotal - $quantidadeAntigaAprovada;
+                $quantidadeFinal = $quantidadeCorrente + $quantidadetotal - $quantidadeAntigaAprovada;
                 
                 $tProduto = new Produto();
-
+        
                 $tProduto->atualizarEstoqueComProdutoDevolvido($produtoid, $quantidadeFinal, $fail = null);
 
                 $this->flashMessenger->addMessage(array('success' => "A quantidade deste item foi atualizado com sucesso!"));
