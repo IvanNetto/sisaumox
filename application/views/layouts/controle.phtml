@@ -1,6 +1,14 @@
+ <?php $perfil = Zend_Auth::getInstance()->getIdentity()->perfilid; ?>
 <div class="row">
     <div class="controle no-print">
-        <div class="col-md-1 logo-admin"><small  class="no-print"><i class="glyphicon glyphicon-user icon-admin"></i> Administrador</small></div>
+        <?php
+            if ($perfil == 2){
+                $id = 'Gerente';
+            }elseif ($perfil == 3){
+                $id = 'Estoquista';
+            }
+            ?>
+        <div class="col-md-1 logo-admin"><small  class="no-print"><i class="glyphicon glyphicon-user icon-admin"></i>  <?= $id ?></small></div>
             <div class="col-md-2">
                 <div class="btn-group" role="group" aria-label="...">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -22,11 +30,9 @@
                     </ul>
                 </div>
             </div>
-            <?php $perfil = Zend_Auth::getInstance()->getIdentity()->perfilid;
+           <?php
             if ($perfil == 3){
-            
             ?>
-             
             <div class="col-md-2">
                 <div class="btn-group" role="group" aria-label="...">
                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">

@@ -70,12 +70,12 @@ class DevolucaoController extends Zend_Controller_Action {
             $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtosolicitacaoid);
 
             $quantidadetotal = $quantidadeEscolhida;
-
+            $quantidadeAntigaDevolvida = 0;
             if ($devolucao[0]['quantidade'] <> null) {
 
                 $quantidadeAntigaDevolvida = $devolucao[0]['quantidade'];
 
-                $quantidadetotal = $quantidadeescolhida + $quantidadeAntigaDevolvida;
+                $quantidadetotal = $quantidadeEscolhida + $quantidadeAntigaDevolvida;
             }
 
             if ($quantidadetotal <= $quantidadesolicitada) {
@@ -97,13 +97,15 @@ class DevolucaoController extends Zend_Controller_Action {
                 $tProduto = new Produto();
                 $tProduto->atualizarEstoqueComProdutoDevolvido($produtoid, $quantidadeFinal, $statusDevolucaoCriada);
 
-                $this->flashMessenger->addMessage(array('success' => "Esta devolução foi encaminhada para análise com sucesso, acompanhe sua análise!"));
+                $mensagem = $this->flashMessenger->addMessage(array('success' => "Esta devolução foi encaminhada para análise com sucesso, acompanhe sua análise!"));
+                $param = ['solicitacaoid' => $solicitacaoid, $mensagem];
+                $this->forward('resumodesolicitacao', 'produtosolicitacao', null, $param);
             } else {
 
-                $this->flashMessenger->addMessage(array('danger' => "Quantidades devolvidas não podem ultrapassar a quantidade solicitada para o produto!"));
+                $mensagem = $this->flashMessenger->addMessage(array('danger' => "Quantidades devolvidas não podem ultrapassar a quantidade solicitada para o produto!"));
+                $param = ['solicitacaoid' => $solicitacaoid, $mensagem];
+                $this->forward('resumodesolicitacao', 'produtosolicitacao', null, $param);
             }
-
-            return $this->_helper->redirector->gotoSimple('listarhistorico', 'solicitacao');
         }
     }
 
@@ -114,9 +116,24 @@ class DevolucaoController extends Zend_Controller_Action {
         $gerenteAprovador = $this->_getParam("gerente_responsavel");
         $data_atualizacao_status = $this->_getParam("data_atualizacao_status");
         $produtoSolicitacaoId = $this->_getParam("produtosolicitacaoid");
+        $qtdjaAprovadaAntiga = 0;
 
-        $post = ['status_devolucao' => $status, 'gerente_responsavel' => $gerenteAprovador, 'data_atualizacao_status' => $data_atualizacao_status];
 
+        if ($status == 'NOVA') {
+            //verifica se já existe quantidade devolvida
+            $tDevolucao = new DbTable_Devolucao();
+            $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacaoAprovada($produtoSolicitacaoId);
+
+            if ($devolucao <> null) {
+                $qtdjaAprovadaAntiga = $devolucao[0]['quantidade'];
+            }
+        }
+        if ($status == 'reprovada') {
+
+            $post = ['status_devolucao' => $status, 'gerente_responsavel' => $gerenteAprovador, 'data_atualizacao_status' => $data_atualizacao_status, 'quantidade_devolvida' => 0];
+        } else {
+            $post = ['status_devolucao' => $status, 'gerente_responsavel' => $gerenteAprovador, 'data_atualizacao_status' => $data_atualizacao_status];
+        }
         $tDevolucao = new Devolucao();
         $tDevolucao->atualizarDevolucao($id, $post);
 
@@ -126,7 +143,7 @@ class DevolucaoController extends Zend_Controller_Action {
             $produtoDevolvido = $tDevolucao->findProdutoByDevolucao($id);
 
             $tProduto = new Produto();
-            $tProduto->devolverItemProEstoque($produtoDevolvido[0]['id'], $produtoSolicitacaoId);
+            $tProduto->devolverItemProEstoque($produtoDevolvido[0]['id'], $produtoSolicitacaoId, $qtdjaAprovadaAntiga);
         }
 
         return $this->_helper->redirector('listardevolucao');

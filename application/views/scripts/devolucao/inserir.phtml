@@ -17,10 +17,16 @@
                     <?php
                     $produtoSolicitacao = new DbTable_Produtosolicitacao;
                     $objProdutoSolicitacao = $produtoSolicitacao->find($this->produtosolicitacaoid)->current();
+                    $tDevolucao = new DbTable_Devolucao();
+                    $objDevolucao = $tDevolucao->findDevolucaoByProdutoSolicitacaoQualquer($this->produtosolicitacaoid);
+                    $quantidadeJaDevolvida = 0;
+                    if ($objDevolucao <> null){
+                    $quantidadeJaDevolvida = $objDevolucao[0]['quantidade_devolvida'];
+                    }
                     $quantidadeParcial = $objProdutoSolicitacao->aprovacao_parcial;
                     $quantidadeSolicitada = $objProdutoSolicitacao->quantidade;
 
-                    $quantidade = $quantidadeSolicitada - $quantidadeParcial;
+                    $quantidade = $quantidadeSolicitada - $quantidadeParcial - $quantidadeJaDevolvida;
                     ?>
                     <span class="help-block">Você só poderá devolver <b class="disponiveis"><?= $quantidade; ?></b> itens</h4></span>
                     <?php ?>    

@@ -156,7 +156,7 @@ class SolicitacaoController extends Zend_Controller_Action {
             'data' => $data,
             'status' => $status
         );
-        
+
         $tSolicitacao = new Solicitacao();
         $tSolicitacao->inserirSolicitacao($post);
 
@@ -241,7 +241,6 @@ class SolicitacaoController extends Zend_Controller_Action {
 
         if ($_POST) {
 
-
             $observacao = $_POST['observacao'];
             $data_atualizacao_status = $this->_getParam("data_atualizacao_status");
             if ($idDevolucao) {
@@ -251,26 +250,28 @@ class SolicitacaoController extends Zend_Controller_Action {
                 $devolucao->current()->setFromArray($post);
                 $devolucao->current()->save();
 
-
-
                 $this->forward('atualizardevolucao', 'produtosolicitacao', null, $param);
             } else {
-
-
 
                 $tSolicitacao = new DbTable_Solicitacao();
 
                 $solicitacao = $tSolicitacao->find($_POST['solicitacaoid']);
 
-                $post = (['observacao' => $observacao, 'status' => $status, 'data_atualizacao_status' => $data_atualizacao_status, 'gerente_responsavel' => $gerente_responsavel]);
-                $solicitacao->current()->setFromArray($post);
-                $solicitacao->current()->save();
+                if (($status == null) && ($observacao <> null)) {
 
-                $pula = $_POST['pula'];
-                if ($pula == 'PULA') {
+                    $post = (['observacao' => $observacao]);
+                    $solicitacao->current()->setFromArray($post);
+                    $solicitacao->current()->save();
+
                     $parametro = ['solicitacaoid' => $solicitacaoid];
+
                     $this->forward('resumodesolicitacao', 'produtosolicitacao', null, $parametro);
                 } else {
+                    
+                    $post = (['observacao' => $observacao, 'status' => $status, 'data_atualizacao_status' => $data_atualizacao_status, 'gerente_responsavel' => $gerente_responsavel]);
+                    $solicitacao->current()->setFromArray($post);
+                    $solicitacao->current()->save();
+
                     $this->forward('atualizarprodutosesolicitacao', 'produtosolicitacao', null, $param);
                 }
             }

@@ -78,7 +78,7 @@ class Produto extends Zend_Db_Table_Row_Abstract {
             $quantidadeExistente = $produtoCorrente->quantidade;
             
             $quantidade = $quantidadeRejeitada + $quantidadeExistente - $quantidadeParcial;
-            var_dump($quantidade);
+            
             $produtoCorrente->setFromArray(['quantidade' => $quantidade]);
             $produtoCorrente->save();
 
@@ -89,7 +89,7 @@ class Produto extends Zend_Db_Table_Row_Abstract {
 
     //usado na rejeição da solicitação toda
     //usardo também na devolução de item
-    public function devolverItemProEstoque($produtodevolvido, $produtoSolicitacaoId) {
+    public function devolverItemProEstoque($produtodevolvido, $produtoSolicitacaoId, $qtdjaAprovadaAntiga) {
         
         $tDevolucao = new DbTable_Devolucao;
         $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtoSolicitacaoId);
@@ -99,7 +99,7 @@ class Produto extends Zend_Db_Table_Row_Abstract {
         $tProduto = new DbTable_Produto;
         $produto = $tProduto->find($produtodevolvido);
 
-        $quantidadeAtualizada = $produto->current()->quantidade + $quantidadeDevolvida;
+        $quantidadeAtualizada = $produto->current()->quantidade + $quantidadeDevolvida - $qtdjaAprovadaAntiga;
         
         $produto->current()->setFromArray(['quantidade' => $quantidadeAtualizada]);
         $produto->current()->save();

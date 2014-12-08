@@ -25,10 +25,26 @@ class DbTable_Devolucao extends Zend_Db_Table_Abstract
         return $this->getAdapter()->fetchAll($sql);
     }
     
+     public function findDevolucaoByProdutoSolicitacaoQualquer($produtosolicitacaoid){
+        
+        $sql = "select * from t_devolucao dev where dev.produtosolicitacaoid = $produtosolicitacaoid";
+
+        
+        return $this->getAdapter()->fetchAll($sql);
+    }
+    
     
     public function somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtoSolicitacaoId){
         
            $sql = "select sum(dev.quantidade_devolvida) as quantidade from t_produto_solicitacao ps, t_devolucao dev where ps.id = dev.produtosolicitacaoid and ps.id = $produtoSolicitacaoId"; 
+
+        return $this->getAdapter()->fetchAll($sql);
+        
+    }
+    
+    public function somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacaoAprovada($produtoSolicitacaoId){
+        
+           $sql = "select sum(dev.quantidade_devolvida) as quantidade from t_produto_solicitacao ps, t_devolucao dev where ps.id = dev.produtosolicitacaoid and ps.id = $produtoSolicitacaoId and dev.status_devolucao = 'entregue'"; 
 
         return $this->getAdapter()->fetchAll($sql);
         
@@ -55,12 +71,12 @@ class DbTable_Devolucao extends Zend_Db_Table_Abstract
         return $this->getAdapter()->fetchAll($sql);
     }
     
-    public function listarDevolucoesAntigas($produtosolicitacao){
+    public function listarDevolucoesAntigas($usuarioId){
         
         $sql = "select * from t_solicitacao s, t_devolucao d, t_produto_solicitacao ps 
                 where s.id = ps.solicitacaoid
                 and ps.id = d.produtosolicitacaoid
-                and s.usuarioid = '6' 
+                and s.usuarioid = $usuarioId 
                 and s.status = 'recebida' 
                 and d.status_devolucao in ('entregue', 'reprovada')";
 

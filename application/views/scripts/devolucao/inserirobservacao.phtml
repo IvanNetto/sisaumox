@@ -1,0 +1,20 @@
+<h3>Justificar reprovação</h3>
+<hr>
+<div class="instrucao">
+    <form class="form-horizontal" action="<?= $this->baseUrl() . '/produtosolicitacao/inserirprodutoemsolicitacaoagendada' ?>" method="POST">
+        <input type="hidden" name="produtoid" value="<?php echo $this->produtoid ?>">
+        <br><br>
+        <div class="form-group">
+             <div class="col-lg-3  col-lg-offset-4">
+                <textarea class="form-control" rows="3" id="observacao" required="true" name="observacao"></textarea>
+                <span class="help-block">Comente a razão da rejeição desta solicitação</span>
+            </div>
+        </div>       
+        <div class="form-group">
+            <div class="col-lg-4 col-lg-offset-4">
+                <button type="submit" class="btn btn-success btn-block"><span class="glyphicon glyphicon-ok"></span> Iserir observação</button>
+            </div>
+        </div>
+    </form>
+
+</div>
