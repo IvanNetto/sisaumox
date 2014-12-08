@@ -4,6 +4,7 @@
     Para agendar o produto, escolha a data que deseja receber o produto, insira a quantidade necessária e clique em Agendar. Caso queira voltar ao menu anterior, clique <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'deletaragendada')); ?>">Aqui</a>.</p>
     <form class="form-horizontal" action="<?= $this->baseUrl() . '/produtosolicitacao/inserirprodutoemsolicitacaoagendada' ?>" method="POST">
         <input type="hidden" name="produtoid" value="<?php echo $this->produtoid ?>">
+        <input type="hidden" name="pula" value="<?php echo 'pula'; ?>">
         <br><br>
              <div class="form-group">
                 <div class="col-lg-3  col-lg-offset-4">

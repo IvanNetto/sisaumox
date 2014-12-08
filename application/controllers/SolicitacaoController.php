@@ -156,7 +156,7 @@ class SolicitacaoController extends Zend_Controller_Action {
             'data' => $data,
             'status' => $status
         );
-
+        
         $tSolicitacao = new Solicitacao();
         $tSolicitacao->inserirSolicitacao($post);
 

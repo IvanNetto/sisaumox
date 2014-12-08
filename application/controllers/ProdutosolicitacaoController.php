@@ -212,8 +212,8 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
         if (!($_POST)) {
 
             $produtoId = $this->_getParam("produtoid");
-
             $this->view->produtoid = $produtoId;
+            
         } else {
 
             $produtoId = $_POST['produtoid'];

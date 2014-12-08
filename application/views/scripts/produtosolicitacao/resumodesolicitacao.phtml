@@ -144,13 +144,15 @@ if ($solicitacao->current()->status == 'recebida') {
 </div>
 <center>
     <?php
-    if ($perfil == 2) {
+    
+    if (($perfil == 2) || ($perfil == 3)) {
         if ($solicitacao->current()->status == 'em analise') {
             ?>
             <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'atualizarprodutosesolicitacao', 'solicitacaoid' => $solicitacao->current()->id, 'status' => 'aprovada', 'data_aprovacao' => $data_aprovacao = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class="btn btn-success btn-xs"><span class="glyphicon glyphicon-thumbs-up"></span> Aprovar</a>
         <?php } if (($solicitacao->current()->status == 'em analise') || ($solicitacao->current()->status == 'aprovada')) { ?>
             <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $produtosolicitacao->solicitacaoid, 'status' => 'reprovada', 'data_atualizacao_status' => $data_reprovacao = date("m-d-Y"), 'gerente_responsavel' => $login, 'produtosolicitacaoid' => $produtosolicitacao->id)); ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-thumbs-down"></span> Reprovar</a>
             <?php
+            
         }
 
         if (($solicitacao->current()->status == 'agendada') || ($solicitacao->current()->status == 'pendente')) {
