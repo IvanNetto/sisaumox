@@ -12,12 +12,16 @@
                     <option required="true" value="<?php echo $nomeCategoria['id']; ?>"><?php echo $nomeCategoria['nome']; ?></option>
                     <?php
                 endforeach;
-                ?>
+                ?>            
             </select>
             <button class="btn btn-primary btn-filter btn-sm"><span class="glyphicon glyphicon-search"></span> Pesquisar</button>
         </form>
     </div>
 </div>
+<?php $tCategoria = new DbTable_Categoria();
+                  $categoria = $tCategoria->find($this->categoriaid);
+                  $nomeDaCategoria = $categoria->current()->nome;
+            ?>
 <?php if ($this->listaDeProdutos) { ?>
     <div class="row">
         <div class="panel panel-primary filterable conteudogerente">
@@ -25,7 +29,7 @@
                 <div class="pull-right">
                     <button class="btn btn-default btn-xs btn-filter"><span class="glyphicon glyphicon-filter"></span> Buscar na lista</button>
                 </div>
-                <span class="glyphicon glyphicon-list"></span> Lista de produtos da categoria <strong><?php echo $nomeCategoria['nome']; ?></strong>
+                <span class="glyphicon glyphicon-list"></span> Lista de produtos da categoria <strong><?php echo $nomeDaCategoria; ?></strong>
             </div>
             <form action="<?= $this->baseUrl() . '/produtosolicitacao/inserir' ?>" method="POST">
                 <table class="table table-striped table-hover tabela-busca">

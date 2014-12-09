@@ -143,6 +143,7 @@ class ProdutoController extends Zend_Controller_Action {
             $listaDeItensPermitidos = $tProdutoSolicitacao->listarProdutosPermitidos($categoriaid, $listaItensProibidos);
 
             $this->view->listaDeProdutos = $listaDeItensPermitidos->toArray();
+            $this->view->categoriaid = $categoriaid;
         }
     }
 

@@ -146,9 +146,10 @@ class SolicitacaoController extends Zend_Controller_Action {
     public function inserirsolicitacaoagendadaAction() {
 
         $produtoId = $this->_getParam("produtoid");
-
+        
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
-        $data = date("d/m/Y");
+        $data= date("d/m/Y");
+        
         $status = "agendada";
 
         $post = array(
@@ -159,8 +160,6 @@ class SolicitacaoController extends Zend_Controller_Action {
 
         $tSolicitacao = new Solicitacao();
         $tSolicitacao->inserirSolicitacao($post);
-
-        $this->flashMessenger->addMessage(array('success' => "Solicitação agendada com sucesso! Agora é só esperar a reposição para este item no estoque!"));
 
         $param = ['produtoid' => $produtoId];
         return $this->forward('inserirprodutoemsolicitacaoagendada', 'produtosolicitacao', null, $param);

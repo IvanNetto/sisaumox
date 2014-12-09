@@ -41,9 +41,8 @@
                                     ?>
 
                                     <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'pendente', 'data_atualizacao_status' => $data_atualizacao_status = date("m-d-Y"), 'gerente_responsavel' => $login)); ?>" class='btn btn-warning btn-xs'><span class="glyphicon glyphicon-remove-circle"></span> Pendente</a>
-
+                                    <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'cancelarsolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'cancelada')); ?>" class='btn btn-danger btn-xs'><span class="glyphicon glyphicon-remove-circle"></span> Cancelar</a>               
                                 <?php } elseif (($solicitacao['status'] == 'agendada') || ($solicitacao['status'] == 'pendente')) { ?>
-
                                     <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'cancelarsolicitacao', 'solicitacaoid' => $solicitacao['id'], 'status' => 'cancelada')); ?>" class='btn btn-danger btn-xs'><span class="glyphicon glyphicon-remove-circle"></span> Cancelar</a>               
                                 <?php } ?>         
                                 <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'resumodesolicitacao', 'solicitacaoid' => $solicitacao['id'])); ?>" class='btn btn-default btn-xs'><span class="glyphicon glyphicon-eye-open"></span> Visualizar</a>

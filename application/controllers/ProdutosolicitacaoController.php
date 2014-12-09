@@ -35,9 +35,11 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
             $listaDeItensPermitidos = $tProdutoSolicitacao->listarProdutosPermitidos($categoriaid, $listaItensProibidos);
 
             $this->view->listaDeProdutos = $listaDeItensPermitidos->toArray();
+            $this->view->categoriaid = $categoriaid;
         }
 
         $this->view->solicitacaoid = $solicitacaoid;
+        
     }
 
     public function inserirAction() {
@@ -219,14 +221,29 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
             $produtoId = $_POST['produtoid'];
             $quantidade = $_POST['quantidade'];
             $data_agendamento = $_POST['data_agendamento'];
+            
+            $data_agendamento = explode('-', $data_agendamento);
+            $ano = $data_agendamento[0];
+            $mes = $data_agendamento[1];
+            $dia = $data_agendamento[2];
 
+            $data = $dia . '/' . $mes . '/' . $ano;
+           
             $tSolicitacao = new Solicitacao();
             $solicitacaoid = $tSolicitacao->selecionarUltimaSolicitacaoCadastrada()->current()->maxID;
             
             $tProdutoSolicitacao = new Produtosolicitacao();
-            $tProdutoSolicitacao->inserirProdutoNaSolicitacaoAgendada($solicitacaoid, $produtoId, $quantidade, $data_agendamento);
-
-            return $this->_helper->redirector->gotoSimple('listar', 'solicitacao');
+            
+            $hoje = date('d/m/Y'); 
+            
+            if ($data > $hoje){
+                
+                $tProdutoSolicitacao->inserirProdutoNaSolicitacaoAgendada($solicitacaoid, $produtoId, $quantidade, $data);
+                
+                return $this->_helper->redirector->gotoSimple('listar', 'solicitacao');
+            }else{
+                $this->flashMessenger->addMessage(array('danger' => "A data solicitada foi inferior a data de hoje!"));
+            }
         }
     }
 
