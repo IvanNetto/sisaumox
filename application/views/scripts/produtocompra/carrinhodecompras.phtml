@@ -36,8 +36,8 @@
                                 <input type="hidden" name="compraid" value="<?php echo $this->compraid ?>"/>   
                                 <input type="hidden" name="fornecedorid" value="<?php echo $this->fornecedorid ?>"/>
                                 <input type="hidden" name="datapedido" value="<?php echo $data = date('d/m/Y'); ?>">
-                                <input type="hidden" name="status" value="<?php echo 'aguardando fornecedor' ?>">
-                                <h4 class="product-name"><strong><?php echo $produto[0]->nome; ?> <small class="label label-warning"> <?php echo $produto->current()->quantidade ?> itens disponíveis</small></h4>
+                                <input type="hidden" name="status" value="<?php echo 'aguardando fornecedor' ?>">                                
+                                <h4 class="product-name"><strong><?php echo $produto[0]->nome; ?> <br><br><small class="label label-warning"> <?php echo $produto->current()->quantidade ?> itens disponíveis</small></h4>
                             </div>
                             <div class="col-xs-7">
                                 <div class="col-xs-1 text-right">
