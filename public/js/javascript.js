@@ -69,11 +69,10 @@ $(document).ready(function () {
 
     /*Carrinho de solicitações*/
     $('.linhaCarrinhoSolicitacao').each(function () {
-
+                        
         var disponiveis = $(this).find('.disponiveis').text();
-
-        $('.quantidadeSolicitada').attr("max", disponiveis);
-
+            
+        $(this).children().find('.quantidadeSolicitada').attr('max', disponiveis);
 
     });
 
@@ -88,7 +87,6 @@ $(document).ready(function () {
 
             var valorUnitario = $(this).find('.valorUnitario').val();
             var quantidadeItensCompra = $(this).find('.quantidadeItensCompra').val();
-
             var valorUnitarioComCifrao = valorUnitario.replace(",", ".");
 
             var multiplica = (parseFloat(quantidadeItensCompra) * parseFloat(valorUnitarioComCifrao));
