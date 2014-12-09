@@ -27,16 +27,14 @@
                     <li class="dropdown-header">Solicitações em andamento</li>
                     <li>
                     <li><a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listaragendadas')); ?>"> Minhas agendadas</a></li>
-            </li>
-            <li>
-                <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarreprovadas')); ?>">Minhas reprovadas</a>
-            </li>  
+            </li>              
             <li class="dropdown-header">Devolução</li>
             <li>
                 <a href="<?php echo $this->url(array('controller' => 'devolucao', 'action' => 'listardevolucao')); ?>" > Devoluções ativas</a>
             </li>
             <li class="dropdown-header">Histórico</li>
             <li>
+                <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarreprovadas')); ?>">Minhas reprovadas</a>
                 <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>" > Solicitações e agendamentos</a>
                 <a href="<?php echo $this->url(array('controller' => 'devolucao', 'action' => 'listardevolucaoantiga')); ?>" > Devoluções antigas</a>
             </li>
