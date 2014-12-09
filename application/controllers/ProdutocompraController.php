@@ -41,6 +41,7 @@ class ProdutocompraController extends Zend_Controller_Action {
             $listaDeItensPermitidos = $produtoCompra->listarProdutosPermitidos($categoriaId, $listaItensProibidos);
 
             $this->view->listaDeProdutos = $listaDeItensPermitidos->toArray();
+            $this->view->categoriaid = $categoriaId;
         }
 
         $this->view->compraid = $compraid;

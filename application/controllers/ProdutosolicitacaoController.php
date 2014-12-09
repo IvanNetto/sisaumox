@@ -17,6 +17,7 @@ class ProdutosolicitacaoController extends Zend_Controller_Action {
     public function buscarprodutosporcategoriaAction() {
 
         $categoriaid = $this->_getParam("categoriaid");
+        
         $solicitacaoid = $this->_getParam("solicitacaoid");
 
         $usuarioId = Zend_Auth::getInstance()->getIdentity()->id;
