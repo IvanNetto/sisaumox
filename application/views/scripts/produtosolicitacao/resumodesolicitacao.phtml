@@ -15,9 +15,21 @@ if ($solicitacao->current()->status == 'recebida') {
         <span class="glyphicon glyphicon-list"></span> Resumo da solicitção
     </div>
     <br>
+    <?php
+    $tUsuario = new DbTable_Usuario();
+    $usuario = $tUsuario->find($solicitacao->current()->usuarioid);
+    $tPessoa = new DbTable_Pessoa();
+    $pessoa = $tPessoa->find($usuario->current()->pessoaid);
+    $nomePessoa = $pessoa->current()->nome;
+    $tFuncao = new DbTable_Funcao();
+    $funcao = $tFuncao->find($pessoa->current()->funcaoid);
+    $nomeFuncao = $funcao->current()->nome;
+    ?>
     <center>
         <table class="table tabela-resumo">
             <thead>
+                <tr>Solicitante: <?= $nomePessoa . '<br> Função: ' . $nomeFuncao; ?> </tr>
+                
                 <tr class= "resumo-solicitacao-head">
                     <th>Solicitação</th>
                     <th>Data da solicitação</th>
@@ -25,10 +37,10 @@ if ($solicitacao->current()->status == 'recebida') {
                         <th>Data de agendametno</th>
                     <?php } elseif ($solicitacao->current()->status == 'reprovada') { ?>
                         <th>Data de Reprovação</th>
-                    <?php } else { ?>
+<?php } else { ?>
                         <th>Data de aprovação</th>
                         <th>Data de recebimento</th>
-                    <?php } ?>
+<?php } ?>
                 </tr>
             </thead>
             <tbody>
@@ -44,10 +56,10 @@ if ($solicitacao->current()->status == 'recebida') {
                         <td><?= $solicitacao->current()->data_agendamento; ?></td>
                     <?php } elseif ($solicitacao->current()->status == 'reprovada') { ?>
                         <td><?= $solicitacao->current()->data_atualizacao_status ?></td>
-                    <?php } else { ?>
+<?php } else { ?>
                         <td><?= $solicitacao->current()->data_aprovacao; ?></td>
                         <td><?= $solicitacao->current()->data_recebimento; ?></td>
-                    <?php } ?>
+<?php } ?>
                 </tr>
             </tbody>
         </table>
@@ -82,7 +94,7 @@ if ($solicitacao->current()->status == 'recebida') {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($this->resumoDeSolicitacao as $produtosolicitacao) { ?>
+<?php foreach ($this->resumoDeSolicitacao as $produtosolicitacao) { ?>
 
                         <tr>
                             <?php
@@ -98,7 +110,7 @@ if ($solicitacao->current()->status == 'recebida') {
                                 <?php } ?>
                                 <?php
                                 $perfil = Zend_Auth::getInstance()->getIdentity()->perfilid;
-                                if (($perfil == 2) || ($perfil ==3)) {
+                                if (($perfil == 2) || ($perfil == 3)) {
                                     if (($solicitacao->current()->status == 'em analise') || ($solicitacao->current()->status == 'aprovada')) {
                                         ?>
                                         <a href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'aprovarparcialitemdasolicitacao', 'solicitacaoid' => $solicitacao->current('id')->id, 'produtoid' => $objProdutoSolicitacao->current()->produtoid)); ?>" class="btn btn-info btn-xs botaoinfo"><span class="glyphicon glyphicon-tag"></span> Entrega parcial</a>
@@ -118,7 +130,7 @@ if ($solicitacao->current()->status == 'recebida') {
                             ?>
                         <h4 class="label label-warning alerta-resumo"><?php echo $quantidadeDevolvida; ?> devolvidos</h4>
 
-                    <?php } ?>
+    <?php } ?>
 
 
                     <?php
@@ -137,14 +149,13 @@ if ($solicitacao->current()->status == 'recebida') {
                     ?>
 
 
-                <?php } ?>
+<?php } ?>
                 </tbody>
             </table>
         </center>
 </div>
 <center>
     <?php
-    
     if (($perfil == 2) || ($perfil == 3)) {
         if ($solicitacao->current()->status == 'em analise') {
             ?>
@@ -152,7 +163,6 @@ if ($solicitacao->current()->status == 'recebida') {
         <?php } if (($solicitacao->current()->status == 'em analise') || ($solicitacao->current()->status == 'aprovada')) { ?>
             <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'inserirobservacao', 'solicitacaoid' => $produtosolicitacao->solicitacaoid, 'status' => 'reprovada', 'data_atualizacao_status' => $data_reprovacao = date("m-d-Y"), 'gerente_responsavel' => $login, 'produtosolicitacaoid' => $produtosolicitacao->id)); ?>" class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-thumbs-down"></span> Reprovar</a>
             <?php
-            
         }
 
         if (($solicitacao->current()->status == 'agendada') || ($solicitacao->current()->status == 'pendente')) {
