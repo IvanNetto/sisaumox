@@ -29,7 +29,7 @@ if ($solicitacao->current()->status == 'recebida') {
         <table class="table tabela-resumo">
             <thead>
                 <tr>Solicitante: <?= $nomePessoa . '<br> Função: ' . $nomeFuncao; ?> </tr>
-                
+
                 <tr class= "resumo-solicitacao-head">
                     <th>Solicitação</th>
                     <th>Data da solicitação</th>
@@ -37,10 +37,10 @@ if ($solicitacao->current()->status == 'recebida') {
                         <th>Data de agendametno</th>
                     <?php } elseif ($solicitacao->current()->status == 'reprovada') { ?>
                         <th>Data de Reprovação</th>
-<?php } else { ?>
+                    <?php } else { ?>
                         <th>Data de aprovação</th>
                         <th>Data de recebimento</th>
-<?php } ?>
+                    <?php } ?>
                 </tr>
             </thead>
             <tbody>
@@ -56,10 +56,10 @@ if ($solicitacao->current()->status == 'recebida') {
                         <td><?= $solicitacao->current()->data_agendamento; ?></td>
                     <?php } elseif ($solicitacao->current()->status == 'reprovada') { ?>
                         <td><?= $solicitacao->current()->data_atualizacao_status ?></td>
-<?php } else { ?>
+                    <?php } else { ?>
                         <td><?= $solicitacao->current()->data_aprovacao; ?></td>
                         <td><?= $solicitacao->current()->data_recebimento; ?></td>
-<?php } ?>
+                    <?php } ?>
                 </tr>
             </tbody>
         </table>
@@ -91,10 +91,12 @@ if ($solicitacao->current()->status == 'recebida') {
                     <tr class= "resumo-solicitacao-head">
                         <th>Produto</th>
                         <th>Quantidade Solicitada</th>
+                        <th colspan="2">Observação</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
-<?php foreach ($this->resumoDeSolicitacao as $produtosolicitacao) { ?>
+                    <?php foreach ($this->resumoDeSolicitacao as $produtosolicitacao) { ?>
 
                         <tr>
                             <?php
@@ -105,7 +107,7 @@ if ($solicitacao->current()->status == 'recebida') {
                             ?>
                             <td><?= $produto->current()->nome; ?></td>
                             <td><?= $objProdutoSolicitacao->current()->quantidade; ?>
-                                <?php if ($solicitacao->current()->status == 'recebida') { ?>
+                            <?php if ($solicitacao->current()->status == 'recebida') { ?>
                                     <a href="<?php echo $this->url(array('controller' => 'devolucao', 'action' => 'inserir', 'solicitacaoid' => $solicitacao->current('id')->id, 'produtoid' => $objProdutoSolicitacao->current()->produtoid, 'data' => $data = date("m-d-Y"), 'produtosolicitacaoid' => $objProdutoSolicitacao->current()->id, 'status' => 'nova')); ?>" class="btn btn-info btn-xs botaoinfo"><span class="glyphicon glyphicon-tag"></span> Devolver</a>
                                 <?php } ?>
                                 <?php
@@ -119,37 +121,38 @@ if ($solicitacao->current()->status == 'recebida') {
                                 }
                                 ?>
                             </td>
+                            <td>
+                                <?php
+                                $tDevolucao = new DbTable_Devolucao();
+                                $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtosolicitacao->id);
+
+                                $quantidadeDevolvida = $devolucao[0]['quantidade'];
+
+                                if ($quantidadeDevolvida) {
+                                    ?>
+                                    <h4 class="label label-warning alerta-resumo"><?php echo $quantidadeDevolvida; ?> devolvidos</h4>
+
+                                <?php } ?>
+
+
+                                <?php
+                                $tProdutoSolicitacao = new DbTable_Produtosolicitacao;
+                                $entregaParcial = $tProdutoSolicitacao->quantidadeJahAprovadaParcialPorProdutoESolicitacao($produtosolicitacao->produtoid, $produtosolicitacao->solicitacaoid);
+                                $quantidadeEntregueParcial = $entregaParcial[0]['aprovacao_parcial'];
+
+                                if ($quantidadeEntregueParcial > 0) {
+                                    if
+                                    (($solicitacao->current()->status <> 'entregue') || ($solicitacao->current()->status <> 'recebida')) {
+                                        ?>
+                                        <h4 class="label label-warning alerta-resumo"><?php echo $objProdutoSolicitacao->current()->quantidade - $quantidadeEntregueParcial; ?> aprovados</h4>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </td>
                         </tr>
-                        <?php
-                        $tDevolucao = new DbTable_Devolucao();
-                        $devolucao = $tDevolucao->somaDeQuantidadeTotalDevolvidaPorProdutoSolicitacao($produtosolicitacao->id);
 
-                        $quantidadeDevolvida = $devolucao[0]['quantidade'];
-
-                        if ($quantidadeDevolvida) {
-                            ?>
-                        <h4 class="label label-warning alerta-resumo"><?php echo $quantidadeDevolvida; ?> devolvidos</h4>
-
-    <?php } ?>
-
-
-                    <?php
-                    $tProdutoSolicitacao = new DbTable_Produtosolicitacao;
-                    $entregaParcial = $tProdutoSolicitacao->quantidadeJahAprovadaParcialPorProdutoESolicitacao($produtosolicitacao->produtoid, $produtosolicitacao->solicitacaoid);
-                    $quantidadeEntregueParcial = $entregaParcial[0]['aprovacao_parcial'];
-
-                    if ($quantidadeEntregueParcial > 0) {
-                        if
-                        (($solicitacao->current()->status <> 'entregue') || ($solicitacao->current()->status <> 'recebida')) {
-                            ?>
-                            <h4 class="label label-warning alerta-resumo"><?php echo $objProdutoSolicitacao->current()->quantidade - $quantidadeEntregueParcial; ?>aprovados</h4>
-                            <?php
-                        }
-                    }
-                    ?>
-
-
-<?php } ?>
+                    <?php } ?>
                 </tbody>
             </table>
         </center>

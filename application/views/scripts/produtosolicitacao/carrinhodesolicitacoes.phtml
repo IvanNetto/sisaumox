@@ -42,7 +42,7 @@
                                     <h6>Qtd</h6>
                                 </div>
                                 <div class="col-xs-5">
-                                    <input type="number" max ="" min="1" placeholder="1" class="form-control input-sm quantidadeSolicitada" name = "quantidade[]">
+                                    <input type="number" max ="" min="1" placeholder="1" class="form-control input-sm quantidadeSolicitada" name = "quantidade[]" required='true'>
                                 </div>
                                 <div class="col-xs-2">
                                     <a class="btn btn-link btn-xs" href="<?php echo $this->url(array('controller' => 'produtosolicitacao', 'action' => 'deletaritemdocarrinho', 'solicitacaoid' => $this->solicitacaoid, 'produtoid' => $item->produtoid)); ?>"><span class="glyphicon glyphicon-trash"> </span></a>    
