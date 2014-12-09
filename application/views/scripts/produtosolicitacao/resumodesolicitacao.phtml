@@ -8,7 +8,7 @@ if ($solicitacao->current()->status == 'recebida') {
     <hr>
     <p> Abaixo segue o resumo de sua solicitação já finalizada, <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listarhistorico')); ?>">clique aqui</a> e retorne ao histórico de solicitações.</p>
 <?php } elseif ($solicitacao->current()->status == 'em analise' || $solicitacao->current()->status == 'aprovada') { ?>
-    <p> Abaixo segue o resumo de sua solicitação ainda não finalizada, selecione <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listar')); ?>">Voltar</a> para retornar para sua lista de solicitações.</p>
+    <p> Abaixo segue o resumo de sua solicitação ainda não finalizada, selecione <a href="<?php echo $this->url(array('controller' => 'solicitacao', 'action' => 'listargerente')); ?>">Voltar</a> para retornar para sua lista de solicitações.</p>
 <?php } ?>
 <div class="panel panel-primary filterable">
     <div class="panel-heading">
