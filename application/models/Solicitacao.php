@@ -106,7 +106,7 @@ class Solicitacao extends Zend_Db_Table_Row_Abstract {
 
     public function listarAgendadas() {
 
-        $lista = ['agendada', 'pendente', 'liberada'];
+        $lista = ['agendada', 'pendente'];
         $tSolicitacao = new DbTable_Solicitacao();
         $query = $tSolicitacao->select()
                 ->where('status in (?)', $lista);
