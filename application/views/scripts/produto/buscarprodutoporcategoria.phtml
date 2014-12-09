@@ -18,10 +18,13 @@
         </form>
     </div>
 </div>
-<?php $tCategoria = new DbTable_Categoria();
-                  $categoria = $tCategoria->find($this->categoriaid);
-                  $nomeDaCategoria = $categoria->current()->nome;
-            ?>
+<?php
+$tCategoria = new DbTable_Categoria();
+$categoria = $tCategoria->find($this->categoriaid)->current();
+if ($categoria) {
+    $nomeDaCategoria = $categoria->nome;
+}
+?>
 <?php if ($this->listaDeProdutos) { ?>
     <div class="row">
         <div class="panel panel-primary filterable conteudogerente">
@@ -39,7 +42,7 @@
                             <th><input type="text" class="form-control" placeholder="Categoria" disabled></th>
                             <th><input type="text" class="form-control" placeholder="Descrição" disabled></th>
                             <th><input type="text" class="form-control" placeholder="Quantidade" disabled></th>
-                             <?php if (($perfil == 2) || ($perfil == 3)) { ?>
+                            <?php if (($perfil == 2) || ($perfil == 3)) { ?>
                                 <th></th>
                             <?php } ?>
                         </tr>
@@ -62,11 +65,12 @@
                             <td> <?= $produto['quantidade']; ?></td>
                         <?php } ?>
                         <?php if (($perfil == 2) || ($perfil == 3)) { ?>
-                        <td><a class='btn btn-block btn-warning btn-xs' href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'editar', 'id' => $produto['id'])); ?>"><span class="glyphicon glyphicon-edit"></span> Editar</a></td>
-                        <td class="text-center"><a href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'deletar', 'id' => $produto['id'])); ?>" class="btn btn-danger btn-block btn-xs"><span class="glyphicon glyphicon-remove-circle"></span>Excluir</a></td>
-                            <?php } ?>
+                            <td><a class='btn btn-block btn-warning btn-xs' href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'editar', 'id' => $produto['id'])); ?>"><span class="glyphicon glyphicon-edit"></span> Editar</a></td>
+                            <td class="text-center"><a href="<?php echo $this->url(array('controller' => 'produto', 'action' => 'deletar', 'id' => $produto['id'])); ?>" class="btn btn-danger btn-block btn-xs"><span class="glyphicon glyphicon-remove-circle"></span>Excluir</a></td>
+                        <?php } ?>
                         </tr>
-                    <?php }
+                    <?php
+                    }
                 }
                 ?>
                 </tbody>
