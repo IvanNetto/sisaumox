@@ -1,7 +1,7 @@
 README
 ======
 
-Hey there! Thats one of my first code in my life. I used what i could get on internet about Zend Framework 1 and developed this project to use as my final project in college. It was presented at 2014 / dec. Yeah. I was starting my Go Horse coding with php5.6 and first steps with Javascript useing Jquery. =)
+Hey there! Thats one of my first code in my life (wrote in 2014). I used what i could get on internet about Zend Framework 1 and developed this project to use as my final project in college. It was presented at 2014 / dec. Yeah. I was starting my Go Horse coding with php5.6 and first steps with Javascript useing Jquery. =)
 
 Ok. This project remains here just to remember about my beggining in programming and how i finished in 2014 my college (Faculdade Lemos de Castro). I took the information systems course during 4 years.
 
